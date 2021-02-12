@@ -1,6 +1,3 @@
-# Repositorio del curso de desarrollo de software en la web
+# TIENDA OLIMPO
 
-## Curso 2021-1
-
-- Olimpo html-css-js
-- Olimpo vue
+Este es un proyecto de ejemplo para una tienda con html, css y js
