@@ -1,15 +1,64 @@
-h1 {
-  color: red;
+body {
+  margin: 0;
 }
 
-h2 {
-  color: aqua;
+/* 
+==== BARRA DE NAVEGACION
+*/
+#header {
+  padding: 15px;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: relative;
 }
 
-.parrafosPrincipales {
-  font-size: 20px;
+.nav-menu {
+  /* border: 2px solid red; */
 }
 
-#coleccion {
-  color: darkorange;
+.nav-menu ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  /* justify-content: space-between; */
+  float: right;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 17px;
+  margin: 5px;
+}
+
+.nav-menu a:hover {
+  color: rgb(218, 155, 73);
+  font-size: 19px;
+}
+/* 
+===== IMAGEN PRINCIPAL ===
+*/
+#app {
+  height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background: url("/src/static/img/corbata.jpg");
+}
+#app:before {
+  contain: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  top: 0;
+  background: rgb(0, 0, 0, 0.5);
+}
+
+#titulo {
+  margin-top: 30vh;
+}
+
+#titulo h1 {
+  color: #fff;
+  font-size: 50px;
 }
