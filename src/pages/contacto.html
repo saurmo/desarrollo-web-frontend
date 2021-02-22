@@ -5,26 +5,75 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contacto - Olimpo</title>
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/contacto.css" />
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
   </head>
   <body>
-    <!-- Encabazado -->
-    <header>
-      <!-- Menú de navegación -->
-      <nav>
-        <ul>
-          <li><a href="/src/index.html">Inicio</a></li>
-          <li><a href="/src/pages/tienda.html">Tienda</a></li>
-          <li><a href="/src/index.html#nosotros">Nosotros</a></li>
-          <li><a href="/src/pages/contacto.html">Contacto</a></li>
-          <li><a href="/src/index.html#glosario">Glosario</a></li>
-          <li><a target="_blank" href="https://www.facebook.com/">Facebook</a></li>
-          <li><a target="_blank" href="https://www.instagram.com/">Instagram</a></li>
-          <li><a href="mailto:info@olimpo.com">info@olimpo.com</a></li>
-        </ul>
-      </nav>
-    </header>
+    <!-- Encabezado -->
+    <section>
+      <div id="app-container">
+        <header id="header">
+          <!-- Menú de navegación -->
+          <nav class="nav-menu">
+            <ul>
+              <li><a href="/src/index.html">Inicio</a></li>
+              <li><a href="/src/pages/tienda.html">Tienda</a></li>
+              <li><a href="#nosotros">Nosotros</a></li>
+              <li><a href="/src/pages/contacto.html">Contacto</a></li>
+              <li><a href="#glosario">Glosario</a></li>
+              <li>
+                <a target="_blank" href="https://www.facebook.com/"
+                  ><i class="fab fa-facebook"></i
+                ></a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.instagram.com/"
+                  ><i class="fab fa-instagram"></i
+                ></a>
+              </li>
+              <li>
+                <a href="mailto:info@olimpo.com"><i class="fas fa-envelope"></i></a>
+              </li>
+            </ul>
+          </nav>
+        </header>
+      </div>
+    </section>
     <!-- Cuerpo -->
-    <main></main>
+    <main id="main">
+      <div class="row">
+        <div class="colum">
+          <div class="container">
+            <h3>Contacto</h3>
+            <p>
+              No buscamos que compres una prenda de vestir, queremos que vivas una
+              experiencia de arte con nosotros. Nos inspiramos en la sabiduría del viento
+              y de los dioses para hacer de cada de una de nuestras colecciones una pieza
+              armónica y única.
+            </p>
+            <br />
+            <form>
+              <label for="txtNombre">Nombre</label>
+              <input id="txtNombre" type="text" placeholder="Ingrese su nombre" />
+              <br />
+              <label for="txtCorreo">Correo</label>
+              <input id="txtCorreo" type="text" placeholder="Ingrese su correo" />
+              <br />
+              <label for="txtMensaje">Mensaje</label>
+              <textarea id="txtMensaje" placeholder="Ingrese su mensaje"></textarea>
+              <br />
+              <input type="submit" value="Enviar" />
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
 
     <!-- Pie de página   -->
     <footer></footer>

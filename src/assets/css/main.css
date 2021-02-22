@@ -35,13 +35,13 @@ body {
 /* 
 ===== IMAGEN PRINCIPAL ===
 */
-#app {
+#header-image {
   height: 100vh;
   width: 100%;
   background-size: cover;
   background: url("/src/static/img/banner-06.jpg");
 }
-#app:before {
+#header-image:before {
   content: "";
   position: absolute;
   bottom: 0;
@@ -50,7 +50,7 @@ body {
   top: 0;
   background: rgba(0, 0, 0, 0.5);
 }
-#app-container {
+#header-image-container {
   position: relative;
 }
 
@@ -80,6 +80,10 @@ body {
 
 .column {
   flex: 50%;
+}
+
+.colum-all {
+  flex: 100%;
 }
 
 .container {

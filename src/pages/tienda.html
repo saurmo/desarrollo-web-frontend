@@ -5,51 +5,159 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tienda - Olimpo</title>
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/contacto.css" />
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <!-- Encabazado -->
-    <header>
-      <!-- Menú de navegación -->
-      <nav>
-        <ul>
-          <li><a href="/src/index.html">Inicio</a></li>
-          <li><a href="/src/pages/tienda.html">Tienda</a></li>
-          <li><a href="/src/index.html#nosotros">Nosotros</a></li>
-          <li><a href="/src/pages/contacto.html">Contacto</a></li>
-          <li><a href="/src/index.html#glosario">Glosario</a></li>
-          <li><a target="_blank" href="https://www.facebook.com/">Facebook</a></li>
-          <li><a target="_blank" href="https://www.instagram.com/">Instagram</a></li>
-          <li><a href="mailto:info@olimpo.com">info@olimpo.com</a></li>
-        </ul>
-      </nav>
-    </header>
+    <!-- Encabezado -->
+    <section>
+      <div id="app-container">
+        <header id="header">
+          <!-- Menú de navegación -->
+          <nav class="nav-menu">
+            <ul>
+              <li><a href="/src/index.html">Inicio</a></li>
+              <li><a href="/src/pages/tienda.html">Tienda</a></li>
+              <li><a href="#nosotros">Nosotros</a></li>
+              <li><a href="/src/pages/contacto.html">Contacto</a></li>
+              <li><a href="#glosario">Glosario</a></li>
+              <li>
+                <a target="_blank" href="https://www.facebook.com/"
+                  ><i class="fab fa-facebook"></i
+                ></a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.instagram.com/"
+                  ><i class="fab fa-instagram"></i
+                ></a>
+              </li>
+              <li>
+                <a href="mailto:info@olimpo.com"><i class="fas fa-envelope"></i></a>
+              </li>
+            </ul>
+          </nav>
+        </header>
+      </div>
+    </section>
     <!-- Cuerpo -->
-    <main>
-      <table border="1">
-        <thead>
-          <th>#</th>
-          <th>Nombre</th>
-          <th>Descripción</th>
-          <th>Valor</th>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Camisa Mujer</td>
-            <td>Camisa blanca de mujer</td>
-            <td>$10.000</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Camisa Hombre</td>
-            <td>Camisa blanca de Hombre</td>
-            <td>$10.000</td>
-          </tr>
-        </tbody>
-      </table>
+    <main id="main">
+      <div id="vuetify">
+        <v-app>
+          <v-main>
+            <v-container>
+              <div class="row">
+                <div class="colum">
+                  <div class="container">
+                    <h3>Productos</h3>
+                    <p>
+                      No buscamos que compres una prenda de vestir, queremos que vivas una
+                      experiencia de arte con nosotros. Nos inspiramos en la sabiduría del
+                      viento y de los dioses para hacer de cada de una de nuestras
+                      colecciones una pieza armónica y única.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="colum-all">
+                  <div class="container">
+                    <h3>Registro</h3>
+                    <v-form ref="form" v-model="valid" lazy-validation>
+                      <v-text-field
+                        v-model="name"
+                        :rules="nameRules"
+                        label="Nombre"
+                        required
+                      ></v-text-field>
+                      <v-text-field
+                        v-model="name"
+                        :rules="nameRules"
+                        label="Apellido"
+                        required
+                      ></v-text-field>
+                      <v-text-field
+                        v-model="email"
+                        :rules="emailRules"
+                        label="Correo"
+                        required
+                      ></v-text-field>
+                      <v-text-field
+                        v-model="email"
+                        :rules="emailRules"
+                        label="Celular"
+                        required
+                      ></v-text-field>
+                      <v-text-field
+                        v-model="email"
+                        :rules="emailRules"
+                        label="Dirección"
+                        required
+                      ></v-text-field>
+                      <v-select :items="items" label="Ciudad"></v-select>
+                      <v-menu
+                        ref="menu"
+                        v-model="menu"
+                        :close-on-content-click="false"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="auto"
+                      >
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-text-field
+                            v-model="date"
+                            label="Fecha de nacimiento"
+                            prepend-icon="mdi-calendar"
+                            readonly
+                            v-bind="attrs"
+                            v-on="on"
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker
+                          ref="picker"
+                          v-model="date"
+                          :max="new Date().toISOString().substr(0, 10)"
+                          min="1950-01-01"
+                          @change="save"
+                        ></v-date-picker>
+                      </v-menu>
+                      <v-btn depressed color="primary"> Enviar </v-btn>
+                    </v-form>
+                  </div>
+                </div>
+              </div>
+            </v-container>
+          </v-main>
+        </v-app>
+      </div>
     </main>
 
     <!-- Pie de página   -->
     <footer></footer>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script>
+      new Vue({
+        el: "#vuetify",
+        vuetify: new Vuetify(),
+      });
+    </script>
   </body>
 </html>
