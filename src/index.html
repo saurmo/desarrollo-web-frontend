@@ -6,92 +6,140 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Olimpo</title>
     <link rel="stylesheet" href="assets/css/main.css" />
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
   </head>
   <body>
     <!-- Encabezado -->
     <section id="app">
-      <header id="header">
-        <!-- Menú de navegación -->
-        <nav class="nav-menu">
-          <ul>
-            <li><a href="/src/index.html">Inicio</a></li>
-            <li><a href="/src/pages/tienda.html">Tienda</a></li>
-            <li><a href="#nosotros">Nosotros</a></li>
-            <li><a href="/src/pages/contacto.html">Contacto</a></li>
-            <li><a href="#glosario">Glosario</a></li>
-            <li><a target="_blank" href="https://www.facebook.com/">Facebook</a></li>
-            <li><a target="_blank" href="https://www.instagram.com/">Instagram</a></li>
-            <li><a href="mailto:info@olimpo.com">info@olimpo.com</a></li>
-          </ul>
-        </nav>
-      </header>
-
-      <div id="titulo">
-        <center>
-          <h1>Tienda el Olimpo</h1>
-          <p>Nuestra tienda el olimpo ofrece productos de ropa deportiva y mucho más</p>
-        </center>
+      <div id="app-container">
+        <header id="header">
+          <!-- Menú de navegación -->
+          <nav class="nav-menu">
+            <ul>
+              <li><a href="/src/index.html">Inicio</a></li>
+              <li><a href="/src/pages/tienda.html">Tienda</a></li>
+              <li><a href="#nosotros">Nosotros</a></li>
+              <li><a href="/src/pages/contacto.html">Contacto</a></li>
+              <li><a href="#glosario">Glosario</a></li>
+              <li>
+                <a target="_blank" href="https://www.facebook.com/"
+                  ><i class="fab fa-facebook"></i
+                ></a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.instagram.com/"
+                  ><i class="fab fa-instagram"></i
+                ></a>
+              </li>
+              <li>
+                <a href="mailto:info@olimpo.com"><i class="fas fa-envelope"></i></a>
+              </li>
+            </ul>
+          </nav>
+        </header>
+        <div id="titulo">
+          <center>
+            <h1>Tienda el Olimpo</h1>
+            <p>Nuestra tienda el olimpo ofrece productos de ropa deportiva y mucho más</p>
+          </center>
+        </div>
       </div>
     </section>
     <!-- Cuerpo -->
-    <main>
-      <h1>Tienda el Olimpo</h1>
-      <p>Nuestra tienda el olimpo ofrece productos de ropa deportiva y mucho más</p>
-      <br />
-      <p class="parrafosPrincipales">
-        No buscamos que compres una prenda de vestir, queremos que vivas una experiencia
-        de arte con nosotros. Nos inspiramos en la sabiduría del viento y de los dioses
-        para hacer de cada de una de nuestras colecciones una pieza armónica y única.
-      </p>
-      <!-- hr: Linea de separacion -->
-      <hr />
-
-      <!-- br: Linea de separacion -->
-      <br />
-      <h2>Nuestras categorías</h2>
-
-      <ul>
-        <li>Ropa deportiva hombres</li>
-        <li>Ropa deportiva mujeres</li>
-        <li>Ropa deportiva niños y niñas</li>
-      </ul>
-      <section id="nosotros">
-        <h2>Sobre nosotros</h2>
-        <p class="parrafosPrincipales">
-          Este mes Olimpo te dice las tendencias primavera-verano de moda que vienen
-          pisando fuerte para este 2021… Las tendencias primavera-verano 2021 resumidas en
-          10 claves: de la prenda más importante de la estación –y en todas las versiones
-          que hay que tener en cuenta– a la inspiración que verás en estampados,
-          tonalidades y joyas, pasando por la década que regresará con fuerza esta
-          temporada o el leitmotiv de los próximos meses que seguramente ya estás poniendo
-          en práctica.
-        </p>
-        <p class="parrafosSecundario">
-          Pero también los detalles que importan, el color que más triunfará (una vez más)
-          y todo lo que tienes que saber sobre zapatos, bolsos y demás accesorios. La
-          temporada empieza aquí, con este resumen de las tendencias primavera-verano 2021
-          más importantes…
-        </p>
-        <div>
-          <div>Novedades</div>
-          <div>
+    <main id="main">
+      <div class="row">
+        <div class="colum">
+          <div class="container">
+            <h3>Tienda el Olimpo</h3>
+            <p>
+              No buscamos que compres una prenda de vestir, queremos que vivas una
+              experiencia de arte con nosotros. Nos inspiramos en la sabiduría del viento
+              y de los dioses para hacer de cada de una de nuestras colecciones una pieza
+              armónica y única.
+            </p>
+            <!-- br: Linea de separacion -->
+            <br />
+            <h3>Nuestras categorías</h3>
             <ul>
-              <li><span id="coleccion">Colección Afrodita</span></li>
-              <li><span>Bolsos Eros</span></li>
-              <li><span>El blog y mucho más..</span></li>
+              <li><i class="fas fa-check-double"></i>Ropa deportiva hombres</li>
+              <li><i class="fas fa-check-double"></i>Ropa deportiva mujeres</li>
+              <li><i class="fas fa-check-double"></i>Ropa deportiva niños y niñas</li>
             </ul>
           </div>
         </div>
-      </section>
-      <section id="glosario">
-        <h2><u>Glosario</u></h2>
-        <dl>
-          <dt>Zapatos:</dt>
-          <dd>Los zapatos</dd>
-          <dt>Camisa:</dt>
-          <dd>Los zapatos</dd>
-        </dl>
-      </section>
+        <div class="colum">
+          <div class="container">
+            <!-- Imagen -->
+            <center>
+              <img src="/src/static/img/banner-05.jpg" width="400" height="400" />
+            </center>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="colum">
+          <div class="container">
+            <!-- Imagen -->
+            <center>
+              <img src="/src/static/img/banner-04.jpg" width="400" height="400" />
+            </center>
+          </div>
+        </div>
+        <div class="colum">
+          <div class="container">
+            <section id="nosotros">
+              <h3>Sobre nosotros</h3>
+              <p>
+                Este mes Olimpo te dice las tendencias primavera-verano de moda que vienen
+                pisando fuerte para este 2021… Las tendencias primavera-verano 2021
+                resumidas en 10 claves: de la prenda más importante de la estación –y en
+                todas las versiones que hay que tener en cuenta– a la inspiración que
+                verás en estampados, tonalidades y joyas, pasando por la década que
+                regresará con fuerza esta temporada o el leitmotiv de los próximos meses
+                que seguramente ya estás poniendo en práctica.
+              </p>
+              <p>
+                Pero también los detalles que importan, el color que más triunfará (una
+                vez más) y todo lo que tienes que saber sobre zapatos, bolsos y demás
+                accesorios. La temporada empieza aquí, con este resumen de las tendencias
+                primavera-verano 2021 más importantes…
+              </p>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="colum">
+          <div class="container">
+            <h3>Novedades</h3>
+            <div>
+              <ul>
+                <li><span id="coleccion">Colección Afrodita</span></li>
+                <li><span>Bolsos Eros</span></li>
+                <li><span>El blog y mucho más..</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="colum">
+          <div class="container">
+            <section id="glosario">
+              <h3><u>Glosario</u></h3>
+              <dl>
+                <dt>Zapatos:</dt>
+                <dd>Los zapatos</dd>
+                <dt>Camisa:</dt>
+                <dd>Los zapatos</dd>
+              </dl>
+            </section>
+          </div>
+        </div>
+      </div>
     </main>
 
     <!-- Pie de página   -->

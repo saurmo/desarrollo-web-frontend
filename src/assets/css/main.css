@@ -1,5 +1,7 @@
 body {
   margin: 0;
+  font-family: "Franklin-gothic", sans-serif;
+  color: #444;
 }
 
 /* 
@@ -11,17 +13,12 @@ body {
   position: relative;
 }
 
-.nav-menu {
-  /* border: 2px solid red; */
-}
-
 .nav-menu ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
   display: flex;
-  /* justify-content: space-between; */
-  float: right;
+  justify-content: center;
 }
 
 .nav-menu a {
@@ -42,16 +39,19 @@ body {
   height: 100vh;
   width: 100%;
   background-size: cover;
-  background: url("/src/static/img/corbata.jpg");
+  background: url("/src/static/img/banner-06.jpg");
 }
 #app:before {
-  contain: "";
+  content: "";
   position: absolute;
   bottom: 0;
   right: 0;
   left: 0;
   top: 0;
-  background: rgb(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.5);
+}
+#app-container {
+  position: relative;
 }
 
 #titulo {
@@ -60,5 +60,54 @@ body {
 
 #titulo h1 {
   color: #fff;
+  margin: 0;
   font-size: 50px;
+}
+
+#titulo p {
+  color: #fff;
+  font-size: 20px;
+  margin: 0;
+}
+
+/* 
+===== CONTENIDO PRINCIPAL ===
+*/
+
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 50%;
+}
+
+.container {
+  margin: 20px;
+  padding: 20px;
+}
+
+#main {
+  margin: 3% 6% 0% 6%;
+}
+
+h3 {
+  font-size: 25px;
+  font-weight: 700;
+}
+#main p {
+  line-height: 150%;
+  text-align: justify;
+}
+
+#main ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#main i {
+  margin-right: 8px;
+  font-size: 20px;
+  color: rgb(218, 155, 73);
 }
