@@ -13,6 +13,24 @@
       integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
       crossorigin="anonymous"
     />
+    <script>
+      console.log("--------HEAD--------");
+      console.log("Página de contacto - Desde el HEAD");
+      let tagNombre = document.getElementById("txtNombre");
+      console.log(tagNombre);
+
+      const ejecutarPruebasJs = () => {
+        console.log("Todos los párrafos");
+        let parrafos = document.getElementsByTagName("p");
+        console.log(parrafos);
+        parrafos[0].innerText = "Hola Mundo";
+        parrafos[0].style.color = "red";
+      };
+
+      console.log("--------FIN HEAD--------");
+    </script>
+
+    <script src="../assets/js/introduccion.js"></script>
   </head>
   <body>
     <!-- Encabezado -->
@@ -47,6 +65,8 @@
     </section>
     <!-- Cuerpo -->
     <main id="main">
+      <input type="button" value="Pruebas JS" onclick="ejecutarPruebasJs()" />
+
       <div class="row">
         <div class="colum">
           <div class="container">
@@ -58,15 +78,29 @@
               armónica y única.
             </p>
             <br />
-            <form>
+            <form action="javascript:void(0)" onsubmit="obtenerDatos()">
               <label for="txtNombre">Nombre</label>
-              <input id="txtNombre" type="text" placeholder="Ingrese su nombre" />
+              <input
+                id="txtNombre"
+                type="text"
+                placeholder="Ingrese su nombre"
+                required
+              />
               <br />
               <label for="txtCorreo">Correo</label>
-              <input id="txtCorreo" type="text" placeholder="Ingrese su correo" />
+              <input
+                id="txtCorreo"
+                type="text"
+                placeholder="Ingrese su correo"
+                required
+              />
               <br />
               <label for="txtMensaje">Mensaje</label>
-              <textarea id="txtMensaje" placeholder="Ingrese su mensaje"></textarea>
+              <textarea
+                id="txtMensaje"
+                placeholder="Ingrese su mensaje"
+                required
+              ></textarea>
               <br />
               <input type="submit" value="Enviar" />
             </form>
@@ -77,5 +111,6 @@
 
     <!-- Pie de página   -->
     <footer></footer>
+    <script src="../assets/js/contacto.js"></script>
   </body>
 </html>
