@@ -1,6 +1,9 @@
 console.log("--------DESPUES DEL CONTENIDO--------");
 console.log("Página de contacto");
 
+let title = document.getElementById("title");
+title.innerText = "Tienda el Olimpo";
+
 const obtenerDatos = () => {
   let tagNombre = document.getElementById("txtNombre");
   let tagCorreo = document.getElementById("txtCorreo");

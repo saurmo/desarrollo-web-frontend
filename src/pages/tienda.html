@@ -66,6 +66,7 @@
               <div class="row">
                 <div class="colum">
                   <div class="container">
+                    <h1>{{ title }}</h1>
                     <h3>Productos</h3>
                     <p>
                       No buscamos que compres una prenda de vestir, queremos que vivas una
@@ -80,41 +81,40 @@
                 <div class="colum-all">
                   <div class="container">
                     <h3>Registro</h3>
-                    <v-form ref="form" v-model="valid" lazy-validation>
+                    <v-form ref="formUser" v-model="formValid" lazy-validation>
                       <v-text-field
-                        v-model="name"
-                        :rules="nameRules"
+                        v-model="info.firstname"
+                        :rules="rules.required"
                         label="Nombre"
                         required
                       ></v-text-field>
                       <v-text-field
-                        v-model="name"
-                        :rules="nameRules"
+                        v-model="info.lastname"
+                        :rules="rules.required"
                         label="Apellido"
                         required
                       ></v-text-field>
                       <v-text-field
-                        v-model="email"
-                        :rules="emailRules"
+                        v-model="info.email"
+                        :rules="rules.email"
                         label="Correo"
                         required
                       ></v-text-field>
                       <v-text-field
-                        v-model="email"
-                        :rules="emailRules"
+                        v-model="info.phone"
+                        :rules="rules.required"
                         label="Celular"
                         required
                       ></v-text-field>
                       <v-text-field
-                        v-model="email"
-                        :rules="emailRules"
+                        v-model="info.address"
+                        :rules="rules.required"
                         label="Dirección"
                         required
                       ></v-text-field>
-                      <v-select :items="items" label="Ciudad"></v-select>
+                      <v-select :items="cities" label="Ciudad"></v-select>
                       <v-menu
                         ref="menu"
-                        v-model="menu"
                         :close-on-content-click="false"
                         transition="scale-transition"
                         offset-y
@@ -122,7 +122,7 @@
                       >
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
-                            v-model="date"
+                            v-model="info.birthday"
                             label="Fecha de nacimiento"
                             prepend-icon="mdi-calendar"
                             readonly
@@ -132,13 +132,12 @@
                         </template>
                         <v-date-picker
                           ref="picker"
-                          v-model="date"
+                          v-model="info.birthday"
                           :max="new Date().toISOString().substr(0, 10)"
                           min="1950-01-01"
-                          @change="save"
                         ></v-date-picker>
                       </v-menu>
-                      <v-btn depressed color="primary"> Enviar </v-btn>
+                      <v-btn depressed color="primary" @click="sendInfo"> Enviar </v-btn>
                     </v-form>
                   </div>
                 </div>
@@ -157,8 +156,29 @@
       new Vue({
         el: "#vuetify",
         vuetify: new Vuetify(),
-        data() {
-          return {};
+        data: {
+          formValid: null,
+          title: "Tienda el Olimpo",
+          info: {},
+          rules: {
+            required: [(v) => !!v || "Field is required"],
+            email: [
+              (v) => !!v || "Field is required",
+              (v) => /.+@.+\..+/.test(v) || "Email must be valid",
+            ],
+          },
+          cities: [],
+        },
+        methods: {
+          sendInfo() {
+            if (this.$refs.formUser.validate()) {
+              console.log("Click en sendInfo");
+              let info = Object.assign({}, this.info);
+              console.log(info);
+            } else {
+              console.error("Form invalid");
+            }
+          },
         },
       });
     </script>

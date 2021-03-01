@@ -16,8 +16,6 @@
     <script>
       console.log("--------HEAD--------");
       console.log("Página de contacto - Desde el HEAD");
-      let tagNombre = document.getElementById("txtNombre");
-      console.log(tagNombre);
 
       const ejecutarPruebasJs = () => {
         console.log("Todos los párrafos");
@@ -70,6 +68,7 @@
       <div class="row">
         <div class="colum">
           <div class="container">
+            <h1 id="title"></h1>
             <h3>Contacto</h3>
             <p>
               No buscamos que compres una prenda de vestir, queremos que vivas una
@@ -103,6 +102,7 @@
               ></textarea>
               <br />
               <input type="submit" value="Enviar" />
+              <input type="button" value="Enviar 2" onclick="obtenerDatos()" />
             </form>
           </div>
         </div>
