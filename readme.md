@@ -4,3 +4,7 @@
 
 - Olimpo html-css-js [Link](https://github.com/saurmo/desarrollo-web-frontend/tree/2021-1-tienda-olimpo-basic)
 - Olimpo nuxt [Link](https://github.com/saurmo/desarrollo-web-frontend/tree/2021-1-tienda-olimpo-nuxt)
+
+# PROYECTO OLIMPO EN NUXT
+
+1. Iniciar el proyecto. `npm init`

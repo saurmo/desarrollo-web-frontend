@@ -1,0 +1,25 @@
+{
+  "name": "tienda-olimpo",
+  "version": "1.0.0",
+  "description": "Tienda el Olimpo",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "start": "nuxt start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saurmo/desarrollo-web-frontend.git"
+  },
+  "author": "saurmo-udem",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/saurmo/desarrollo-web-frontend/issues"
+  },
+  "homepage": "https://github.com/saurmo/desarrollo-web-frontend#readme",
+  "dependencies": {
+    "nuxt": "^2.15.2"
+  }
+}
