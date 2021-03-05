@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/saurmo/desarrollo-web-frontend#readme",
   "dependencies": {
-    "nuxt": "^2.15.2"
+    "nuxt": "^2.15.2",
+    "vuetify": "1.5.24",
+    "vuetify-loader": "^1.7.2"
   }
 }
