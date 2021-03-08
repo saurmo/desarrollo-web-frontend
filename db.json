@@ -1,0 +1,25 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "Camiseta",
+      "price": "30000",
+      "brand": "nn",
+      "size": "s",
+      "colors": "blanco",
+      "description": "camiseta básica",
+      "category": "Mujer"
+    },
+    {
+      "id": "2",
+      "name": "Camiseta",
+      "price": "25000",
+      "brand": "nn",
+      "size": "xs",
+      "colors": "rojo",
+      "description": "Camiseta niño y niña",
+      "category": "Deportiva"
+    }
+  ],
+  "categorias": []
+}
