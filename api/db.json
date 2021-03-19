@@ -2,13 +2,13 @@
   "products": [
     {
       "id": "1",
-      "name": "Camiseta",
+      "name": "Camiseta básica",
       "price": "30000",
       "brand": "nn",
       "size": "s",
       "colors": "blanco",
-      "description": "camiseta básica",
-      "category": "Mujer"
+      "category": "Mujer",
+      "description": "camiseta básica"
     },
     {
       "id": "2",

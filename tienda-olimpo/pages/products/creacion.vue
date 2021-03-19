@@ -1,10 +1,12 @@
 <template>
   <div>
-    <h1>Productos</h1>
+    <v-card flat>
+      <v-card-actions>
+        <h1>Creación de Productos</h1>
+        <v-spacer></v-spacer>
+        <v-btn class="text-none" to="/products">Ver lista de productos</v-btn>
+      </v-card-actions>
 
-    Código Nombre Precio Descripción Categoria Marca Talla Colores
-
-    <template>
       <v-form ref="formProduct" v-model="valid" lazy-validation>
         <v-text-field
           v-model="product.id"
@@ -57,7 +59,7 @@
         ></v-select>
         <v-btn color="success" @click="saveProduct()">Guardar producto</v-btn>
       </v-form>
-    </template>
+    </v-card>
   </div>
 </template>
 
@@ -67,44 +69,31 @@ export default {
     valid: true,
     product: {
       id: "",
-      name: ""
+      name: "",
     },
     categories: ["Deportiva", "Mujer", "Hombre", "Casual"],
     rules: {
-      required: [v => !!v || "El campo es obligatorio"]
-    }
+      required: [(v) => !!v || "El campo es obligatorio"],
+    },
   }),
-  beforeMount() {
-    this.getProducts();
-  },
+  beforeMount() {},
 
   methods: {
+    /**
+     * Enviar una solicitud (Request) en un método post
+     * Para guardar el producto
+     */
     async saveProduct() {
       if (this.$refs.formProduct.validate()) {
         console.log("-- Inicio guardar producto --");
         let product = Object.assign({}, this.product);
-        // Enviar una solicitud (Request) en un método post
-        let response = await this.$axios.post(
-          "http://localhost:3001/products",
-          product
-        );
+        let response = await this.$axios.post("http://localhost:3001/products", product);
         console.log(response);
       } else {
         console.log("Formulario incompleto");
       }
     },
-    deleteProduct() {
-      // Enviar una solicitud (Request) en un método delete
-    },
-    async getProducts() {
-      // Enviar una solicitud (Request) en un método get
-      let response = await this.$axios.get("http://localhost:3001/products");
-      console.log(response);
-    },
-    updateProduct() {
-      // Enviar una solicitud (Request) en un método update
-    }
-  }
+  },
 };
 </script>
 
