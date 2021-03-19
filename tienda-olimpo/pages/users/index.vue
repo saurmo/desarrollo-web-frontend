@@ -3,16 +3,16 @@
     <v-col cols="12">
       <v-card flat>
         <v-card-actions>
-          <h1>Listado de productos</h1>
+          <h1>Listado de usuarios</h1>
           <v-spacer></v-spacer>
-          <v-btn color="success" class="text-none" to="/products/creacion"
-            >Crear producto</v-btn
+          <v-btn color="success" class="text-none" to="/users/creacion"
+            >Crear usuario</v-btn
           >
         </v-card-actions>
         <v-card-text>
           <v-data-table
             :headers="headers"
-            :items="products"
+            :items="users"
             :items-per-page="5"
             class="elevation-1"
           >
@@ -32,48 +32,46 @@
 </template>
 
 <script>
+const url_api = "http://localhost:3001/users/";
+
 export default {
   beforeMount() {
-    this.getProducts();
+    this.getUsers();
   },
   data() {
     return {
       headers: [
         {
-          text: "Código",
+          text: "Identificación",
           align: "start",
           value: "id",
         },
         { text: "Nombre", value: "name" },
-        { text: "Precio", value: "price" },
-        { text: "Marca", value: "brand" },
-        { text: "Talla", value: "size" },
-        { text: "Color", value: "colors" },
-        { text: "Categoría", value: "category" },
+        { text: "Correo", value: "email" },
         { text: "Acción", value: "actions" },
       ],
-      products: [],
+      users: [],
     };
   },
   methods: {
     /**
      * Enviar una solicitud (Request) en un método get
-     * Para consultar todos los productos
+     * Para consultar todos los usuarios
      */
-    async getProducts() {
+    async getUsers() {
       try {
-        let response = await this.$axios.get("http://localhost:3001/products");
-        this.products = response.data;
+        let response = await this.$axios.get(url_api);
+        this.users = response.data;
       } catch (error) {
         console.error(error);
       }
     },
     /**
      * Enviar el producción a edición
-     * /products/id
+     * /users/id
      */
     editItem(item) {
-      let url = `/products/${item.id}`;
+      let url = `/users/${item.id}`;
       this.$router.push(url);
     },
     /**
@@ -92,14 +90,14 @@ export default {
         .then(async (result) => {
           if (result.value) {
             try {
-              let url = "http://localhost:3001/products/" + item.id;
+              let url = url_api + item.id;
               await this.$axios.delete(url);
               this.$swal.fire({
                 type: "success",
                 title: "Operación exitosa.",
                 text: "El item se eliminó correctamente.",
               });
-              this.getProducts();
+              this.getUsers();
             } catch (error) {
               this.$swal.fire({
                 type: "error",

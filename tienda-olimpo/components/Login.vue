@@ -28,6 +28,8 @@
   </v-card>
 </template>
 <script>
+const url_api = "http://localhost:3001/users/";
+
 export default {
   props: {
     color: {
@@ -49,12 +51,31 @@ export default {
     /**
      * Método post para realizar el login
      */
-    login() {
+    async login() {
       if (this.$refs.formLogin.validate()) {
         //llamado a la api
-        this.$router.push("home");
+        let response = await this.$axios.get(url_api);
+        let users = response.data;
+        let findUser = users.find((x) => {
+          return x.email === this.user.email && x.password === this.user.password;
+        });
+        if (findUser) {
+          this.$router.push("home");
+        } else {
+          this.$swal.fire({
+            type: "error",
+            title: "Oops...",
+            text: "El correo o la contraseña son incorrectos.",
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+          });
+        }
       } else {
-        console.log("Formulario incorrecto");
+        this.$swal.fire({
+          type: "warning",
+          title: "Formulario incompleto.",
+          text: "Hay campos que deben ser diligenciados.",
+        });
       }
     },
   },

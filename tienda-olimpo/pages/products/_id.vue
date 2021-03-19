@@ -95,7 +95,19 @@ export default {
         );
         this.product = response.data;
       } catch (error) {
-        console.error(error);
+        this.$swal
+          .fire({
+            type: "error",
+            title: "Oops...",
+            text: "El producto no existe o hubo un error cargandolo.",
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+          })
+          .then((result) => {
+            if (result.value) {
+              this.$router.push("/products");
+            }
+          });
       }
     },
 
@@ -111,9 +123,17 @@ export default {
           "http://localhost:3001/products/" + this.id_product,
           product
         );
-        console.log(response);
+        this.$swal.fire({
+          type: "success",
+          title: "Operación exitosa.",
+          text: "El item se actualizo correctamente.",
+        });
       } else {
-        console.log("Formulario incompleto");
+        this.$swal.fire({
+          type: "warning",
+          title: "Formulario incompleto.",
+          text: "Hay campos que deben ser diligenciados.",
+        });
       }
     },
   },

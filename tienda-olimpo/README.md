@@ -9,6 +9,7 @@
 
 - CRUD categorias
 - CRUD productos
+
   - Código
   - Nombre
   - Precio
@@ -17,8 +18,20 @@
   - Marca
   - Talla
   - Colores
-- CRUD clientes
-- CRUD empleados
-- CRUD proveedores
+
+- CRUD usuarios
+
+  - identificación (id)
+  - nombres
+  - apellidos
+  - fecha de nacimiento
+  - correo
+  - clave
+  - rol
+
+  - Roles: clientes
+  - Roles: empleados
+  - Roles: proveedores
+
 - CRUD compras
 - CRUD facturas

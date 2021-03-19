@@ -88,9 +88,17 @@ export default {
         console.log("-- Inicio guardar producto --");
         let product = Object.assign({}, this.product);
         let response = await this.$axios.post("http://localhost:3001/products", product);
-        console.log(response);
+        this.$swal.fire({
+          type: "success",
+          title: "Operación exitosa.",
+          text: "El item se guardo correctamente.",
+        });
       } else {
-        console.log("Formulario incompleto");
+        this.$swal.fire({
+          type: "warning",
+          title: "Formulario incompleto.",
+          text: "Hay campos que deben ser diligenciados.",
+        });
       }
     },
   },

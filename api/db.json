@@ -1,16 +1,6 @@
 {
   "products": [
     {
-      "id": "1",
-      "name": "Camiseta básica",
-      "price": "30000",
-      "brand": "nn",
-      "size": "s",
-      "colors": "blanco",
-      "category": "Mujer",
-      "description": "camiseta básica"
-    },
-    {
       "id": "2",
       "name": "Camiseta",
       "price": "25000",
@@ -21,5 +11,13 @@
       "category": "Deportiva"
     }
   ],
-  "categorias": []
+  "categorias": [],
+  "users": [
+    {
+      "email": "santimo0108@gmail.com",
+      "password": "123",
+      "id": "123",
+      "name": "Santiago"
+    }
+  ]
 }

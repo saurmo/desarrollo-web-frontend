@@ -3,13 +3,7 @@
     <!-- Menú hamburguesa -->
     <v-navigation-drawer v-model="openMenu" fixed app>
       <v-list>
-        <v-list-item
-          v-for="item in items"
-          :key="item.id"
-          :to="item.to"
-          router
-          exact
-        >
+        <v-list-item v-for="item in items" :key="item.id" :to="item.to" router exact>
           <v-list-item-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
@@ -60,23 +54,28 @@ export default {
           id: "home",
           icon: "mdi-home",
           title: "Inicio",
-          to: "/"
+          to: "/",
         },
         {
           id: "productos",
           icon: "mdi-gift",
           title: "Productos",
-          to: "/products"
+          to: "/products",
         },
         {
           icon: "mdi-square",
-          title: "Categorías",
-          to: "/categories"
-        }
+          title: "Usuarios",
+          to: "/users",
+        },
+        {
+          icon: "mdi-exit-to-app",
+          title: "Cerrar sesión",
+          to: "/",
+        },
       ],
 
-      title: "Vuetify.js"
+      title: "Vuetify.js",
     };
-  }
+  },
 };
 </script>
