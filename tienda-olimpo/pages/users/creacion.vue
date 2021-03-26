@@ -35,6 +35,14 @@
           required
         ></v-text-field>
 
+        <v-select
+          v-model="user.rol"
+          :items="roles"
+          label="Rol"
+          item-value="id"
+          item-text="nombre"
+        ></v-select>
+
         <v-btn color="success" @click="saveUser()">Crear usuario</v-btn>
       </v-form>
     </v-card>
@@ -54,6 +62,12 @@ export default {
     rules: {
       required: [(v) => !!v || "El campo es obligatorio"],
     },
+    roles: [
+      { id: 1, nombre: "Administrador" },
+      { id: 2, nombre: "Empleado" },
+      { id: 3, nombre: "Cliente" },
+      { id: 4, nombre: "Invitado" },
+    ],
   }),
   beforeMount() {},
 

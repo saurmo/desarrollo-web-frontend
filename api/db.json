@@ -17,7 +17,15 @@
       "email": "santimo0108@gmail.com",
       "password": "123",
       "id": "123",
-      "name": "Santiago"
+      "name": "Santiago",
+      "rol": 1
+    },
+    {
+      "email": "motorstotal@hotmail.com",
+      "password": "123",
+      "id": "9876",
+      "name": "Juan",
+      "rol": 3
     }
   ]
 }
