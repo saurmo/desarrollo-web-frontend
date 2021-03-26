@@ -1,9 +1,9 @@
 <template>
-  <v-app>
+  <v-app v-if="user">
     <v-app-bar fixed app>
       <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
 
-      <v-toolbar-title>Bienvenido NOMBRE-DE-LA-PERSONA</v-toolbar-title>
+      <v-toolbar-title>Bienvenido {{ user.name }}</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
@@ -48,6 +48,16 @@
       </v-card>
     </v-dialog>
   </v-app>
+  <v-app v-else>
+    <v-main>
+      <center>
+        <h3>Por favor inicie sesión</h3>
+        <v-btn color="green darken-1" text to="/login">
+          Ir al login
+        </v-btn>
+      </center>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
@@ -56,11 +66,27 @@ export default {
   components: {
     login,
   },
+  beforeMount() {
+    this.loadUser();
+  },
   data() {
     return {
       year: new Date().getFullYear(),
       dialogLogin: false,
+      user: null,
     };
+  },
+  methods: {
+    loadUser() {
+      let stringUser = localStorage.getItem("user-in");
+      this.user = JSON.parse(stringUser);
+      this.validRol(this.user);
+    },
+    validRol(user) {
+      if (!user || user.rol != 3) {
+        this.$router.push("/");
+      }
+    },
   },
 };
 </script>

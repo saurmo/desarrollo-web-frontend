@@ -43,12 +43,13 @@
 
 <script>
 export default {
+  beforeMount() {
+    this.loadUser();
+  },
   data() {
     return {
       year: new Date().getFullYear(),
-
       openMenu: false,
-
       items: [
         {
           id: "home",
@@ -73,9 +74,19 @@ export default {
           to: "/",
         },
       ],
-
-      title: "Vuetify.js",
     };
+  },
+  methods: {
+    loadUser() {
+      let stringUser = localStorage.getItem("user-in");
+      this.user = JSON.parse(stringUser);
+      this.validRol(this.user);
+    },
+    validRol(user) {
+      if (!user || (user.rol != 1 && user.rol != 2)) {
+        this.$router.push("/");
+      }
+    },
   },
 };
 </script>

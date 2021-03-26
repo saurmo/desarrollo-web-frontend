@@ -68,9 +68,10 @@ export default {
           let findUser = users.find((x) => {
             return x.email === this.user.email && x.password === this.user.password;
           });
-          console.log(findUser);
           if (findUser) {
             let rol = findUser.rol;
+            delete findUser.password;
+            localStorage.setItem("user-in", JSON.stringify(findUser));
             if (rol == 3) {
               this.$router.push("home-clientes");
             } else if (rol == 1 || rol == 2) {

@@ -53,6 +53,9 @@
 <script>
 import login from "@/components/Login";
 export default {
+  beforeMount() {
+    localStorage.clear();
+  },
   components: {
     login,
   },
