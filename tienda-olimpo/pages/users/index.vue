@@ -36,6 +36,9 @@ const url_api = "http://localhost:3001/users/";
 
 export default {
   beforeMount() {
+    let token = localStorage.getItem("token");
+
+    this.$axios.setHeader("token", token);
     this.getUsers();
   },
   data() {
@@ -61,8 +64,9 @@ export default {
     async getUsers() {
       try {
         let response = await this.$axios.get(url_api);
-        this.users = response.data;
+        this.users = response.data.content;
       } catch (error) {
+        this.users = [];
         console.error(error);
       }
     },

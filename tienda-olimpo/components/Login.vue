@@ -8,9 +8,9 @@
         <v-row>
           <v-col cols="12">
             <v-text-field
-              v-model="user.email"
-              :rules="emailRules"
-              label="Correo"
+              v-model="user.id"
+              :rules="fieldRules"
+              label="Identificación"
               required
             ></v-text-field>
           </v-col>
@@ -36,7 +36,7 @@
   </v-card>
 </template>
 <script>
-const url_api = "http://localhost:3001/users/";
+const url_api = "http://localhost:3001/login";
 
 export default {
   props: {
@@ -63,15 +63,16 @@ export default {
       try {
         if (this.$refs.formLogin.validate()) {
           //llamado a la api
-          let response = await this.$axios.get(url_api);
-          let users = response.data;
-          let findUser = users.find((x) => {
-            return x.email === this.user.email && x.password === this.user.password;
-          });
-          if (findUser) {
-            let rol = findUser.rol;
-            delete findUser.password;
-            localStorage.setItem("user-in", JSON.stringify(findUser));
+          let response = await this.$axios.post(url_api, this.user);
+          let info = response.data;
+
+          if (info.ok == true) {
+            let rol = info.content.rol;
+            let name = info.content.name;
+            let token = info.content.token;
+
+            localStorage.setItem("token", token);
+            localStorage.setItem("user-in", JSON.stringify({ rol, name }));
             if (rol == 3) {
               this.$router.push("home-clientes");
             } else if (rol == 1 || rol == 2) {

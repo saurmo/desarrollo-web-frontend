@@ -40,7 +40,7 @@
           :items="roles"
           label="Rol"
           item-value="id"
-          item-text="nombre"
+          item-text="name"
         ></v-select>
 
         <v-btn color="success" @click="saveUser()">Crear usuario</v-btn>
@@ -51,6 +51,7 @@
 
 <script>
 const url_api = "http://localhost:3001/users/";
+const url_api_roles = "http://localhost:3001/roles/";
 export default {
   data: () => ({
     valid: true,
@@ -69,9 +70,21 @@ export default {
       { id: 4, nombre: "Invitado" },
     ],
   }),
-  beforeMount() {},
+  beforeMount() {
+    this.getRoles();
+  },
 
   methods: {
+    async getRoles() {
+      try {
+        let response = await this.$axios.get(url_api_roles);
+        this.roles = response.data.content;
+      } catch (error) {
+        this.roles = [];
+        console.error(error);
+      }
+    },
+
     /**
      * Enviar una solicitud (Request) en un método update
      * Para modificar el usuario
