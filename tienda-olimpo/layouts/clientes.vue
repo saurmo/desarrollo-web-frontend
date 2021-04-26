@@ -62,12 +62,18 @@
 
 <script>
 import login from "@/components/Login";
+import { auth } from "@/mixins/auth";
 export default {
+  mixins: [auth],
   components: {
     login,
   },
   beforeMount() {
+    let token = localStorage.getItem("token");
+    this.$axios.setHeader("token", token);
+
     this.loadUser();
+    this.verifyToken();
   },
   data() {
     return {

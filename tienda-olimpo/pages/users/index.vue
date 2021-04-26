@@ -37,7 +37,6 @@ const url_api = "http://localhost:3001/users/";
 export default {
   beforeMount() {
     let token = localStorage.getItem("token");
-
     this.$axios.setHeader("token", token);
     this.getUsers();
   },
@@ -95,12 +94,21 @@ export default {
           if (result.value) {
             try {
               let url = url_api + item.id;
-              await this.$axios.delete(url);
-              this.$swal.fire({
-                type: "success",
-                title: "Operación exitosa.",
-                text: "El item se eliminó correctamente.",
-              });
+              let { data } = await this.$axios.delete(url);
+              if (data.ok == true) {
+                this.$swal.fire({
+                  type: "success",
+                  title: "Operación exitosa.",
+                  text: "El item se eliminó correctamente.",
+                });
+              } else {
+                this.$swal.fire({
+                  type: "error",
+                  title: "Error al eliminar.",
+                  text: data.message,
+                });
+              }
+
               this.getUsers();
             } catch (error) {
               this.$swal.fire({

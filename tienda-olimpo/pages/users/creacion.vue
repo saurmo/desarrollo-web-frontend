@@ -94,11 +94,19 @@ export default {
         // Crear un nuevo objeto con la info del usuario
         let user = Object.assign({}, this.user);
         let response = await this.$axios.post(url_api, user);
-        this.$swal.fire({
-          type: "success",
-          title: "Operación exitosa.",
-          text: "El item se guardo correctamente.",
-        });
+        if (response.data.ok == true) {
+          this.$swal.fire({
+            type: "success",
+            title: "Operación exitosa.",
+            text: "El item se guardo correctamente.",
+          });
+        } else {
+          this.$swal.fire({
+            type: "error",
+            title: "Error al crear",
+            text: response.data.message,
+          });
+        }
       } else {
         this.$swal.fire({
           type: "warning",

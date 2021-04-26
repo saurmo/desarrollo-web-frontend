@@ -12,6 +12,7 @@
           v-model="user.id"
           label="Identificación"
           :rules="rules.required"
+          disabled
           required
         ></v-text-field>
         <v-text-field
@@ -24,14 +25,6 @@
           v-model="user.email"
           :rules="emailRules"
           label="Correo"
-          required
-        ></v-text-field>
-
-        <v-text-field
-          v-model="user.password"
-          :rules="rules.required"
-          label="Contraseña"
-          type="password"
           required
         ></v-text-field>
 
@@ -72,8 +65,8 @@ export default {
     async getUser() {
       try {
         //
-        let response = await this.$axios.get(url_api + this.id_user);
-        this.user = response.data;
+        let { data } = await this.$axios.get(url_api + this.id_user);
+        this.user = data.content;
       } catch (error) {
         this.$swal
           .fire({
@@ -99,12 +92,20 @@ export default {
       if (this.$refs.formUser.validate()) {
         // Crear un nuevo objeto con la info del usuario
         let user = Object.assign({}, this.user);
-        let response = await this.$axios.put(url_api + this.id_user, user);
-        this.$swal.fire({
-          type: "success",
-          title: "Operación exitosa.",
-          text: "El item se actualizo correctamente.",
-        });
+        let { data } = await this.$axios.put(url_api + this.id_user, user);
+        if (data.ok == true) {
+          this.$swal.fire({
+            type: "success",
+            title: "Operación exitosa.",
+            text: "El item se actualizo correctamente.",
+          });
+        } else {
+          this.$swal.fire({
+            type: "error",
+            title: "Error al modificar.",
+            text: data.message,
+          });
+        }
       } else {
         this.$swal.fire({
           type: "warning",

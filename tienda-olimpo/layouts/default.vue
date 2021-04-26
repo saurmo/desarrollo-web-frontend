@@ -42,9 +42,15 @@
 </template>
 
 <script>
+import { auth } from "@/mixins/auth";
 export default {
+  mixins: [auth],
   beforeMount() {
+    let token = localStorage.getItem("token");
+    this.$axios.setHeader("token", token);
+
     this.loadUser();
+    this.verifyToken();
   },
   data() {
     return {
