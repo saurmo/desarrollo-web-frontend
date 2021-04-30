@@ -8,55 +8,76 @@
       </v-card-actions>
 
       <v-form ref="formProduct" v-model="valid" lazy-validation>
-        <v-text-field
-          v-model="product.id"
-          label="Código"
-          :rules="rules.required"
-          required
-        ></v-text-field>
-        <v-text-field
-          v-model="product.name"
-          :rules="rules.required"
-          label="Nombre"
-          required
-        ></v-text-field>
-        <v-text-field
-          v-model="product.price"
-          :rules="rules.required"
-          label="Precio"
-          required
-        ></v-text-field>
-        <v-text-field
-          v-model="product.brand"
-          :rules="rules.required"
-          label="Marca"
-          required
-        ></v-text-field>
-        <v-text-field
-          v-model="product.size"
-          :rules="rules.required"
-          label="Tallas"
-          required
-        ></v-text-field>
-        <v-text-field
-          v-model="product.colors"
-          :rules="rules.required"
-          label="Colores"
-          required
-        ></v-text-field>
-        <v-textarea
-          v-model="product.description"
-          :rules="rules.required"
-          label="Descripción"
-          required
-        ></v-textarea>
-        <v-select
-          v-model="product.category"
-          :rules="rules.required"
-          :items="categories"
-          label="Categoria"
-          required
-        ></v-select>
+        <v-row wrap>
+          <v-col cols="4">
+            <v-text-field
+              v-model="product.id"
+              label="Código"
+              :rules="rules.required"
+              required
+            ></v-text-field>
+          </v-col>
+          <v-col cols="8">
+            <v-text-field
+              v-model="product.name"
+              :rules="rules.required"
+              label="Nombre"
+              required
+            ></v-text-field>
+          </v-col>
+
+          <v-col cols="6">
+            <v-text-field
+              v-model="product.price"
+              :rules="rules.required"
+              label="Precio"
+              required
+            ></v-text-field>
+          </v-col>
+          <v-col cols="6">
+            <v-text-field
+              v-model="product.brand"
+              :rules="rules.required"
+              label="Marca"
+              required
+            ></v-text-field>
+          </v-col>
+
+          <v-col cols="6">
+            <v-text-field
+              v-model="product.size"
+              :rules="rules.required"
+              label="Tallas"
+              required
+            ></v-text-field>
+          </v-col>
+          <v-col cols="6">
+            <v-text-field
+              v-model="product.colors"
+              :rules="rules.required"
+              label="Colores"
+              required
+            ></v-text-field>
+          </v-col>
+          <v-col>
+            <v-select
+              v-model="product.category"
+              :rules="rules.required"
+              :items="categories"
+              label="Categoría"
+              required
+            ></v-select>
+          </v-col>
+          <v-col cols="12">
+            <v-textarea
+              v-model="product.description"
+              :rules="rules.required"
+              label="Descripción"
+              required
+            ></v-textarea>
+          </v-col>
+        </v-row>
+
         <v-btn color="success" @click="saveProduct()">Guardar producto</v-btn>
       </v-form>
     </v-card>
@@ -64,6 +85,7 @@
 </template>
 
 <script>
+const url = "http://localhost:3001/products";
 export default {
   data: () => ({
     valid: true,
@@ -87,12 +109,20 @@ export default {
       if (this.$refs.formProduct.validate()) {
         console.log("-- Inicio guardar producto --");
         let product = Object.assign({}, this.product);
-        let response = await this.$axios.post("http://localhost:3001/products", product);
-        this.$swal.fire({
-          type: "success",
-          title: "Operación exitosa.",
-          text: "El item se guardo correctamente.",
-        });
+        let response = await this.$axios.post(url, product);
+        if (response.data.ok == true) {
+          this.$swal.fire({
+            type: "success",
+            title: "Operación exitosa.",
+            text: "El item se guardo correctamente.",
+          });
+        } else {
+          this.$swal.fire({
+            type: "error",
+            title: "Error al crear",
+            text: response.data.message,
+          });
+        }
       } else {
         this.$swal.fire({
           type: "warning",

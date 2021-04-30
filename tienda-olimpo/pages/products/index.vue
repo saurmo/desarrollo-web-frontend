@@ -32,6 +32,7 @@
 </template>
 
 <script>
+const url = "http://localhost:3001/products";
 export default {
   beforeMount() {
     this.getProducts();
@@ -62,9 +63,10 @@ export default {
      */
     async getProducts() {
       try {
-        let response = await this.$axios.get("http://localhost:3001/products");
-        this.products = response.data;
+        let response = await this.$axios.get(url);
+        this.products = response.data.content;
       } catch (error) {
+        this.products = [];
         console.error(error);
       }
     },

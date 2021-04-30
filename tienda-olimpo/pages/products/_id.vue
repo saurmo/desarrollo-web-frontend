@@ -93,7 +93,7 @@ export default {
         let response = await this.$axios.get(
           "http://localhost:3001/products/" + this.id_product
         );
-        this.product = response.data;
+        this.product = response.data.content;
       } catch (error) {
         this.$swal
           .fire({
@@ -119,15 +119,23 @@ export default {
       if (this.$refs.formProduct.validate()) {
         // Crear un nuevo objeto con la info del producto
         let product = Object.assign({}, this.product);
-        let response = await this.$axios.put(
+        let { data } = await this.$axios.put(
           "http://localhost:3001/products/" + this.id_product,
           product
         );
-        this.$swal.fire({
-          type: "success",
-          title: "Operación exitosa.",
-          text: "El item se actualizo correctamente.",
-        });
+        if (data.ok == true) {
+          this.$swal.fire({
+            type: "success",
+            title: "Operación exitosa.",
+            text: "El item se actualizo correctamente.",
+          });
+        } else {
+          this.$swal.fire({
+            type: "error",
+            title: "Error al modificar.",
+            text: data.message,
+          });
+        }
       } else {
         this.$swal.fire({
           type: "warning",
