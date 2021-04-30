@@ -23,9 +23,14 @@
               <v-icon @click="deleteItem(item)">
                 mdi-delete
               </v-icon>
+
+              <v-icon @click="openDialogFiles(item)">
+                mdi-upload-multiple
+              </v-icon>
             </template>
           </v-data-table>
         </v-card-text>
+        <SubirArchivos :openDialog="dialogFiles" @close="dialogFiles = false" />
       </v-card>
     </v-col>
   </v-row>
@@ -33,9 +38,14 @@
 
 <script>
 const url = "http://localhost:3001/products";
+import SubirArchivos from "@/components/SubirArchivos";
+
 export default {
   beforeMount() {
     this.getProducts();
+  },
+  components: {
+    SubirArchivos,
   },
   data() {
     return {
@@ -54,6 +64,7 @@ export default {
         { text: "Acción", value: "actions" },
       ],
       products: [],
+      dialogFiles: false,
     };
   },
   methods: {
@@ -111,6 +122,13 @@ export default {
             }
           }
         });
+    },
+
+    /**
+     * Método para abrir el componente de subir archivos
+     */
+    openDialogFiles(item) {
+      this.dialogFiles = true;
     },
   },
 };
