@@ -30,7 +30,11 @@
             </template>
           </v-data-table>
         </v-card-text>
-        <SubirArchivos :openDialog="dialogFiles" @close="dialogFiles = false" />
+        <SubirArchivos
+          :openDialog="dialogFiles"
+          :product="productSelected"
+          @close="dialogFiles = false"
+        />
       </v-card>
     </v-col>
   </v-row>
@@ -65,6 +69,7 @@ export default {
       ],
       products: [],
       dialogFiles: false,
+      productSelected: "",
     };
   },
   methods: {
@@ -128,6 +133,7 @@ export default {
      * Método para abrir el componente de subir archivos
      */
     openDialogFiles(item) {
+      this.productSelected = item;
       this.dialogFiles = true;
     },
   },

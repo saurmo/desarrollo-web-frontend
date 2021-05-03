@@ -37,6 +37,7 @@ export default {
       default: false,
       require: true,
     },
+    product: Object,
   },
   data() {
     return {
@@ -44,12 +45,15 @@ export default {
     };
   },
   methods: {
+    /**
+     * Emitir un evento para cerrar el dialogo
+     */
     closeDialog() {
       this.$emit("close");
     },
     async sendFiles() {
       try {
-        let url = "http://localhost:3001/products/ID_PRODUCTO/archivos";
+        let url = `http://localhost:3001/products/${this.product.id}/archivos`;
 
         // Crear el form data con el nombre del archivo y la información binaria de ese archivo
         let formData = new FormData();
@@ -62,6 +66,7 @@ export default {
             title: "Operación exitosa.",
             text: "Los archivos se guardaron",
           });
+          this.closeDialog();
         } else {
           this.$swal.fire({
             type: "error",
