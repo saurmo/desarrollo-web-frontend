@@ -56,7 +56,11 @@ export default {
         let data = response.data;
         if (data.ok == true) {
           // El usuario existe
-          this.$swal("Hello Vue world!!!");
+          let token = data.info.token
+          let nombre_usuario =  data.info.nombre_completo
+          localStorage.setItem('token', token)
+          localStorage.setItem('nombre_usuario', nombre_usuario)
+          this.$router.push('/home/administrador')
         } else {
           this.$swal({
             type: "error",

@@ -33,6 +33,7 @@
 
       <v-toolbar-title v-text="title" />
       <v-spacer />
+      {{ nombre_usuario }}
     </v-app-bar>
 
     <v-main>
@@ -41,13 +42,15 @@
       </v-container>
     </v-main>
 
-    <v-footer  app>
+    <v-footer app>
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
   </v-app>
 </template>
 
 <script>
+import config from "../assets/js/config";
+
 export default {
   data() {
     return {
@@ -79,7 +82,32 @@ export default {
       miniVariant: false,
       right: true,
       title: "Reservas",
+      nombre_usuario: "",
     };
+  },
+  beforeMount() {
+    this.cargarPagina();
+  },
+  methods: {
+    async cargarPagina() {
+      this.nombre_usuario = localStorage.getItem("nombre_usuario");
+      let token = localStorage.getItem("token");
+      if (token === "null" || token == null || token == undefined) {
+        this.$router.push("/login");
+      } else {
+        await this.validarToken(token);
+      }
+    },
+
+    async validarToken(token) {
+      try {
+        let url = config.URL_API + "/validar-token/" + token;
+        let respuesta = await this.$axios.get(url);
+        console.log(respuesta);
+      } catch (error) {
+        this.$router.push("/login");
+      }
+    },
   },
 };
 </script>
