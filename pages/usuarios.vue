@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title primary-title> Usuarios </v-card-title>
-    <v-card-text> Formulario para crear usuarios </v-card-text>
+    <v-card-text>Formulario para crear usuarios </v-card-text>
     <v-card-text>
       <v-form>
         <v-text-field
@@ -63,6 +63,38 @@
         <v-btn color="success" @click="crearUsuario()">Crear usuario</v-btn>
       </v-form>
     </v-card-text>
+    <v-card-text>
+      <v-data-table
+        :headers="headers"
+        :items="users"
+        :items-per-page="5"
+        class="elevation-1"
+      >
+        <template slot="item.actions" slot-scope="{ item }">
+          <v-icon small class="mr-2" @click="modificarUsuario(item)">
+            mdi-pencil
+          </v-icon>
+          <v-icon small @click="eliminarUsuario(item)"> mdi-delete </v-icon>
+        </template>
+      </v-data-table>
+      <!-- <br />
+      <hr />
+      <br />
+      <table border="1" width="100%">
+        <thead>
+          <th v-for="header in headers" :key="header.name">
+            {{ header.text }}
+          </th>
+        </thead>
+        <tbody>
+          <tr v-for="user in users" :key="user.id">
+            <td v-for="header in headers" :key="header.name">
+              {{ user[header.value]}}
+            </td>
+          </tr>
+        </tbody>
+      </table> -->
+    </v-card-text>
   </v-card>
 </template>
 <script>
@@ -74,13 +106,27 @@ export default {
         { id: "0", nombre: "Administrador" },
         { id: "1", nombre: "Empleado" },
       ],
+      headers: [
+        { text: "Identificación", value: "id" },
+        { text: "Nombre", value: "nombre" },
+        { text: "Apellidos", value: "apellidos" },
+        { text: "Rol", value: "rol" },
+        { text: "Acciones", value: "actions" },
+      ],
+      users: [],
     };
   },
+  beforeMount() {
+    this.cargarPagina();
+  },
   methods: {
+    async cargarPagina() {
+      await this.consultarUsuarios();
+    },
+
     crearUsuario() {
       let url = "http://localhost:3001/usuarios";
       let token = localStorage.getItem("token");
-
       this.$axios
         .post(url, this.usuario, { headers: { token } })
         .then((response) => {
@@ -89,6 +135,40 @@ export default {
         .catch((err) => {
           console.log("Error al guardar", err);
         });
+    },
+
+    async consultarUsuarios() {
+      try {
+        let url = "http://localhost:3001/usuarios";
+        let token = localStorage.getItem("token");
+        let { data } = await this.$axios.get(url, { headers: { token } });
+        this.users = data.info;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async eliminarUsuario(user) {
+      try {
+        let response_swal = await this.$swal({
+          title: "Esta seguro de eliminar el usuario?",
+          text: "Esta acción no se puede revertir.",
+          type: "warning",
+          showCancelButton: true,
+          cancelButtonColor: "#d33",
+          cancelButtonText: "Cancelar",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "Si, eliminarlo!",
+        });
+        if (response_swal.value == true) {
+          let url = "http://localhost:3001/usuarios/" + user.id;
+          let token = localStorage.getItem("token");
+          let { data } = await this.$axios.delete(url, { headers: { token } });
+          await this.consultarUsuarios();
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };

@@ -101,11 +101,12 @@ export default {
 
     async validarToken(token) {
       try {
-        let url = config.URL_API + "/validar-token/" + token;
+        let url = config.URL_API + "/validar-token?token=" + token;
         let respuesta = await this.$axios.get(url);
         console.log(respuesta);
       } catch (error) {
-        this.$router.push("/login");
+        console.log(error);
+        //this.$router.push("/login");
       }
     },
   },
