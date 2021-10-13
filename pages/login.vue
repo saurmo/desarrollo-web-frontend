@@ -56,11 +56,16 @@ export default {
         let data = response.data;
         if (data.ok == true) {
           // El usuario existe
-          let token = data.info.token
-          let nombre_usuario =  data.info.nombre_completo
-          localStorage.setItem('token', token)
-          localStorage.setItem('nombre_usuario', nombre_usuario)
-          this.$router.push('/home/administrador')
+          let token = data.info.token;
+          let nombre_usuario = data.info.nombre_completo;
+          let rol = data.info.rol;
+          localStorage.setItem("token", token);
+          localStorage.setItem("nombre_usuario", nombre_usuario);
+          if (rol == 1) {
+            this.$router.push("/home/administrador");
+          } else {
+            this.$router.push("/destinos");
+          }
         } else {
           this.$swal({
             type: "error",
