@@ -80,6 +80,9 @@
         class="elevation-1"
       >
         <template slot="item.actions" slot-scope="{ item }">
+          <v-icon small @click="abrirCrudArchivos(item)"
+            >mdi-file-multiple
+          </v-icon>
           <v-icon small class="mr-2" @click="modificarDestino(item)">
             mdi-pencil
           </v-icon>
@@ -87,6 +90,53 @@
         </template>
       </v-data-table>
     </v-card-text>
+
+    <v-dialog
+      v-model="abrirDialogoCrudArchivos"
+      scrollable
+      persistent
+      max-width="700px"
+      transition="dialog-transition"
+    >
+      <v-card>
+        <v-card-actions>
+          Imagenes {{ destino.nombre }}
+          <v-spacer></v-spacer>
+          <v-icon @click="abrirDialogoCrudArchivos = false">
+            mdi-close-circle
+          </v-icon>
+        </v-card-actions>
+        <v-card-text>
+          <v-form>
+            <v-file-input
+              v-model="archivo"
+              chips
+              counter
+              show-size
+              truncate-length="15"
+            ></v-file-input>
+            <v-btn
+              small
+              color="success"
+              class="text-none"
+              @click="subirImagen()"
+              >Subir imagen</v-btn
+            >
+          </v-form>
+        </v-card-text>
+        <v-card-text>
+          <template v-for="(imagen, index) in imagenes">
+            <div :key="index">
+              <a :href="imagen.url" target="_blank">{{ imagen.nombre }}</a>
+              <v-icon small @click="eliminarImagen(imagen)">
+                mdi-delete
+              </v-icon>
+            </div>
+          </template>
+          <span></span>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </v-card>
 </template>
 <script>
@@ -113,6 +163,9 @@ export default {
       show_password: false,
       show_repeat_password: false,
       loading: false,
+      abrirDialogoCrudArchivos: false,
+      archivo: null,
+      imagenes: [],
     };
   },
   beforeMount() {
@@ -226,6 +279,71 @@ export default {
         console.log("Error al guardar", err);
       }
     },
+
+    async abrirCrudArchivos(destino) {
+      await this.consultarImagenes(destino);
+      this.abrirDialogoCrudArchivos = true;
+      this.destino = destino;
+    },
+
+    async subirImagen() {
+      let url = config.URL_API + "/archivos";
+      let token = localStorage.getItem("token");
+      let form_data = new FormData();
+      form_data.append("mi_archivo", this.archivo);
+      form_data.append("tipo_padre", "destinos");
+      form_data.append("id_padre", this.destino.id);
+      let { data } = await this.$axios.post(url, form_data, {
+        headers: { token },
+      });
+      this.archivo = null;
+      this.$swal.fire(
+        "Imagen cargada.",
+        "Imagen cargada correctamente",
+        "success"
+      );
+         await this.consultarImagenes(this.destino);
+    },
+
+    async consultarImagenes(destino) {
+      try {
+        let url = config.URL_API + "/archivos/destinos/" + destino.id;
+        let token = localStorage.getItem("token");
+        let { data } = await this.$axios.get(url, { headers: { token } });
+        this.imagenes = data.info;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+
+        async eliminarImagen(imagen) {
+      try {
+        let response_swal = await this.$swal({
+          title: "Esta seguro de eliminar la imagen?",
+          text: "Esta acción no se puede revertir.",
+          type: "warning",
+          showCancelButton: true,
+          cancelButtonColor: "#d33",
+          cancelButtonText: "Cancelar",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "Si, eliminarlo!",
+        });
+        if (response_swal.value == true) {
+          let url = config.URL_API + "/archivos/" + imagen.id + '?nombre='+imagen.nombre;
+          let token = localStorage.getItem("token");
+          let { data } = await this.$axios.delete(url, { headers: { token } });
+          await this.consultarImagenes(this.destino);
+        }
+      } catch (error) {
+        this.$swal.fire(
+          "Operación NO ejecutada.",
+          "No se elimino el destino.",
+          "error"
+        );
+      }
+    },
+
   },
 };
 </script>
