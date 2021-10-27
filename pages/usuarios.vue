@@ -4,14 +4,25 @@
     <v-card-text>Formulario para crear usuarios </v-card-text>
     <v-card-text>
       <v-form ref="form_users">
-        <v-text-field
-          name="id"
-          label="Nro de Identificación"
-          id="id"
-          v-model="usuario.id"
-          :disabled="is_updating"
-          :rules="requiredRule"
-        ></v-text-field>
+        <v-row>
+          <v-col sm="12" md="6">
+            <v-text-field
+              name="id"
+              label="Nro de Identificación"
+              id="id"
+              v-model="usuario.id"
+              :disabled="is_updating"
+              :rules="requiredRule"
+            ></v-text-field>
+          </v-col>
+          <v-col sm="12" md="6">
+            <v-text-field
+              label="Correo"
+              v-model="usuario.correo"
+              :rules="requiredRule"
+            ></v-text-field>
+          </v-col>
+        </v-row>
         <v-row>
           <v-col sm="12" md="6">
             <v-text-field
@@ -149,6 +160,7 @@ export default {
         { text: "Nombre", value: "nombre" },
         { text: "Apellidos", value: "apellidos" },
         { text: "Rol", value: "rol" },
+        { text: "Correo", value: "correo" },
         { text: "Acciones", value: "actions" },
       ],
       users: [],
@@ -176,7 +188,7 @@ export default {
         return;
       }
 
-      let url =  config.URL_API + "/usuarios";
+      let url = config.URL_API + "/usuarios";
       let token = localStorage.getItem("token");
       this.loading = true;
       this.$axios
@@ -203,7 +215,7 @@ export default {
 
     async consultarUsuarios() {
       try {
-        let url =  config.URL_API + "/usuarios";
+        let url = config.URL_API + "/usuarios";
         let token = localStorage.getItem("token");
         let { data } = await this.$axios.get(url, { headers: { token } });
         this.users = data.info;
@@ -229,7 +241,7 @@ export default {
           confirmButtonText: "Si, eliminarlo!",
         });
         if (response_swal.value == true) {
-          let url =  config.URL_API + "/usuarios/" + user.id;
+          let url = config.URL_API + "/usuarios/" + user.id;
           let token = localStorage.getItem("token");
           let { data } = await this.$axios.delete(url, { headers: { token } });
           await this.consultarUsuarios();
@@ -253,7 +265,7 @@ export default {
         if (!this.$refs.form_users.validate()) {
           return;
         }
-        let url =  config.URL_API + "/usuarios";
+        let url = config.URL_API + "/usuarios";
         let token = localStorage.getItem("token");
         let response = await this.$axios.put(url, this.usuario, {
           headers: { token },
