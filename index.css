@@ -34,9 +34,94 @@ body {
     display: flex;
 }
 
+.nav-menu a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+}
+
 .nav-menu ul li{
     margin-left: 5px;
     margin-right: 5px;
+}
+
+.nav-menu a:hover {
+    color: yellow;
+}
+
+#titulo {
+    margin-top: 30vh ;
+    position: relative;
+}
+#titulo h1, #titulo h2  {
+    color: white ;
+}
+
+h1 {
+    margin-top: 10px;
+    color: #160707;
+}
+
+.row {
+    display: flex;
+}
+
+.column {
+    flex: 50%;
+    padding: 20px;
+}
+
+#nosotros, #objetivos {
+    margin: 3% 6% 0px 6%;
+}
+
+#registro {
+padding-top: 10px;
+    background: black;
+    color: white;
+    font-size: 16px;
+}
+
+.flecha {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 50px;  
+}
+
+.mi-flecha {
+    width: 2vw;
+    height: 2vh;
+    border: 0.5vw solid;
+    border-color: white transparent transparent white;
+    transform: rotate(-135deg);
+}
+
+.flecha-invetida {
+    position: absolute;
+    animation: slide 4s linear infinite;
+    
+}
+
+@keyframes slide {
+    0% {
+        opacity: 0;
+        transform: translateY(-4vw);
+    }
+    20%{
+        opacity: 1;
+        transform: translateY(-1vw);
+    }
+    80%{
+        transform: translateY(1vw);
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+        transform: translateY(4vw);
+    }
+
 }
 
 
