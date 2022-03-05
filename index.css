@@ -92,16 +92,15 @@ padding-top: 10px;
 
 .mi-flecha {
     width: 2vw;
-    height: 2vh;
+    height: 2vw;
     border: 0.5vw solid;
     border-color: white transparent transparent white;
     transform: rotate(-135deg);
 }
 
-.flecha-invetida {
+.flecha-invertida {
     position: absolute;
     animation: slide 4s linear infinite;
-    
 }
 
 @keyframes slide {

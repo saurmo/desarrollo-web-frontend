@@ -135,13 +135,18 @@
       </div>
       <div class="column">
 
-        <h2>Contacto</h2>
-        <form action="">
+        <h2>Registro</h2>
+        <form action="javascript:void(0)" onsubmit="obtenerValoresFormulario()">
           <input type="email" placeholder="Ingrese su correo" id="txtCorreo">
           <br>
-          <input type="text" placeholder="Ingrese su solicitud" id="txtAsunto">
+          <input type="text" placeholder="Ingrese su nombre" id="txtNombre">
           <br>
-          <textarea name="" placeholder="Ingrese una descripción" id="txtDescripcion" cols="30" rows="10"></textarea>
+          <input type="text" placeholder="Ingrese su celular" id="txtCelular">
+          <br>
+          <input type="password" placeholder="Ingrese una contraseña" id="txtClave">
+          <br>
+          <textarea name="" placeholder="Ingrese su dirección" id="txtDireccion" 
+          cols="30" rows="10"></textarea>
           <br>
           <input type="submit" value="Enviar datos">
         </form>
@@ -149,6 +154,8 @@
       </div>
     </div>
   </footer>
+  <script src="./index.js"></script>
+
 </body>
 
 </html>
