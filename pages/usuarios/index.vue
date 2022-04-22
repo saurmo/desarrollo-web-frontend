@@ -3,7 +3,7 @@
     <h1>Usuarios</h1>
 
     <!-- Creacion del formulario -->
-    <b-form @submit="onSubmit" @reset="onReset">
+    <b-form @submit="createUser" @reset="resetForm">
       <b-form-group
         id="input-group-1"
         label="Email:"
@@ -36,27 +36,51 @@
           required
         ></b-form-select>
       </b-form-group>
-
-      <b-button type="submit" variant="primary">Submit</b-button>
-      <b-button type="reset" variant="danger">Reset</b-button>
+      <br />
+      <!-- Actions -->
+      <b-button type="submit" variant="primary" v-if="!editing"
+        >Crear usuario</b-button
+      >
+      <b-button variant="success" v-else @click="updateUser"
+        >Guardar usuario</b-button
+      >
+      <b-button type="reset" variant="danger">Limpiar formulario</b-button>
     </b-form>
 
-    <b-table striped hover :items="users"></b-table>
+    <b-table striped hover :items="users" :fields="headers">
+      <template #cell(show_details)="row">
+        <b-button size="sm" @click="loadUser(row)" class="mr-2">
+          Modificar usuario
+        </b-button>
+        <b-button size="sm" @click="deleteUser(row)" class="mr-2">
+          Eliminar usuario
+        </b-button>
+      </template>
+    </b-table>
   </b-container>
 </template>
 <script>
 export default {
+
+  // Información a utilizar
   data() {
     return {
+      headers: ["correo", "nombre", "universidad", "show_details"],
       users: [],
       user: {},
+      editing: false,
       universidades: ["Universidad de Medellin", "Universidad de Antioquia"],
     };
   },
+
+  // Método antes de que cargue la página
   beforeMount() {
     this.loadUsers();
   },
+
+  // Métodos
   methods: {
+    
     async loadUsers() {
       // Cargar los usuarios de la base de datos
       const url = "http://localhost:3001/api/v1/usuarios";
@@ -68,26 +92,38 @@ export default {
         alert("No se cargaron los usuarios");
       }
     },
-    async onSubmit(event) {
-      event.preventDefault();
 
+    async createUser(event) {
+      event.preventDefault();
       const url = "http://localhost:3001/api/v1/usuarios";
       let { data } = await this.$axios.post(url, this.user);
       console.log(data);
       this.loadUsers();
     },
-    onReset(event) {
+
+    async updateUser(event) {
       event.preventDefault();
-      // Reset our form values
-      this.form.email = "";
-      this.form.name = "";
-      this.form.food = null;
-      this.form.checked = [];
-      // Trick to reset/clear native browser form validation state
-      this.show = false;
-      this.$nextTick(() => {
-        this.show = true;
-      });
+      const url = `http://localhost:3001/api/v1/usuarios/${this.user._id}`;
+      let { data } = await this.$axios.put(url, this.user);
+      console.log(data);
+      this.resetForm();
+      this.loadUsers();
+    },
+
+    loadUser(user) {
+      this.editing = true;
+      this.user = Object.assign({}, user.item);
+    },
+
+    resetForm() {
+      this.editing = false;
+      this.user = {};
+    },
+
+    async deleteUser({ item }) {
+      const url = `http://localhost:3001/api/v1/usuarios/${item._id}`;
+      let { data } = await this.$axios.delete(url);
+      this.loadUsers();
     },
   },
 };
