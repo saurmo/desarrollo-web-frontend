@@ -57,10 +57,14 @@
         </b-button>
       </template>
     </b-table>
+
+    <alerts :message="message" />
   </b-container>
 </template>
 <script>
+import alerts from "~/components/alerts.vue";
 export default {
+  components: { alerts },
 
   // Información a utilizar
   data() {
@@ -70,6 +74,7 @@ export default {
       user: {},
       editing: false,
       universidades: ["Universidad de Medellin", "Universidad de Antioquia"],
+      message: "",
     };
   },
 
@@ -80,7 +85,6 @@ export default {
 
   // Métodos
   methods: {
-    
     async loadUsers() {
       // Cargar los usuarios de la base de datos
       const url = "http://localhost:3001/api/v1/usuarios";
@@ -97,7 +101,7 @@ export default {
       event.preventDefault();
       const url = "http://localhost:3001/api/v1/usuarios";
       let { data } = await this.$axios.post(url, this.user);
-      console.log(data);
+      this.message = data.message;
       this.loadUsers();
     },
 
@@ -106,6 +110,7 @@ export default {
       const url = `http://localhost:3001/api/v1/usuarios/${this.user._id}`;
       let { data } = await this.$axios.put(url, this.user);
       console.log(data);
+      this.$swal.fire("Actualizado.", data.message, "success");
       this.resetForm();
       this.loadUsers();
     },
@@ -121,9 +126,25 @@ export default {
     },
 
     async deleteUser({ item }) {
-      const url = `http://localhost:3001/api/v1/usuarios/${item._id}`;
-      let { data } = await this.$axios.delete(url);
-      this.loadUsers();
+      this.$swal
+        .fire({
+          title: "¿Esta seguro de eliminar?",
+          text: "No se puede recuperar despúes de la eliminación.",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Si, eliminar!",
+          cancelButtonText: "Cancelar",
+        })
+        .then(async (result) => {
+          if (result.value == true) {
+            const url = `http://localhost:3001/api/v1/usuarios/${item._id}`;
+            let { data } = await this.$axios.delete(url);
+            this.loadUsers();
+            this.$swal.fire("Eliminado!", data.message, "success");
+          }
+        });
     },
   },
 };
