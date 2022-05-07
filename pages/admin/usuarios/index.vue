@@ -64,6 +64,7 @@
 <script>
 import alerts from "~/components/alerts.vue";
 export default {
+  layout:"admin",
   components: { alerts },
 
   // Información a utilizar
@@ -75,20 +76,28 @@ export default {
       editing: false,
       universidades: ["Universidad de Medellin", "Universidad de Antioquia"],
       message: "",
+      opcionesAxios: null,
     };
   },
 
   // Método antes de que cargue la página
   beforeMount() {
+     this.loadHeader();
     this.loadUsers();
+   
   },
 
   // Métodos
   methods: {
+    loadHeader() {
+      let token = localStorage.getItem("token");
+      this.opcionesAxios = { headers: { token } };
+    },
     async loadUsers() {
+      
       // Cargar los usuarios de la base de datos
       const url = "http://localhost:3001/api/v1/usuarios";
-      let { data } = await this.$axios.get(url);
+      let { data } = await this.$axios.get(url, this.opcionesAxios);
       console.log(data);
       if (data.ok === true) {
         this.users = data.info;
@@ -100,7 +109,7 @@ export default {
     async createUser(event) {
       event.preventDefault();
       const url = "http://localhost:3001/api/v1/usuarios";
-      let { data } = await this.$axios.post(url, this.user);
+      let { data } = await this.$axios.post(url, this.user, this.opcionesAxios);
       this.message = data.message;
       this.loadUsers();
     },
@@ -108,7 +117,7 @@ export default {
     async updateUser(event) {
       event.preventDefault();
       const url = `http://localhost:3001/api/v1/usuarios/${this.user._id}`;
-      let { data } = await this.$axios.put(url, this.user);
+      let { data } = await this.$axios.put(url, this.user, this.opcionesAxios);
       console.log(data);
       this.$swal.fire("Actualizado.", data.message, "success");
       this.resetForm();
@@ -140,7 +149,7 @@ export default {
         .then(async (result) => {
           if (result.value == true) {
             const url = `http://localhost:3001/api/v1/usuarios/${item._id}`;
-            let { data } = await this.$axios.delete(url);
+            let { data } = await this.$axios.delete(url, this.opcionesAxios);
             this.loadUsers();
             this.$swal.fire("Eliminado!", data.message, "success");
           }
