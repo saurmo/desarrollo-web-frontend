@@ -1,21 +1,23 @@
-# Repositorio del curso de desarrollo de software en la web
+# Proyecto de ejemplo con html, css y javascript
 
-## Semestre 2022-2
+## Objetivo
 
-- Proyecto de ejemplo con html, css y javascript [Link](https://github.com/saurmo/desarrollo-web-frontend/tree/2022-2-tienda-html-css-js)
+Crear un sitio web para una tienda de frutas y verduras.
 
-## Semestre 2022-1
+## Información sobre la tienda:
 
-- Proyecto con nuxt [Link](https://github.com/saurmo/desarrollo-web-frontend/tree/2022-1-restaurante-nuxt)
+- Nombre: Frutas y verduras la esquina fresca.
+- Slogan: Siempre orgánico y fresco.
 
-- Proyecto con html [Link](https://github.com/saurmo/desarrollo-web-frontend/tree/2022-1-restaurante-vainilla)
+# Productos
+La información que se tiene de los productos son:
 
-## Semestre 2021-2
+- Nombre
+- Tipo (Verdura, fruta)
+- Precio
+- Fecha de cosecha
+- Porcentaje de descuento
+- Fecha de vencimiento
+- Descripción
 
-- Proyecto Reservas (Nuxt) [Link](https://github.com/saurmo/desarrollo-web-frontend/tree/2021-2-reservas)
 
-
-## Semestre 2021-1
-
-- Tienda Olimpo html-css-js [Link](https://github.com/saurmo/desarrollo-web-frontend/tree/2021-1-tienda-olimpo-basic)
-- Tienda Olimpo nuxt [Link](https://github.com/saurmo/desarrollo-web-frontend/tree/2021-1-tienda-olimpo-nuxt2)
