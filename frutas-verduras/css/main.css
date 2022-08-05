@@ -1,0 +1,30 @@
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.formProductos {
+    display: block;
+    margin: 30px;
+    padding: 30px;
+    background-color: #ebe9e9 ;
+    border: gray solid 1px;
+    border-radius: 10px;
+    width: 500px;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 5px;
+    border-radius: 10px;
+    border: #939191 solid 1px;
+}
+
+input:hover {
+     border: #8ab394 solid 2px;
+}
