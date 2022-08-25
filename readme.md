@@ -2,6 +2,8 @@
 
 ## Semestre 2022-2
 
+- Proyecto "Tienda frutas y verduras" con nuxtjs [Link](https://github.com/saurmo/desarrollo-web-frontend/tree/2022-2-tienda-nuxtjs)
+
 - Proyecto de ejemplo con html, css y javascript [Link](https://github.com/saurmo/desarrollo-web-frontend/tree/2022-2-tienda-html-css-js)
 
 ## Semestre 2022-1
