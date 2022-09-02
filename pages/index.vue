@@ -1,11 +1,11 @@
 <template>
   <div>
-    Hola Mundo
+    <h1>Frutas y verduras la esquina fresca.</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'IndexPage'
-}
+
+};
 </script>

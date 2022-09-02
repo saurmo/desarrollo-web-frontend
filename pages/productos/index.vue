@@ -29,7 +29,7 @@
         <input
           class="form-control"
           type="number"
-          name="precio"
+          name="precios"
           id="precio"
           v-model="product.price"
         />
@@ -83,5 +83,25 @@
 </template>
 
 <script>
-export default {};
+export default {
+      // State: Estado de los datos de mi aplicación/componente/página
+  // El state (data) se une a los inputs del html por medio del v-model
+  data() {
+    return {
+      message: "Hello Vue!",
+      product: {},
+      nombre: "",
+    };
+  },
+  // Metodos: Metodos a utilizar
+  methods: {
+    changeMessage() {
+      this.message = "Buenas tardes, dllo web";
+    },
+
+    createProduct() {
+      console.log(this.product);
+    },
+  },
+};
 </script>
