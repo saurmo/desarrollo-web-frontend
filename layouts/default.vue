@@ -45,6 +45,9 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
-    <Nuxt />
+    <b-container fluid>
+      <!-- Content here -->
+      <Nuxt />
+    </b-container>
   </div>
 </template>
