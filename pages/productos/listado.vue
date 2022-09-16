@@ -21,3 +21,23 @@
     </b-card>
   </div>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      products: [],
+    };
+  },
+  // Metodo de vue que se ejecuta antes de que cargue la página
+  beforeMount() {
+    this.loadProducts();
+  },
+  methods: {
+    async loadProducts() {
+      const url = "http://localhost:3001/productos";
+      const response = await this.$axios.get(url);
+      console.log(response);
+    },
+  },
+};
+</script>

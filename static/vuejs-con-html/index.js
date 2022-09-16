@@ -16,6 +16,9 @@ var app = new Vue({
 
         createProduct() {
             console.log(this.product);
+        },
+        loadProducts(){
+        //    axios.get
         }
     }
 })
