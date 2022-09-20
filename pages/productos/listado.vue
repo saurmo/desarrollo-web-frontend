@@ -3,22 +3,31 @@
     <center>
       <h1>Listado de productos</h1>
     </center>
-    <b-card
-      title="Card Title"
-      img-src="https://picsum.photos/600/300/?image=25"
-      img-alt="Image"
-      img-top
-      tag="article"
-      style="max-width: 20rem"
-      class="mb-2"
-    >
-      <b-card-text>
-        Some quick example text to build on the card title and make up the bulk
-        of the card's content.
-      </b-card-text>
+    <!-- Fila -->
+    <b-row>
+      <!-- Columna -->
+      <b-col>
+        <!-- <b-card
+          v-for="product in products"
+          :key="product.id"
+          :title="product.name"
+          :img-src="product.image"
+          img-alt="Image"
+          img-top
+          tag="article"
+          style="max-width: 200px"
+          class="mb-2"
+        >
+          <b-card-text>
+            {{ product.description }}
+          </b-card-text>
 
-      <b-button href="#" variant="primary">Go somewhere</b-button>
-    </b-card>
+          <b-button href="#" variant="primary">Agregar al carro</b-button>
+        </b-card> -->
+      columna 1
+      </b-col>
+    
+    </b-row>
   </div>
 </template>
 <script>
@@ -37,6 +46,7 @@ export default {
       const url = "http://localhost:3001/productos";
       const response = await this.$axios.get(url);
       console.log(response);
+      this.products = response.data.info;
     },
   },
 };
