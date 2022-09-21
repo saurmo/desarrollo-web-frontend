@@ -6,27 +6,25 @@
     <!-- Fila -->
     <b-row>
       <!-- Columna -->
-      <b-col>
-        <!-- <b-card
-          v-for="product in products"
-          :key="product.id"
-          :title="product.name"
-          :img-src="product.image"
-          img-alt="Image"
-          img-top
-          tag="article"
-          style="max-width: 200px"
-          class="mb-2"
-        >
-          <b-card-text>
-            {{ product.description }}
-          </b-card-text>
-
-          <b-button href="#" variant="primary">Agregar al carro</b-button>
-        </b-card> -->
-      columna 1
+      <b-col v-for="product in products" :key="product.id" cols="3">
+        <center>
+          <b-card
+            img-height="100"
+            :title="product.name"
+            :img-src="product.image"
+            img-alt="Image"
+            img-top
+            tag="article"
+            style="max-width: 200px"
+            class="mb-2"
+          >
+            <b-card-text>
+              {{ product.description }}
+            </b-card-text>
+            <b-button href="#" variant="primary">Agregar al carro</b-button>
+          </b-card>
+        </center>
       </b-col>
-    
     </b-row>
   </div>
 </template>
