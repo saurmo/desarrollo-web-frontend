@@ -101,10 +101,7 @@ export default {
   },
   // Metodos: Metodos a utilizar
   methods: {
-    validateState(name) {
-      const { $dirty, $error } = this.$v.form[name];
-      return $dirty ? !$error : null;
-    },
+ 
     createProduct() {
   
       const url = "http://localhost:3001/productos";

@@ -11,6 +11,14 @@
 
 <script>
 export default {
-  layout:"blank"
+  layout:"blank",
+    beforeMount() {
+    this.closeSession();
+  },
+  methods: {
+    closeSession() {
+      localStorage.removeItem("user-logged");
+    },
+  }
 };
 </script>
