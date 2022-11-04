@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import config from "../config/main.config"
 export default {
   layout: "blank",
   data() {
@@ -72,12 +73,13 @@ export default {
 
     async login() {
       try {
-        const url = "http://localhost:3001/login";
+        const url = config.HOST_API + "/login";
         this.loading = true;
         const { data } = await this.$axios.post(url, this.user);
         if (data.ok) {
           const { role } = data.info;
           localStorage.setItem("user-logged", JSON.stringify(data.info));
+          localStorage.setItem("user-token", data.info.token);
           switch (role) {
             case "ADMIN":
               this.$router.push("/panel-admin");
@@ -91,11 +93,11 @@ export default {
           }
         }
         this.message = data.message;
-        this.loading = false;
       } catch (error) {
         if (error.response) {
           this.message = error.response.data.message;
         }
+      } finally {
         this.loading = false;
       }
     },

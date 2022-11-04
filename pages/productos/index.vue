@@ -90,6 +90,7 @@
 </template>
 
 <script>
+import config from "../../config/main.config";
 export default {
   // State: Estado de los datos de mi aplicación/componente/página
   // El state (data) se une a los inputs del html por medio del v-model
@@ -101,15 +102,14 @@ export default {
   },
   // Metodos: Metodos a utilizar
   methods: {
- 
     createProduct() {
-  
-      const url = "http://localhost:3001/productos";
+      const url = config.HOST_API + "/productos";
       // this.$axios (Lib de axios instalada como complemento)
-
+      const token = localStorage.getItem("user-token");
+      const headers = { authorization: `Bearer ${token}` };
       // Creación del httpRequest con el method post
       this.$axios
-        .post(url, this.product)
+        .post(url, this.product, {headers})
         .then((response) => {
           // THEN solución de la promesa cuando resuelve (resolve)
           alert(response.data.message);
