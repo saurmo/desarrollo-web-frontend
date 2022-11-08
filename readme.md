@@ -1,69 +1,37 @@
-# frutas-verduras
+# Proyecto de ejemplo con html, css y javascript
 
-## Build Setup
+## Objetivo
 
-```bash
-# install dependencies
-$ npm install
+Crear un sitio web para una tienda de frutas y verduras.
 
-# serve with hot reload at localhost:3000
-$ npm run dev
+## Información sobre la tienda:
 
-# build for production and launch server
-$ npm run build
-$ npm run start
+- Nombre: Frutas y verduras la esquina fresca.
+- Slogan: Siempre orgánico y fresco.
 
-# generate static project
-$ npm run generate
-```
+# Productos
+La información que se tiene de los productos son:
 
-For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
+- Nombre                             Manzana
+- Tipo (Verdura, fruta)              Fruta
+- Precio                             1500
+- Fecha de cosecha                   01/08/2022
+- Porcentaje de descuento            10%
+- Fecha de vencimiento               15/08/2022
+- Descripción                        Manzana verde
 
-## Special Directories
+- Historial de precio                Array [{fecha:"", precio:0}, {fecha:"", precio:0}]
+    - Fecha
+    - Precio
 
-You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
-
-### `assets`
-
-The assets directory contains your uncompiled assets such as Stylus or Sass files, images, or fonts.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/assets).
-
-### `components`
-
-The components directory contains your Vue.js components. Components make up the different parts of your page and can be reused and imported into your pages, layouts and even other components.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/components).
-
-### `layouts`
-
-Layouts are a great help when you want to change the look and feel of your Nuxt app, whether you want to include a sidebar or have distinct layouts for mobile and desktop.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/layouts).
+- Resumen inventario                 Objeto { cant_disponible:0, cant_vendida_mes:0, cant_negociacion:0 }
+    - Cantidad disponible
+    - Cantidad vendida mes
+    - Cantidad en negociacion
 
 
-### `pages`
+## Libs
+https://github.com/freearhey/vue2-filters
 
-This directory contains your application views and routes. Nuxt will read all the `*.vue` files inside this directory and setup Vue Router automatically.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/get-started/routing).
-
-### `plugins`
-
-The plugins directory contains JavaScript plugins that you want to run before instantiating the root Vue.js Application. This is the place to add Vue plugins and to inject functions or constants. Every time you need to use `Vue.use()`, you should create a file in `plugins/` and add its path to plugins in `nuxt.config.js`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/plugins).
-
-### `static`
-
-This directory contains your static files. Each file inside this directory is mapped to `/`.
-
-Example: `/static/robots.txt` is mapped as `/robots.txt`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/static).
-
-### `store`
-
-This directory contains your Vuex store files. Creating a file in this directory automatically activates Vuex.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/store).
+https://github.com/ImreC/nuxt-sweetalert2
+https://sweetalert2.github.io/

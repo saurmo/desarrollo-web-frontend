@@ -1,13 +1,23 @@
 <template>
-  <b-container>
-    <center>
-      <h1>Frutas y verduras la esquina fresca.</h1>
-      <h3>Siempre orgánico y fresco.</h3>
-    </center>
+  <div>
+    <b-navbar toggleable="sm" type="dark" variant="info">
+      <b-navbar-brand to="/">La esquina fresca</b-navbar-brand>
 
-    <!-- Con la etiqueta nuxt se puede visualizar el contenido de cada página -->
-    <Nuxt />
-  </b-container>
+      <b-navbar-nav class="ml-auto">
+        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+        <b-nav-item to="/login">Login</b-nav-item>
+
+      </b-navbar-nav>
+    </b-navbar>
+    <b-container fluid>
+
+      <Nuxt />
+
+    </b-container>
+  </div>
+
+
 </template>
 <script>
 export default {};

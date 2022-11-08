@@ -5,33 +5,35 @@
     </center>
     <!-- Fila -->
     <b-row>
-      <!-- Columna -->
-      <b-col v-for="product in products" :key="product.id" cols="3">
-        <center>
-          <b-card
-            img-height="100"
-            :title="product.name"
-            :img-src="product.image"
-            img-alt="Image"
-            img-top
-            tag="article"
-            style="max-width: 200px"
-            class="mb-2"
-          >
-            <b-card-text>
-              {{ product.description }}
-            </b-card-text>
-            <b-button href="#" variant="primary">Agregar al carro</b-button>
-          </b-card>
-        </center>
+      <b-col>
+        <b-table striped hover :items="products" :fields="fields">
+          <template #cell(actions)="row">
+            <b-button size="sm" @click="loadItem(row)" class="mr-2">
+              Modificar
+            </b-button>
+            <b-button size="sm" @click="deleteItem(row)" class="mr-2">
+              Eliminar
+            </b-button>
+          </template>
+        </b-table>
       </b-col>
     </b-row>
   </div>
 </template>
 <script>
+import config from "@/config/main.config"
+
 export default {
   data() {
     return {
+      fields: [
+        { key: 'codigo', name: 'Código', },
+        { key: 'name', name: 'Nombre', },
+        { key: 'price', name: 'Precio', },
+        { key: 'type', name: 'Tipo', },
+        { key: 'actions', name: 'Acciones', },
+      ],
+
       products: [],
     };
   },
@@ -41,10 +43,34 @@ export default {
   },
   methods: {
     async loadProducts() {
-      const url = "http://localhost:3001/productos";
+      const url = config.HOST_API + "/productos";
       const response = await this.$axios.get(url);
-      console.log(response);
-      this.products = response.data.info;
+
+      this.products = response.data.info
+    },
+    async deleteItem({ item }) {
+      this.$swal
+        .fire({
+          title: "¿Esta seguro de eliminar?",
+          text: "No se puede recuperar despúes de la eliminación.",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Si, eliminar!",
+          cancelButtonText: "Cancelar",
+        })
+        .then(async (result) => {
+          if (result.value == true) {
+            let token = localStorage.getItem("user-token");
+            let opcionesAxios = { headers: { token } };
+
+            const url = config.HOST_API + `/productos/${item._id}`;
+            let { data } = await this.$axios.delete(url, opcionesAxios);
+            await this.loadProducts();
+            this.$swal.fire("Eliminado!", data.message, "success");
+          }
+        });
     },
   },
 };

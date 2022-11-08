@@ -1,7 +1,7 @@
 <template>
   <div v-if="userLogged != null">
     <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand to="/">Tienda</b-navbar-brand>
+      <b-navbar-brand to="/panel-admin">Tienda</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
