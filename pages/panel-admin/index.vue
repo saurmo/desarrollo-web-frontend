@@ -15,7 +15,7 @@
                         <b>Gestión de Productos</b>
                     </template>
                     <b-button to="/productos/listado" block variant="primary">Listado</b-button>
-                    <b-button to="/productos/crear" block variant="success">Nuevo producto</b-button>
+                    <b-button to="/productos/" block variant="success">Nuevo producto</b-button>
                     <template #footer>
                         <b>Total de productos:</b>#
                     </template>

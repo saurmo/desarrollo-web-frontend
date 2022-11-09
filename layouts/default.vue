@@ -8,7 +8,7 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item-dropdown text="Administración" right>
-            <b-dropdown-item to="/productos">Productos</b-dropdown-item>
+            <b-dropdown-item to="/productos/listado">Productos</b-dropdown-item>
             <b-dropdown-item to="/compras">Compras</b-dropdown-item>
             <b-dropdown-item to="/usuarios">Usuarios</b-dropdown-item>
           </b-nav-item-dropdown>
