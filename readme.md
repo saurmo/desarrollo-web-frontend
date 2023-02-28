@@ -2,6 +2,7 @@
 
 ## Semestre 2023-1
 
+- Proyecto "Seguimiento de tareas hecho en clase" [Link](https://github.com/saurmo/desarrollo-web-frontend/tree/2023-1-clases)
 - Proyecto "Seguimiento de tareas" [Link](https://github.com/saurmo/desarrollo-web-frontend/tree/2023-1-seguimiento-tareas)
 
 ## Semestre 2022-2
