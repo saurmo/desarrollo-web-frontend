@@ -81,6 +81,11 @@ export default {
           title: 'Inspire',
           to: '/inspire',
         },
+        {
+          icon: 'mdi-account-plus',
+          title: 'Crear cuenta',
+          to: '/register',
+        },
       ],
       miniVariant: false,
       right: true,
