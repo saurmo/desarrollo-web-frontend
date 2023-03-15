@@ -13,61 +13,35 @@
             <v-form v-model="formAccount" ref="formAccount">
               <v-row>
                 <v-col>
-                  <v-text-field
-                    label="Nombre"
-                    v-model="account.firstname"
-                    :rules="[rules.required, ...nameRules]"
-                    required
-                    counter="20"
-                  ></v-text-field>
+                  <v-text-field label="Nombre" v-model="account.firstname" :rules="[rules.required, ...nameRules]"
+                    required counter="20"></v-text-field>
                 </v-col>
                 <v-col>
-                  <v-text-field
-                    label="Apellido"
-                    v-model="account.lastname"
-                    :rules="[rules.required]"
-                    required
-                  ></v-text-field>
+                  <v-text-field label="Apellido" v-model="account.lastname" :rules="[rules.required]"
+                    required></v-text-field>
                 </v-col>
               </v-row>
               <v-row>
                 <v-col>
-                  <v-text-field
-                    label="Correo"
-                    type="email"
-                    :rules="[rules.required, ...emailRules]"
-                    v-model="account.email"
-                    required
-                  ></v-text-field>
+                  <v-text-field label="Correo" type="email" :rules="[rules.required, ...emailRules]"
+                    v-model="account.email" required></v-text-field>
                 </v-col>
                 <v-col>
-                  <v-text-field
-                    label="Contraseña"
-                    v-model="account.pass"
-                    :rules="[rules.required, ...passwordRules]"
-                    type="password"
-                    required
-                  ></v-text-field>
+                  <v-text-field label="Contraseña" v-model="account.pass" :rules="[rules.required, ...passwordRules]"
+                    :type="showPassword ? 'text' : 'password'" required
+                    :append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+                    @click:append="changeVisibilityPassword()"></v-text-field>
                 </v-col>
               </v-row>
               <v-row justify="start">
                 <v-col cols="6">
-                  <v-checkbox
-                    label="Acepta términos y condiciones"
-                    v-model="account.polity"
-                    required
-                    :rules="[rules.required]"
-                  ></v-checkbox>
+                  <v-checkbox label="Acepta términos y condiciones" v-model="account.polity" required
+                    :rules="[rules.required]"></v-checkbox>
                 </v-col>
               </v-row>
               <v-row justify="center">
                 <v-col cols="4">
-                  <v-btn
-                    color="primary"
-                    class="text-none"
-                    @click="createAccount"
-                    >Crear cuenta</v-btn
-                  >
+                  <v-btn color="primary" class="text-none" @click="createAccount">Crear cuenta</v-btn>
                 </v-col>
               </v-row>
             </v-form>
@@ -82,6 +56,7 @@ export default {
   layout: 'blank',
   data() {
     return {
+      showPassword: false,
       formAccount: null,
       title: 'Crear cuenta',
       subtitle: 'Crea tu gratuitamente hasta el 30 de julio de 2023',
@@ -94,17 +69,17 @@ export default {
       },
       // Reglas generales
       rules: {
-        required: (v) => !!v || 'Este campo es obligatorio.',
+        required: (v: String | null) => !!v || 'Este campo es obligatorio.',
       },
       //Reglas especificas
       nameRules: [
-        (v) =>
+        (v: String | null) =>
           (v && v.length <= 20) ||
           'El nombre debe contener máximo 20 caracteres ',
       ],
-      emailRules: [(v) => /.+@.+\..+/.test(v) || 'El correo debe ser valido'],
+      emailRules: [(v: string) => /.+@.+\..+/.test(v) || 'El correo debe ser valido'],
       passwordRules: [
-        (v) =>
+        (v: string) =>
           /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/.test(v) ||
           'Debe tener may, min, 8-16',
       ],
@@ -112,6 +87,10 @@ export default {
   },
 
   methods: {
+    changeVisibilityPassword() {
+      this.showPassword = !this.showPassword;
+      console.log(this.showPassword)
+    },
     createAccount() {
       // Acceder al formulario por medio del atributo ref
       const refFormAccount: any = this.$refs['formAccount']
@@ -120,11 +99,18 @@ export default {
         const formIsValid = refFormAccount.validate()
         if (formIsValid) {
           console.log('formIsValid', formIsValid)
+          const url = "http://localhost:3001/accounts"
+          this.$axios.post(url, this.account).then((response) => {
+            console.log("Cuenta creada correctamente", response)
+          }).catch((error) => {
+            console.log("Ha ocurrido un error", error)
+          }).finally(() => {
+            console.log("Ha finalizado la creación de cuenta");
+          })
         } else {
           alert('Formulario no valido')
         }
       }
-
       console.log('Hello world', this.account)
     },
   },

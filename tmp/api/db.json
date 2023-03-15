@@ -1,0 +1,12 @@
+{
+  "accounts": [
+    {
+      "firstname": "Santiago",
+      "lastname": "Urrego",
+      "email": "saurego@udemedellin.edu.co",
+      "pass": "Admin123",
+      "polity": true,
+      "id": 1
+    }
+  ]
+}

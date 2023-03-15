@@ -86,6 +86,11 @@ export default {
           title: 'Crear cuenta',
           to: '/register',
         },
+        {
+          icon: 'mdi-account-multiple',
+          title: 'Cuentas creadas',
+          to: '/accounts',
+        },
       ],
       miniVariant: false,
       right: true,
