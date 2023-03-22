@@ -7,6 +7,32 @@
       "pass": "Admin123",
       "polity": true,
       "id": 1
+    },
+    {
+      "firstname": "Samuel",
+      "lastname": "Montoya",
+      "email": "samuel@udemedellin.edu.co",
+      "pass": "Admin123!",
+      "polity": true,
+      "id": 2
+    }
+  ],
+  "tasks": [
+    {
+      "description": "Entregable 3",
+      "due_date": "2023-03-31",
+      "subject": "Datos",
+      "is_active": true,
+      "is_public": false,
+      "id": 1
+    },
+    {
+      "description": "Entrega 1",
+      "due_date": "2023-03-23",
+      "subject": "Test",
+      "is_active": true,
+      "is_public": false,
+      "id": 2
     }
   ]
 }

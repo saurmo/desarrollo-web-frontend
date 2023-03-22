@@ -1,6 +1,6 @@
 <template>
   <v-container fill-height>
-    <v-row justify="center" style="border: 1px solid red">
+    <v-row justify="center">
       <v-col cols="8">
         <v-card>
           <v-card-title>
@@ -40,8 +40,9 @@
                 </v-col>
               </v-row>
               <v-row justify="center">
-                <v-col cols="4">
+                <v-col cols="6">
                   <v-btn color="primary" class="text-none" @click="createAccount">Crear cuenta</v-btn>
+                  <v-btn color="secondary" class="text-none" to="/">Cancelar</v-btn>
                 </v-col>
               </v-row>
             </v-form>
@@ -71,7 +72,7 @@ export default {
       rules: {
         required: (v: String | null) => !!v || 'Este campo es obligatorio.',
       },
-      //Reglas especificas
+      // Reglas especificas
       nameRules: [
         (v: String | null) =>
           (v && v.length <= 20) ||
@@ -93,6 +94,7 @@ export default {
     },
     createAccount() {
       // Acceder al formulario por medio del atributo ref
+      // eslint-disable-next-line dot-notation
       const refFormAccount: any = this.$refs['formAccount']
       //   Activar la validacion de campos
       if (refFormAccount) {

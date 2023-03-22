@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "nuxt",
+    "api-fake": "json-server --watch tmp/api/db.json -p 3001",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
