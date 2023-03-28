@@ -21,15 +21,15 @@
     {
       "description": "Entregable 3",
       "due_date": "2023-03-31",
-      "subject": "Datos",
+      "subject": "Base de Datos",
       "is_active": true,
       "is_public": false,
       "id": 1
     },
     {
-      "description": "test",
+      "description": "Seguimiento 5",
       "due_date": "2023-03-31",
-      "subject": "test",
+      "subject": "Dllo Web",
       "is_active": true,
       "is_public": true,
       "id": 2

@@ -1,9 +1,9 @@
 export class Task {
     id = ""
-    description: String = ""
-    due_date: String = ""
+    description: string = ""
+    due_date: string = ""
     subject = ""
-    is_active: Boolean = true
+    is_active: boolean = true
     is_public = false
 
     constructor() {

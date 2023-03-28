@@ -7,9 +7,15 @@
         <template #activator="{ on }">
           <v-btn color="success" v-on="on">Crear tarea</v-btn>
         </template>
+
         <v-card>
           <v-card-title primary-title>
-            Crear tarea
+            <span v-if="editing == false">
+              Crear tarea
+            </span>
+            <span v-else>
+              Actualizar tarea
+            </span>
             <v-spacer></v-spacer>
             <v-icon @click="dialog = false">mdi-close</v-icon>
           </v-card-title>
@@ -44,7 +50,14 @@
                   <v-checkbox label="Es pública?" v-model="myTask.is_public"></v-checkbox>
                 </v-col>
                 <v-col cols="12">
-                  <v-btn color="success" @click="saveTask" :loading="loading">Guardar tarea</v-btn>
+                  <span v-if="editing">
+                    <v-btn color="success" class="text-none" @click="updateTask" :loading="loading">Actualizar
+                      tarea</v-btn>
+                  </span>
+                  <span v-else>
+                    <v-btn color="success" class="text-none" @click="saveTask" :loading="loading">Guardar tarea</v-btn>
+                  </span>
+
 
                 </v-col>
               </v-row>
@@ -80,6 +93,7 @@ export default {
     return {
       loading: false,
       dialog: false,
+      editing: false,
       menuDate: false,
       headers: [
         { text: "Id", value: "id", },
@@ -139,7 +153,6 @@ export default {
           title: 'Tarea creada',
           text: `La tarea ${this.myTask.description} fue creada exitosamente.`
         })
-        console.log(response);
         this.dialog = false
         this.loadTasks()
       }).catch(error => {
@@ -156,7 +169,32 @@ export default {
     },
 
     loadTaskToUpdate(task: Task) {
-      alert(task.description)
+      this.editing = true;
+      this.dialog = true;
+      this.myTask = { ...task } // Crear una nueva instancia del objeto
+
+    },
+    updateTask() {
+      const url = `http://localhost:3001/tasks/${this.myTask.id}`
+      this.loading = true
+      this.$axios.put(url, this.myTask).then(response => {
+        this.clearMyTask()
+        this.$swal.fire({
+          icon: 'success',
+          title: 'Tarea actualiza',
+          text: 'La tarea fue actualizada exitosamente'
+        })
+        this.loadTasks()
+        this.dialog=false
+      }).catch(error => {
+        this.$swal.fire({
+          icon: 'error',
+          title: 'Hubo un error',
+          text: 'La tarea no fue borrada'
+        })
+      }).finally(() => {
+        this.loading = false
+      })
     },
 
     deleteTask(task: Task) {
