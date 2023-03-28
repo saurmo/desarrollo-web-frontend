@@ -26,8 +26,8 @@
                   <v-menu ref="menuDate" v-model="menuDate" :close-on-content-click="false"
                     :return-value.sync="myTask.due_date" offset-y min-width="auto">
                     <template #activator="{ on, attrs }">
-                      <v-text-field v-model="myTask.due_date" label="Picker in menu" prepend-icon="mdi-calendar" readonly
-                        v-bind="attrs" v-on="on"></v-text-field>
+                      <v-text-field v-model="myTask.due_date" label="Fecha de entrega" prepend-icon="mdi-calendar"
+                        readonly v-bind="attrs" v-on="on"></v-text-field>
                     </template>
                     <v-date-picker v-model="myTask.due_date" no-title scrollable>
                       <v-spacer></v-spacer>
@@ -44,7 +44,7 @@
                   <v-checkbox label="Es pública?" v-model="myTask.is_public"></v-checkbox>
                 </v-col>
                 <v-col cols="12">
-                  <v-btn color="success" @click="saveTask">Guardar tarea</v-btn>
+                  <v-btn color="success" @click="saveTask" :loading="loading">Guardar tarea</v-btn>
 
                 </v-col>
               </v-row>
@@ -56,7 +56,7 @@
     </v-col>
 
     <v-col cols="12">
-      <v-data-table :headers="headers" :items="tasks" class="elevation-1">
+      <v-data-table :headers="headers" :items="tasks" class="elevation-1" :loading="loading">
         <template #item.actions="{ item }">
           <v-icon small @click="loadTaskToUpdate(item)">mdi-pencil</v-icon>
           <v-icon small @click="deleteTask(item)">mdi-delete</v-icon>
@@ -71,12 +71,14 @@
 </template>
 
 <script lang="ts">
+import { Task } from '../assets/models/Task'
 export default {
   beforeMount() {
     this.loadTasks()
   },
   data() {
     return {
+      loading: false,
       dialog: false,
       menuDate: false,
       headers: [
@@ -118,23 +120,78 @@ export default {
 
       })
     },
+    clearMyTask() {
+      this.myTask = {
+        description: "",
+        due_date: "",
+        subject: "",
+        is_active: true,
+        is_public: false
+      }
+    },
     saveTask() {
       const url = "http://localhost:3001/tasks"
+      this.loading = true
       this.$axios.post(url, this.myTask).then(response => {
+        this.clearMyTask()
+        this.$swal.fire({
+          icon: 'success',
+          title: 'Tarea creada',
+          text: `La tarea ${this.myTask.description} fue creada exitosamente.`
+        })
         console.log(response);
         this.dialog = false
         this.loadTasks()
       }).catch(error => {
+        this.$swal.fire({
+          icon: 'error',
+          title: 'Hubo un error',
+          text: 'La tarea no fue creada'
+        })
         console.log(error);
 
+      }).finally(() => {
+        this.loading = false
       })
     },
-    loadTaskToUpdate(task) {
+
+    loadTaskToUpdate(task: Task) {
       alert(task.description)
     },
-    deleteTask(task) {
-      alert(task.description)
 
+    deleteTask(task: Task) {
+
+      this.$swal.fire({
+        title: '¿Seguro que quieres eliminar la tarea? ',
+        text: "Esto no se puede revertir",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, borrar tarea'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const url = `http://localhost:3001/tasks/${task.id}`
+          this.loading = true
+          this.$axios.delete(url).then(response => {
+            this.$swal.fire({
+              icon: 'success',
+              title: 'Tarea borrada',
+              text: 'La tarea fue borrada exitosamente'
+            })
+            this.loadTasks()
+          }).catch(error => {
+            this.$swal.fire({
+              icon: 'error',
+              title: 'Hubo un error',
+              text: 'La tarea no fue borrada'
+            })
+          }).finally(() => {
+            this.loading = false
+          })
+
+        }
+      })
     }
   }
 }
