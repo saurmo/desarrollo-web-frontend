@@ -68,6 +68,11 @@ export default {
           to: '/tasks',
         },
         {
+          icon: 'mdi-checkbox-marked-circle-plus-outline',
+          title: 'Mis materias',
+          to: '/subjects',
+        },
+        {
           icon: 'mdi-account-multiple',
           title: 'Cuentas creadas',
           to: '/accounts',

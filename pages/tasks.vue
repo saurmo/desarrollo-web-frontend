@@ -23,7 +23,8 @@
             <v-form>
               <v-row>
                 <v-col cols="12">
-                  <v-text-field label="Nombre" v-model="myTask.subject" counter="20"></v-text-field>
+                  <v-combobox v-model="myTask.subject" :items="subjects" label="Materia" item-text="name"
+                    item-value="id"></v-combobox>
                 </v-col>
                 <v-col cols="12">
                   <v-text-field label="Descripción" v-model="myTask.description"></v-text-field>
@@ -70,6 +71,9 @@
 
     <v-col cols="12">
       <v-data-table :headers="headers" :items="tasks" class="elevation-1" :loading="loading">
+        <template #item.subject="{ item }">
+        {{ item.subject.name }}
+        </template>
         <template #item.actions="{ item }">
           <v-icon small @click="loadTaskToUpdate(item)">mdi-pencil</v-icon>
           <v-icon small @click="deleteTask(item)">mdi-delete</v-icon>
@@ -82,12 +86,14 @@
 
   </v-row>
 </template>
-
+myTask
 <script lang="ts">
 import { Task } from '../assets/models/Task'
+import { Subject } from '../assets/models/Subject';
 export default {
   beforeMount() {
     this.loadTasks()
+    this.loadSubjects()
   },
   data() {
     return {
@@ -112,15 +118,8 @@ export default {
         is_public: false
       },
       tasks: [
-        {
-          id: 1,
-          description: "Seguimiento 3",
-          due_date: "31-marzo",
-          subject: "Dllo Web",
-          is_active: true,
-          is_public: false
-        }
-      ]
+      ],
+      subjects: []
     }
 
   },
@@ -129,6 +128,16 @@ export default {
       const url = "http://localhost:3001/tasks"
       this.$axios.get(url).then(response => {
         this.tasks = response.data
+      }).catch(error => {
+        console.log(error);
+
+      })
+    },
+
+    loadSubjects() {
+      const url = "http://localhost:3001/subjects"
+      this.$axios.get(url).then(response => {
+        this.subjects = response.data
       }).catch(error => {
         console.log(error);
 
@@ -185,7 +194,7 @@ export default {
           text: 'La tarea fue actualizada exitosamente'
         })
         this.loadTasks()
-        this.dialog=false
+        this.dialog = false
       }).catch(error => {
         this.$swal.fire({
           icon: 'error',
