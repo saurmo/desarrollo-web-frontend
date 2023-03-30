@@ -7,9 +7,15 @@
         <template #activator="{ on }">
           <v-btn color="success" v-on="on" class="text-none">Crear tarea</v-btn>
         </template>
+
         <v-card>
           <v-card-title primary-title>
-            Crear tarea
+            <span v-if="editing == false">
+              Crear tarea
+            </span>
+            <span v-else>
+              Actualizar tarea
+            </span>
             <v-spacer></v-spacer>
             <v-icon @click="dialog = false">mdi-close</v-icon>
           </v-card-title>
@@ -17,7 +23,8 @@
             <v-form>
               <v-row>
                 <v-col cols="12">
-                  <v-text-field label="Nombre" v-model="myTask.subject" counter="20"></v-text-field>
+                  <v-combobox v-model="myTask.subject" :items="subjects" label="Materia" item-text="name"
+                    item-value="id"></v-combobox>
                 </v-col>
                 <v-col cols="12">
                   <v-text-field label="Descripción" v-model="myTask.description"></v-text-field>
@@ -44,7 +51,14 @@
                   <v-checkbox label="Es pública?" v-model="myTask.is_public"></v-checkbox>
                 </v-col>
                 <v-col cols="12">
-                  <v-btn color="success" class="text-none" @click="saveTask" :loading="loading">Guardar tarea</v-btn>
+                  <span v-if="editing">
+                    <v-btn color="success" class="text-none" @click="updateTask" :loading="loading">Actualizar
+                      tarea</v-btn>
+                  </span>
+                  <span v-else>
+                    <v-btn color="success" class="text-none" @click="saveTask" :loading="loading">Guardar tarea</v-btn>
+                  </span>
+
 
                 </v-col>
               </v-row>
@@ -57,6 +71,9 @@
 
     <v-col cols="12">
       <v-data-table :headers="headers" :items="tasks" class="elevation-1" :loading="loading">
+        <template #item.subject="{ item }">
+        {{ item.subject.name }}
+        </template>
         <template #item.actions="{ item }">
           <v-icon small @click="loadTaskToUpdate(item)">mdi-pencil</v-icon>
           <v-icon small @click="deleteTask(item)">mdi-delete</v-icon>
@@ -69,18 +86,20 @@
 
   </v-row>
 </template>
-
+myTask
 <script lang="ts">
 import { Task } from '../assets/models/Task'
-
+import { Subject } from '../assets/models/Subject';
 export default {
   beforeMount() {
     this.loadTasks()
+    this.loadSubjects()
   },
   data() {
     return {
       loading: false,
       dialog: false,
+      editing: false,
       menuDate: false,
       headers: [
         { text: "Id", value: "id", },
@@ -99,15 +118,8 @@ export default {
         is_public: false
       },
       tasks: [
-        {
-          id: 1,
-          description: "Seguimiento 3",
-          due_date: "31-marzo",
-          subject: "Dllo Web",
-          is_active: true,
-          is_public: false
-        }
-      ]
+      ],
+      subjects: []
     }
 
   },
@@ -127,6 +139,16 @@ export default {
         this.loading = false
       })
     },
+
+    loadSubjects() {
+      const url = "http://localhost:3001/subjects"
+      this.$axios.get(url).then(response => {
+        this.subjects = response.data
+      }).catch(error => {
+        console.log(error);
+
+      })
+    },
     clearMyTask() {
       this.myTask = {
         description: "",
@@ -144,23 +166,50 @@ export default {
         this.$swal.fire({
           icon: 'success',
           title: 'Tarea creada',
-          text: `La tarea ${this.myTask.description} se ha creado.`,
-
+          text: `La tarea ${this.myTask.description} fue creada exitosamente.`
         })
         this.dialog = false
         this.loadTasks()
       }).catch(error => {
         this.$swal.fire({
-          title: 'Error!',
-          text: 'Ha ocurrido un error.',
           icon: 'error',
+          title: 'Hubo un error',
+          text: 'La tarea no fue creada'
         })
+        console.log(error);
+
       }).finally(() => {
         this.loading = false
       })
     },
+
     loadTaskToUpdate(task: Task) {
-      alert(task.description)
+      this.editing = true;
+      this.dialog = true;
+      this.myTask = { ...task } // Crear una nueva instancia del objeto
+
+    },
+    updateTask() {
+      const url = `http://localhost:3001/tasks/${this.myTask.id}`
+      this.loading = true
+      this.$axios.put(url, this.myTask).then(response => {
+        this.clearMyTask()
+        this.$swal.fire({
+          icon: 'success',
+          title: 'Tarea actualiza',
+          text: 'La tarea fue actualizada exitosamente'
+        })
+        this.loadTasks()
+        this.dialog = false
+      }).catch(error => {
+        this.$swal.fire({
+          icon: 'error',
+          title: 'Hubo un error',
+          text: 'La tarea no fue borrada'
+        })
+      }).finally(() => {
+        this.loading = false
+      })
     },
     deleteTask(task: Task) {
       this.$swal.fire({
@@ -193,7 +242,6 @@ export default {
           })
         }
       })
-
 
     }
   }

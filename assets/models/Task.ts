@@ -1,15 +1,12 @@
-
 export class Task {
-
-    id: String = ""
-    description: String = ""
-    due_date: String = ""
+    id = ""
+    description: string = ""
+    due_date: string = ""
     subject = ""
-    is_active: Boolean = true
+    is_active: boolean = true
     is_public = false
 
     constructor() {
-
+        
     }
 }
-

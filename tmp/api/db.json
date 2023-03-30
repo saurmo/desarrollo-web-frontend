@@ -19,11 +19,51 @@
   ],
   "tasks": [
     {
-      "description": "Entrega 1",
-      "due_date": "2023-03-23",
-      "subject": "Test",
+      "description": "Entregable 3",
+      "due_date": "2023-03-31",
+      "subject": {
+        "name": "Dllo Web",
+        "description": "",
+        "id": 1
+      },
       "is_active": true,
       "is_public": false,
+      "id": 1
+    },
+    {
+      "description": "Seguimiento 5",
+      "due_date": "2023-03-31",
+      "subject": {
+        "name": "Base de datos",
+        "description": "semestre 4",
+        "id": 2
+      },
+      "is_active": true,
+      "is_public": true,
+      "id": 2
+    },
+    {
+      "description": "seg 1",
+      "due_date": "",
+      "subject": {
+        "name": "Dllo Web",
+        "description": "",
+        "id": 1
+      },
+      "is_active": true,
+      "is_public": false,
+      "id": 3
+    }
+  ],
+  "subjects": [
+    {
+      "name": "Dllo Web",
+      "description": "",
+      "id": 1
+    },
+    {
+      "name": "Base de datos",
+      "description": "semestre 4",
       "id": 2
     },
     {
