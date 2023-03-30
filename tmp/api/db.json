@@ -19,20 +19,20 @@
   ],
   "tasks": [
     {
-      "description": "Entregable 3",
-      "due_date": "2023-03-31",
-      "subject": "Datos",
-      "is_active": true,
-      "is_public": false,
-      "id": 1
-    },
-    {
       "description": "Entrega 1",
       "due_date": "2023-03-23",
       "subject": "Test",
       "is_active": true,
       "is_public": false,
       "id": 2
+    },
+    {
+      "description": "Seguimiento 4 - Fisica",
+      "due_date": "2023-03-31",
+      "subject": "Seguimiento 4 ",
+      "is_active": true,
+      "is_public": true,
+      "id": 3
     }
   ]
 }
