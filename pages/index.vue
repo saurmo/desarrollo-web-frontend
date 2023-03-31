@@ -44,6 +44,7 @@
   </v-container>
 </template>
 <script lang="ts">
+import { Account } from '~/assets/models/Account';
 export default {
   layout: 'blank',
   data() {
@@ -95,7 +96,9 @@ export default {
           this.$axios.get(url).then((response) => {
             const data = response.data
             const found = data.find(account => account.email == this.account.email && account.pass == this.account.pass)
-            this.$router.push("/home")
+            const account = new Account()
+            const path = account.getPathAfterLogin(found)
+            this.$router.push(path)
           }).catch((error) => {
             this.$swal.fire({
               title: 'Error!',

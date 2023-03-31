@@ -59,7 +59,7 @@ export default {
         {
           icon: 'mdi-apps',
           title: 'Inicio',
-          to: '/home',
+          to: '/students/home',
         },
         {
           icon: 'mdi-account',
@@ -69,18 +69,9 @@ export default {
         {
           icon: 'mdi-checkbox-marked-circle-plus-outline',
           title: 'Mis tareas',
-          to: '/tasks',
+          to: '/students/tasks',
         },
-        {
-          icon: 'mdi-checkbox-marked-circle-plus-outline',
-          title: 'Mis materias',
-          to: '/subjects',
-        },
-        {
-          icon: 'mdi-account-multiple',
-          title: 'Cuentas creadas',
-          to: '/accounts',
-        },
+
       ],
       miniVariant: false,
 

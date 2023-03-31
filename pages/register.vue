@@ -53,6 +53,8 @@
   </v-container>
 </template>
 <script lang="ts">
+import { Account } from '~/assets/models/Account';
+
 export default {
   layout: 'blank',
   data() {
@@ -100,20 +102,30 @@ export default {
       if (refFormAccount) {
         const formIsValid = refFormAccount.validate()
         if (formIsValid) {
-          console.log('formIsValid', formIsValid)
+
           const url = "http://localhost:3001/accounts"
-          this.$axios.post(url, this.account).then((response) => {
-            console.log("Cuenta creada correctamente", response)
+          const account = Account.createAccount(this.account)
+          this.$axios.post(url, account).then((response) => {
+            this.$swal.fire({
+              icon: 'success',
+              title: 'Cuenta creada'
+            })
+            this.$router.push("/")
           }).catch((error) => {
-            console.log("Ha ocurrido un error", error)
+            this.$swal.fire({
+              icon: 'error',
+              title: 'Hubo un error'
+            })
           }).finally(() => {
             console.log("Ha finalizado la creación de cuenta");
           })
         } else {
-          alert('Formulario no valido')
+          this.$swal.fire({
+            icon: 'warning',
+            title: 'Faltan campos en el formulario.'
+          })
         }
       }
-      console.log('Hello world', this.account)
     },
   },
 }
