@@ -6,6 +6,7 @@
       "email": "saurego@udemedellin.edu.co",
       "pass": "Admin123",
       "polity": true,
+      "role": 1,
       "id": 1
     },
     {
@@ -15,6 +16,36 @@
       "pass": "Admin123!",
       "polity": true,
       "id": 2
+    },
+    {
+      "firstname": "Juan",
+      "lastname": "Aldo",
+      "email": "juanaldo@udem.edu.co",
+      "pass": "Admin123!",
+      "polity": true,
+      "role": 1,
+      "create_date": "2023-03-30T23:30:41.262Z",
+      "id": 3
+    },
+    {
+      "firstname": "Tester",
+      "lastname": "test",
+      "email": "test@udem.edu.co",
+      "pass": "Admin123!",
+      "polity": true,
+      "role": 0,
+      "create_date": "2023-03-30T23:33:49.620Z",
+      "id": 4
+    },
+    {
+      "firstname": "Test 2",
+      "lastname": "Test2",
+      "email": "test2@udem.edu.co",
+      "pass": "Admin123!",
+      "polity": true,
+      "role": 0,
+      "create_date": "2023-03-30T23:43:44.473Z",
+      "id": 5
     }
   ],
   "tasks": [
@@ -65,6 +96,14 @@
       "name": "Base de datos",
       "description": "semestre 4",
       "id": 2
+    },
+    {
+      "description": "Seguimiento 4 - Fisica",
+      "due_date": "2023-03-31",
+      "subject": "Seguimiento 4 ",
+      "is_active": true,
+      "is_public": true,
+      "id": 3
     }
   ]
 }

@@ -91,6 +91,7 @@ myTask
 import { Task } from '../assets/models/Task'
 import { Subject } from '../assets/models/Subject';
 export default {
+  layout: "default-student",
   beforeMount() {
     this.loadTasks()
     this.loadSubjects()
