@@ -104,10 +104,10 @@ export default {
             this.$router.push("/home")
           }
         } catch (error) {
-          this.$router.push("/")
+          // this.$router.push("/")
         }
       } else {
-        this.$router.push("/")
+        // this.$router.push("/")
       }
     }
   }

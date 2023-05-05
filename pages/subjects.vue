@@ -51,6 +51,7 @@
 </template>
 
 <script lang="ts">
+import config from '~/assets/config'
 import { Subject } from '../assets/models/Subject'
 export default {
     beforeMount() {
@@ -78,9 +79,9 @@ export default {
     },
     methods: {
         loadSubjects() {
-            const url = "http://localhost:3001/subjects"
+            const url = `${config.API_URL}/subjects` 
             this.$axios.get(url).then(response => {
-                this.subjects = response.data
+                this.subjects = response.data.info
             }).catch(error => {
                 console.log(error);
 
@@ -94,7 +95,7 @@ export default {
             }
         },
         saveSubject() {
-            const url = "http://localhost:3001/subjects"
+            const url = `${config.API_URL}/subjects`
             this.loading = true
             this.$axios.post(url, this.mySubject).then(response => {
                 this.clearmySubject()
@@ -125,7 +126,7 @@ export default {
             this.mySubject = { ...subject }
         },
         updateSubject() {
-            const url = `http://localhost:3001/subjects/${this.mySubject.id}`
+            const url = `${config.API_URL}/subjects/${this.mySubject.id}`
             this.loading = true
             this.$axios.put(url, this.mySubject).then(response => {
                 this.clearmySubject()
@@ -159,7 +160,7 @@ export default {
                 confirmButtonText: 'Sí, borrar materia'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    const url = `http://localhost:3001/subjects/${subject.id}`
+                    const url = `${config.API_URL}/subjects/${subject.id}`
                     this.loading = true
                     this.$axios.delete(url).then(response => {
                         this.$swal.fire({

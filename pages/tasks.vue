@@ -90,6 +90,7 @@ myTask
 <script lang="ts">
 import { Task } from '../assets/models/Task'
 import { Subject } from '../assets/models/Subject';
+import config from '~/assets/config';
 export default {
   beforeMount() {
     this.loadTasks()
@@ -102,8 +103,7 @@ export default {
       editing: false,
       menuDate: false,
       headers: [
-        { text: "Id", value: "id", },
-        { text: "Materia", value: "subject", },
+        { text: "Tarea", value: "name", },
         { text: "Descripción", value: "description", },
         { text: "Fecha", value: "due_date", },
         { text: "Activa", value: "is_active", },
@@ -125,10 +125,10 @@ export default {
   },
   methods: {
     loadTasks() {
-      const url = "http://localhost:3001/tasks"
+      const url =`${config.API_URL}/tasks`
       this.loading = true
       this.$axios.get(url).then(response => {
-        this.tasks = response.data
+        this.tasks = response.data.info
       }).catch(error => {
         this.$swal.fire({
           title: 'Error!',
@@ -141,9 +141,9 @@ export default {
     },
 
     loadSubjects() {
-      const url = "http://localhost:3001/subjects"
+      const url = `${config.API_URL}/subjects` 
       this.$axios.get(url).then(response => {
-        this.subjects = response.data
+        this.subjects = response.data.info
       }).catch(error => {
         console.log(error);
 
@@ -159,7 +159,7 @@ export default {
       }
     },
     saveTask() {
-      const url = "http://localhost:3001/tasks"
+      const url = `${config.API_URL}/tasks`
       this.loading = true
       this.$axios.post(url, this.myTask).then(response => {
         this.clearMyTask()
@@ -190,7 +190,7 @@ export default {
 
     },
     updateTask() {
-      const url = `http://localhost:3001/tasks/${this.myTask.id}`
+      const url = `${config.API_URL}/tasks/${this.myTask._id}`
       this.loading = true
       this.$axios.put(url, this.myTask).then(response => {
         this.clearMyTask()
@@ -222,7 +222,7 @@ export default {
         confirmButtonText: 'Si'
       }).then((result:any) => {
         if (result.isConfirmed) {
-          const url = `http://localhost:3001/tasks/${task.id}`
+          const url = `${config.API_URL}/tasks/${task._id}`
           this.loading = true
           this.$axios.delete(url).then(response => {
             this.$swal.fire({
