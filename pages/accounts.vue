@@ -26,7 +26,7 @@ export default {
     },
     methods: {
         loadAccounts() {
-            const url = `${config.API_URL}/users`
+               const url = `${config.API_URL}/users`
             this.loading = true
             this.$axios.get(url).then((response) => {
                 const data = response.data

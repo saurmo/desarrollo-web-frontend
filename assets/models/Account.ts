@@ -10,6 +10,7 @@ export class Account {
     id: string = ""
     role: Role = Role.Student
     create_date: Date = new Date();
+    token:string=""
 
 
 
@@ -27,8 +28,9 @@ export class Account {
     }
 
     getPathAfterLogin(account: Account): string {
-        const {id, firstname, lastname, email, role} = account
+        const {id, firstname, lastname, email, role, token} = account
         localStorage.setItem("ACCOUNT", JSON.stringify({id, firstname, lastname, email, role}))
+        localStorage.setItem("token", token)
         if (account.role.toString() == Role.Student.toString()) {
             return "/students/home"
         } else {

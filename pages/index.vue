@@ -44,6 +44,7 @@
   </v-container>
 </template>
 <script lang="ts">
+import config from '~/assets/config'
 import { Account } from '~/assets/models/Account';
 export default {
   layout: 'blank',
@@ -92,10 +93,10 @@ export default {
       if (refFormAccount) {
         const formIsValid = refFormAccount.validate()
         if (formIsValid) {
-          const url = "http://localhost:3001/accounts"
-          this.$axios.get(url).then((response) => {
+          const url = `${config.API_URL}/login`
+          this.$axios.post(url, this.account ).then((response) => {
             const data = response.data
-            const found = data.find(account => account.email == this.account.email && account.pass == this.account.pass)
+            const found = data.info
             const account = new Account()
             const path = account.getPathAfterLogin(found)
             this.$router.push(path)

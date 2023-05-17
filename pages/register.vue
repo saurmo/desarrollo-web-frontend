@@ -54,7 +54,7 @@
 </template>
 <script lang="ts">
 import { Account } from '~/assets/models/Account';
-
+import config from '~/assets/config'
 export default {
   layout: 'blank',
   data() {
@@ -92,7 +92,6 @@ export default {
   methods: {
     changeVisibilityPassword() {
       this.showPassword = !this.showPassword;
-      console.log(this.showPassword)
     },
     createAccount() {
       // Acceder al formulario por medio del atributo ref
@@ -103,7 +102,7 @@ export default {
         const formIsValid = refFormAccount.validate()
         if (formIsValid) {
 
-          const url = "http://localhost:3001/accounts"
+          const url =`${config.API_URL}/users`
           const account = Account.createAccount(this.account)
           this.$axios.post(url, account).then((response) => {
             this.$swal.fire({

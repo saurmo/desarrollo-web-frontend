@@ -44,6 +44,8 @@
 </template>
 
 <script>
+import config from '~/assets/config'
+
 export default {
   name: 'DefaultLayout',
   beforeMount() {
@@ -91,24 +93,33 @@ export default {
     closeSesion() {
       this.$router.push("/")
     },
-    loadAccount() {
-      const account_str = localStorage.getItem("ACCOUNT")
-      if (account_str) {
-        try {
-          const account = JSON.parse(account_str)
-          this.fullname = `${account.firstname} ${account.lastname}`
-          //TODO: Validando el rol pendiente desde el API
-          if (account.role == 0) {
-            this.$router.push("/students/home")
-          } else {
-            this.$router.push("/home")
-          }
-        } catch (error) {
-          // this.$router.push("/")
+    async loadAccount() {
+      try {
+        const account_str = localStorage.getItem("ACCOUNT")
+        
+
+        if (!account_str) throw 'account_str'
+
+        const account = JSON.parse(account_str)
+        this.fullname = `${account.firstname} ${account.lastname}`
+        const url = `${config.API_URL}/verify`
+        const account_token = localStorage.getItem("token")
+        const authorization = 'Bearer ' + account_token
+        const validTokenRespon = await this.$axios.get(url, { headers: { authorization } })
+
+        if (validTokenRespon.data.success === false) throw 'account_token'
+
+        this.$axios.setToken(account_token)
+
+        if (account.role == 0) {
+          this.$router.push("/students/home")
+        } else {
+          this.$router.push("/home")
         }
-      } else {
-        // this.$router.push("/")
+      } catch (error) {
+        this.$router.push("/")
       }
+
     }
   }
 }
