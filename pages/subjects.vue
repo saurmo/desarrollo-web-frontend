@@ -126,7 +126,7 @@ export default {
             this.mySubject = { ...subject }
         },
         updateSubject() {
-            const url = `${config.API_URL}/subjects/${this.mySubject.id}`
+            const url = `${config.API_URL}/subjects/${this.mySubject._id}`
             this.loading = true
             this.$axios.put(url, this.mySubject).then(response => {
                 this.clearmySubject()
@@ -160,7 +160,7 @@ export default {
                 confirmButtonText: 'Sí, borrar materia'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    const url = `${config.API_URL}/subjects/${subject.id}`
+                    const url = `${config.API_URL}/subjects/${subject._id}`
                     this.loading = true
                     this.$axios.delete(url).then(response => {
                         this.$swal.fire({

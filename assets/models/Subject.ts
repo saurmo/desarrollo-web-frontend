@@ -1,5 +1,5 @@
 export class Subject {
-    id = ""
+    _id = ""
     name: string = ""
     description: string = ""
 
