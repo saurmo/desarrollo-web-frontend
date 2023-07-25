@@ -1,5 +1,9 @@
 # Repositorio del curso de desarrollo de software en la web
 
+## Semestre 2023-2
+
+- Proyecto "Tareas" [Link](https://github.com/saurmo/desarrollo-web-frontend/tree/2023-2-tasks)
+
 ## Semestre 2023-1
 
 - Proyecto "Seguimiento de tareas hecho en clase" [Link](https://github.com/saurmo/desarrollo-web-frontend/tree/2023-1-clases)
