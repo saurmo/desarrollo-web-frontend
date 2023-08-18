@@ -68,30 +68,39 @@
                 <h1>Formulario de tareas y actividades</h1>
             </center>
             <form action="javascript:void(0)" onsubmit="getDataForm()">
-                <label for="txtName">Nombre</label>
-                <input id="txtName" name="txtName" type="text" placeholder="Ingrese su nombre">
+                <label for="txtName" class="form-label">Nombre</label>
+                <input required class="form-control" id="txtName" name="txtName" type="text"
+                    placeholder="Ingrese su nombre">
                 <br>
-                <label for="txtEmail">Correo</label>
-                <input id="txtEmail" name="txtEmail" type="email" placeholder="Ingrese su correo">
+                <label for="txtEmail" class="form-label">Correo</label>
+                <input class="form-control" id="txtEmail" name="txtEmail" type="email" placeholder="Ingrese su correo">
                 <br>
-                <label for="txtTask">Descripción tarea</label>
+                <label for="txtTask" class="form-label">Descripción tarea</label>
                 <br>
-                <textarea name="txtTask" id="txtTask" cols="10" rows="3"></textarea>
+                <textarea class="form-control" name="txtTask" id="txtTask" cols="10" rows="3"></textarea>
                 <br>
-                <input type="checkbox" name="acceptConditions" id="acceptConditions">
-                <label for="acceptConditions">
+                <input class="form-check-input" type="checkbox" name="acceptConditions" id="acceptConditions">
+                <label for="acceptConditions" class="form-check-label">
                     <a href="http://google.com" target="_blank">Acepta terminos y condiciones</a>
 
                 </label>
                 <br>
-                <label for="taskType">Tipo de tarea</label>
+                <label class="form-label" for="taskType">Tipo de tarea</label>
                 <br>
-                <input type="radio" name="taskType" id="typeA"> Actividad
+                <input class="form-check-input" type="radio" name="taskType" id="typeA"> Actividad
                 <br>
-                <input type="radio" name="taskType" id="typeB"> Tarea
+                <input class="form-check-input" type="radio" name="taskType" id="typeB"> Tarea
                 <br>
                 <br>
-                <input type="submit" value="Enviar">
+                <label class="form-label" for="semester">Semestre</label>
+                <select class="form-control" name="semester" id="semester">
+                    <option value="1">Semestre 1</option>
+                    <option value="2">Semestre 2</option>
+                    <option value="3">Semestre 3</option>
+                </select>
+                <br>
+                <br>
+                <input type="submit" class="btn btn-primary" value="Enviar">
             </form>
         </div>
     </main>
