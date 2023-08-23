@@ -99,8 +99,8 @@ const crearNombreCompleto = (nombre, apellido) => {
 
 }
 
-const botonesHtm = document.getElementsByTagName('button')
-console.log(botonesHtm);
+// const botonesHtm = document.getElementsByTagName('button')
+// console.log(botonesHtm);
 crearNombreCompleto(nombre, apellido)
 
 
@@ -120,16 +120,46 @@ estudiantes.push({ "nombre": "Maria", id: 12344 })
 estudiantes.forEach((x) => console.log(x.nombre))
 
 for (let i = 0; i < estudiantes.length; i++) {
-   if(estudiantes[i].nombre == "Maria"){
-    console.log(estudiantes[i].id);
-   }
+    if (estudiantes[i].nombre == "Maria") {
+        console.log(estudiantes[i].id);
+    }
 }
-const maria = estudiantes.find(x=>x.nombre == "Maria")
+const maria = estudiantes.find(x => x.nombre == "Maria")
 console.log(estudiantes);
 
 
-const marias = estudiantes.filter(x=>x.nombre == "Maria")
+const marias = estudiantes.filter(x => x.nombre == "Maria")
 marias[0].id
 
-estudiantes = estudiantes.map(x=> { return {...x, edad:null } })
+estudiantes = estudiantes.map(x => { return { ...x, edad: null } })
 console.log(estudiantes);
+
+///  JSON (javascript object notation)
+
+jsonsEnJavascript();
+
+
+
+
+function jsonsEnJavascript() {
+    console.log('--- MANEJO DE JSON --');
+    const ciudad = {
+        nombre: "Medellin",
+        "token-ciudad":"sdfsdfsdf",
+        poblacion: 2.5,
+        barrios_count: 31,
+        calcularCantidadVehiculos(){
+            console.log("Total de vehiculos", "55M", this.nombre);
+        }
+    };
+    // DESTRUCTURACION
+    const { nombre:nombreCiudad } = ciudad;
+    console.log(nombreCiudad);
+
+    //  funciones dentro de un json
+    ciudad.calcularCantidadVehiculos()
+    console.log(ciudad.nombre);
+    console.log(ciudad["nombre"]);
+    console.log(ciudad["token-ciudad"]);
+}
+
