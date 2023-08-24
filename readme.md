@@ -2,7 +2,8 @@
 
 ## Semestre 2023-2
 
-- Proyecto "Tareas" [Link](https://github.com/saurmo/desarrollo-web-frontend/tree/2023-2-tasks)
+- Proyecto "Tareas" framework nuxt [Link](https://github.com/saurmo/desarrollo-web-frontend/tree/2023-2-tasks-nuxt)
+- Bases html,css,js [Link](https://github.com/saurmo/desarrollo-web-frontend/tree/2023-2-tasks)
 
 ## Semestre 2023-1
 
