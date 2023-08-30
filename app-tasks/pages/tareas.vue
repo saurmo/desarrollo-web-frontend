@@ -23,18 +23,23 @@
         <v-radio label="Tarea" value="typeB"></v-radio>
       </v-radio-group>
 
-      <v-select @change="updatePeriod()" label="Semestre" v-model="user.period" :items="['Semestre 1', 'Semestre 2', 'Semestre 3']"></v-select>
+      <v-select @change="updatePeriod()" label="Semestre" v-model="user.period"
+        :items="['Semestre 1', 'Semestre 2', 'Semestre 3']"></v-select>
 
 
-      <v-btn type="submit" >Enviar</v-btn>
+      <v-btn type="submit">Enviar</v-btn>
 
     </form>
   </div>
 </template>
 <script setup>
+import axios from "axios";
 const user = ref({ conditions: true, period: '1' })
-const saveUser = () => {
+
+const saveUser = async () => {
   console.log(user.value);
+  const result = await axios.post("http://localhost:3001/tasks", user.value)
+  console.log(result);
 }
 const updatePeriod = () => {
   console.log(user.value);

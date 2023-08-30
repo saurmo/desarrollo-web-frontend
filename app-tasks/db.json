@@ -1,0 +1,23 @@
+{
+  "tasks": [
+    {
+      "conditions": true,
+      "period": "1",
+      "name": "test",
+      "email": "test@test.udem.co",
+      "description": "test",
+      "type": "typeA",
+      "id": 1
+    },
+    {
+      "conditions": true,
+      "period": "Semestre 2",
+      "name": "test2",
+      "email": "test@test.udem.co",
+      "description": "test2",
+      "type": "typeB",
+      "id": 2
+    }
+  ],
+  "users": []
+}
