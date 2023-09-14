@@ -3,11 +3,20 @@
     {
       "conditions": true,
       "period": "1",
-      "name": "test",
+      "name": "Api Marvel",
       "email": "test@test.udem.co",
-      "description": "test",
+      "description": "Api Marvel con front y api",
       "type": "typeA",
       "id": 1
+    },
+    {
+      "conditions": true,
+      "period": "1",
+      "name": "Login",
+      "email": "test@test.co",
+      "description": "test",
+      "type": "typeA",
+      "id": 2
     }
   ],
   "users": []
