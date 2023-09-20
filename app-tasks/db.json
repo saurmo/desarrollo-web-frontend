@@ -19,5 +19,18 @@
       "id": 2
     }
   ],
-  "users": []
+  "users": [
+    {
+      "id": 2,
+      "fullName": "El Profe",
+      "email": "saurrego@udem.edu.co",
+      "password": "admin123"
+    },
+    {
+      "id": 3,
+      "fullName": "asdasd",
+      "email": "asdasd",
+      "password": "asdasd"
+    }
+  ]
 }
