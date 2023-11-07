@@ -23,7 +23,7 @@
           prepend-inner-icon="mdi-lock-outline" variant="underlined"
           @click:append-inner="visible = !visible"></v-text-field>
 
-        <v-btn block class="mb-8" color="red" size="large" variant="outlined" type="submit" >
+        <v-btn block class="mb-8" color="red" size="large" variant="outlined" type="submit">
           Iniciar sesión
         </v-btn>
 
@@ -37,57 +37,95 @@
   </div>
 </template>
 
-<script>
+<script setup>
+
+import Swal from "sweetalert2";
 import axios from 'axios';
+import config from '../config/default.json';
 
-export default {
-  data() {
-    return {
-      email: '',
-      password: '',
-      visible: false,
-      users: [],
-      emailRules: [
-        value => {
-          if (value) return true
-          return 'El campo es obligatorio.'
-        },
-        value => {
-          if (/[^[^@]+@[^@]+\.[a-zA-Z]{2,}$/.test(value)) return true
-          return 'Correo no valido.'
-        }
-      ],
-    };
+definePageMeta({ layout: "blank" });
+
+// Definir las variables del estado:
+const email = ref('saurrego@udem.edu.co')
+const password = ref('admin123')
+const visible = ref(false)
+const emailRules = ref([
+  value => {
+    if (value) return true
+    return 'El campo es obligatorio.'
   },
-  methods: {
-    async getUsers() {
-      try {
-        const response = await axios.get('http://localhost:3001/users');
-        this.users = response.data;
-      } catch (error) {
-        console.error('Error al obtener usuarios:', error);
-      }
-    },
-    async login() {
-      await this.getUsers();
+  value => {
+    if (/[^[^@]+@[^@]+\.[a-zA-Z]{2,}$/.test(value)) return true
+    return 'Correo no valido.'
+  }
+])
 
-      const foundUser = this.users.find(
-        user =>
-          user.email === this.email && user.password === this.password
-      );
+const login = async () => {
+  try {
+    console.log(config.api_host);
 
-      if (foundUser) {
-        console.log('Inicio de sesión exitoso para el usuario:', foundUser);
-        this.$router.push('/tareas');
-      } else {
-        console.error('Credenciales incorrectas. Inicio de sesión fallido.');
-      }
-    },
-  },
-};
-definePageMeta({
-  layout: "blank",
-});
+    const url = `${config.api_host}/login`
+    const { data } = await axios.post(url, { email: email.value, password: password.value })
+    if (data?.ok == true) {
+      // Redireccionar al home, guardar el token
+      console.log(data?.info);
+      const token = data?.info?.token
+      localStorage.setItem('token', token)
+      useRouter().push('/tareas')
+      // useRoute(')
+    }
+    else {
+      Swal.fire({
+        title: 'Error!',
+        text: data?.message,
+        icon: 'error'
+      })
+    }
+  } catch (error) {
+    console.error(error);
+    Swal.fire({
+      title: 'Error!',
+      text: 'Ha ocurrido un error al conectarse.',
+      icon: 'error'
+    })
+  }
+}
+
+
+
+// export default {
+//   data() {
+//     return {
+
+//     };
+//   },
+//   methods: {
+//     async getUsers() {
+//       try {
+//         const response = await axios.get('http://localhost:3001/users');
+//         this.users = response.data;
+//       } catch (error) {
+//         console.error('Error al obtener usuarios:', error);
+//       }
+//     },
+//     async login() {
+//       await this.getUsers();
+
+//       const foundUser = this.users.find(
+//         user =>
+//           user.email === this.email && user.password === this.password
+//       );
+
+//       if (foundUser) {
+//         console.log('Inicio de sesión exitoso para el usuario:', foundUser);
+//         this.$router.push('/tareas');
+//       } else {
+//         console.error('Credenciales incorrectas. Inicio de sesión fallido.');
+//       }
+//     },
+//   },
+// };
+
 </script>
 
 <style scoped>
