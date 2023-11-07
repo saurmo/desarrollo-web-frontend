@@ -35,22 +35,26 @@
 </template>
 <script setup>
 import axios from "axios";
-
+import config from '../../config/default.json'
 const tasks = ref([])
 const isEdit = ref(false)
 const editingTask = ref(null)
 
 onBeforeMount(() => {
+    
     loadTasks()
 })
 
+
+
 const loadTasks = async () => {
-    const url = "http://localhost:3001/tasks"
-    const { data } = await axios.get(url)
+    const url = `${config.api_host}/tasks`
+    const headers = getHeaders()
+    const { data } = await axios.get(url, { headers })
     tasks.value = data
 }
 const deleteTask = async (item) => {
-    const url = `http://localhost:3001/tasks/${item.id}`
+    const url = `${config.api_host}/tasks/${item.id}`
     const { data } = await axios.delete(url)
     loadTasks()
 }
@@ -63,8 +67,8 @@ const editTask = async (item) => {
 
 const updateTask = (isUpdated) => {
     console.log(isUpdated);
-    isEdit.value=false
-    editingTask.value=null
+    isEdit.value = false
+    editingTask.value = null
     loadTasks()
 }
 </script>           
