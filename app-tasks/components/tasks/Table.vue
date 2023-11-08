@@ -36,6 +36,7 @@
 <script setup>
 import axios from "axios";
 import config from '../../config/default.json'
+import { getHeaders } from "../../src/auth/jwt";
 const tasks = ref([])
 const isEdit = ref(false)
 const editingTask = ref(null)
@@ -49,9 +50,10 @@ onBeforeMount(() => {
 
 const loadTasks = async () => {
     const url = `${config.api_host}/tasks`
-    const headers = getHeaders()
+    const token = localStorage.getItem("token")
+    const headers = getHeaders(token)
     const { data } = await axios.get(url, { headers })
-    tasks.value = data
+    tasks.value = data.info
 }
 const deleteTask = async (item) => {
     const url = `${config.api_host}/tasks/${item.id}`
@@ -61,12 +63,9 @@ const deleteTask = async (item) => {
 const editTask = async (item) => {
     isEdit.value = true
     editingTask.value = { ...item }
-    console.log(editingTask.value);
-
 }
 
 const updateTask = (isUpdated) => {
-    console.log(isUpdated);
     isEdit.value = false
     editingTask.value = null
     loadTasks()

@@ -1,6 +1,9 @@
 <template>
   <v-layout class="rounded rounded-md" v-if="!loading">
     <v-app-bar :title="titleApp">
+
+      <v-space />
+      <v-btn @click="signout">Salir</v-btn>
     </v-app-bar>
     <v-navigation-drawer>
       <v-list>
@@ -25,10 +28,9 @@ onBeforeMount(() => {
     loading.value = false
     const url = `${config.api_host}/verify`
     axios.post(url, { token }).then(() => {
-      loading.value = true
+      loading.value = false
     }).catch(() => {
       useRouter().push('/')
-
     })
   } else {
     useRouter().push('/')
@@ -41,6 +43,11 @@ const loading = ref(true)
 const incrementLikes = () => {
   // NOTA: Recuerda acceder al valor de la propiedad con .value
   likes.value++
+}
+
+const signout =()=>{
+  localStorage.removeItem("token")
+  useRouter().push('/')
 }
 </script>
 
