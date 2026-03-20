@@ -1,8 +1,10 @@
 "use client";
+
 import { useState } from "react";
 
 
 const Nombre = () => {
+    // Estado para el nombre
     const [nombre, setNombre] = useState("");
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -12,8 +14,8 @@ const Nombre = () => {
 
     return (
         <div>
-            <label htmlFor="nombre">Nombre:</label>
-            <input id="nombre" className="border-2 border-gray-300 rounded-md p-2" type="text" value={nombre} onChange={handleChange} />
+            <h1>Componente Nombre</h1>
+            <input className="border-2 border-gray-300 rounded-md p-2" placeholder="Ingrese su nombre" type="text" value={nombre} onChange={handleChange}/>
             <p>Nombre: {nombre}</p>
         </div>
     )

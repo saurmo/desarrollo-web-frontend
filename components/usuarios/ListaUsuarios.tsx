@@ -1,46 +1,37 @@
-'use client';
-
+"use client";
 import { Usuario } from "@/src/domain/models/Usuario";
 import { useEffect, useState } from "react";
 import ItemUsuario from "./ItemUsuario";
 
-
-
 const ListaUsuarios = () => {
-    const [usuarios, setUsuarios] = useState<Usuario[]>([]); // Array de usuarios
-    const [loading, setLoading] = useState<boolean>(true); // Booleano para indicar si se está cargando
-    const [error, setError] = useState<string | null>(null); // String para indicar el error
+    // Estado para los usuarios
+    const [usuarios, setUsuarios] = useState<Usuario[]>([]);
+    // Estado para el loading
+    const [loading, setLoading] = useState(true);
+    // Estado para el error
+    const [error, setError] = useState<string | null>(null);
 
-    // Ejecuta el efecto cuando el componente se monta (mount)
     useEffect(() => {
-        fetch("https://jsonplaceholder.typicode.com/users") // URL de la API de usuarios
+        // Llamar a la API de usuarios
+        fetch("https://jsonplaceholder.typicode.com/users")
             .then(response => response.json())
-            .then(data => {
-                setUsuarios(data)
-                console.log(data)
-            })
-            .catch(error => setError(error))
+            .then(data => setUsuarios(data))
+            .catch(error => setError(error.message))
             .finally(() => setLoading(false));
-    }, []);
+    }, [])
 
-    if (loading) {
-        return <div>Cargando usuarios...</div>;
-    }
-
-    if (error) {
-        return <div>Error al cargar los usuarios: {error}</div>;
-    }
-
-    if (usuarios.length === 0) {
-        return <div>No hay usuarios</div>;
-    }
-
+    if (loading) return <div>Cargando...</div>;
+    // Mostrar el error si hay un error
+    if (error) return <div>Error: {error}</div>;
+    // Mostrar un mensaje si no hay usuarios
+    if (usuarios.length === 0) return <div>No hay usuarios</div>;
+    // Mostrar la lista de usuarios
     return (
-        <div>
-            <h1>Lista de Usuarios {usuarios.length}</h1>
-            <ul className="list-disc list-inside">
+        <div className="flex flex-col flex-1 items-center justify-start">
+            <h1 className="text-2xl font-bold pt-10">Lista de Usuarios</h1>
+            <ul>
                 {usuarios.map((usuario) => (
-                   <ItemUsuario usuario={usuario} key={usuario.id} />
+                    <ItemUsuario key={usuario.id} usuario={usuario} />
                 ))}
             </ul>
         </div>
