@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
 
-First, run the development server:
+- Hacer un login en la parte grafica, donde use un hook que invoque un api http://localhost:3001/api/v1/login, donde en la respuesta de retornar un json con un data, y dentro del data un token de jwt para guardar en localstorage y enviarlo en otras peticiones. Usar clean arquitectura, fetch o axios para el llamado al pi
+ 
+-  Crear en la pagina principal una landing con información sobre una fundación de cacao que se llame 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+-  Necesito hacer una pagina para el registro de usuarios, con los campos nombre, apellidos, correo, contraseña, acepta terminos y condiciones
+
+```sql
+CREATE TABLE usuarios (
+  id          UUID          PRIMARY KEY DEFAULT gen_random_uuid(),
+  nombre      VARCHAR(100)  NOT NULL,
+  apellidos   VARCHAR(150)  NOT NULL,
+  email       VARCHAR(255)  NOT NULL UNIQUE,
+  password    VARCHAR(255)  NOT NULL,
+  acepta_terminos BOOLEAN   NOT NULL DEFAULT FALSE,
+  created_at  TIMESTAMPTZ   NOT NULL DEFAULT NOW(),
+  updated_at  TIMESTAMPTZ   NOT NULL DEFAULT NOW()
+);
+
+-- Índice para búsquedas por email (login)
+CREATE INDEX idx_usuarios_email ON usuarios (email);
+
+-- Trigger para actualizar updated_at automáticamente
+CREATE OR REPLACE FUNCTION set_updated_at()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.updated_at = NOW();
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_usuarios_updated_at
+  BEFORE UPDATE ON usuarios
+  FOR EACH ROW
+  EXECUTE FUNCTION set_updated_at();
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Mi proyecto usar clean architecture tanto en desarrollo-web-front como en desarrollo-web-backend
