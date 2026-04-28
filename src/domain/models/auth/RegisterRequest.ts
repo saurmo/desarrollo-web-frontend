@@ -3,5 +3,5 @@ export interface RegisterRequest {
   apellidos: string;
   email: string;
   password: string;
-  aceptaTerminos: boolean;
+  acepta_terminos: boolean;
 }

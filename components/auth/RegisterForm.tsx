@@ -74,7 +74,7 @@ export default function RegisterForm() {
       apellidos: form.apellidos,
       email: form.email,
       password: form.password,
-      aceptaTerminos: form.aceptaTerminos,
+      acepta_terminos: form.aceptaTerminos,
     });
 
     if (success) {
