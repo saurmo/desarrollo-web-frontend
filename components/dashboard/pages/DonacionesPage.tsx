@@ -1,8 +1,10 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useRef } from 'react';
 import { useAuth } from '@/src/application/auth/useAuth';
 import { useCrearDonacion } from '@/src/application/donaciones/useCrearDonacion';
+
+const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001';
 
 function formatCOP(value: number) {
   return new Intl.NumberFormat('es-CO', {
@@ -10,6 +12,12 @@ function formatCOP(value: number) {
     currency: 'COP',
     maximumFractionDigits: 0,
   }).format(value);
+}
+
+function comprobanteLabel(url: string): string {
+  const lower = url.toLowerCase();
+  if (lower.endsWith('.pdf')) return 'Ver PDF';
+  return 'Ver imagen';
 }
 
 export default function DonacionesPage() {
@@ -21,7 +29,9 @@ export default function DonacionesPage() {
     descripcion: '',
     vincularUsuario: true,
   });
+  const [archivo, setArchivo] = useState<File | null>(null);
   const [exito, setExito] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const set = (field: keyof typeof form) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -32,18 +42,36 @@ export default function DonacionesPage() {
       setExito(false);
     };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] ?? null;
+    setArchivo(file);
+    setExito(false);
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const success = await crear({
       total: Number(form.total),
       descripcion: form.descripcion || undefined,
       user_id: form.vincularUsuario && usuario ? usuario.id : undefined,
+      archivo: archivo ?? undefined,
     });
     if (success) {
       setExito(true);
       setForm({ total: '', descripcion: '', vincularUsuario: true });
+      setArchivo(null);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
     }
   };
+
+  const comprobanteHref =
+    donacion?.comprobante_url != null && donacion.comprobante_url !== ''
+      ? donacion.comprobante_url.startsWith('http')
+        ? donacion.comprobante_url
+        : `${API_BASE}${donacion.comprobante_url}`
+      : null;
 
   return (
     <div className="space-y-6">
@@ -97,6 +125,25 @@ export default function DonacionesPage() {
               />
             </div>
 
+            <div>
+              <label htmlFor="comprobante" className="block text-sm font-medium text-gray-700 mb-1">
+                Comprobante <span className="text-gray-400 font-normal">(PDF o imagen, opcional)</span>
+              </label>
+              <input
+                ref={fileInputRef}
+                id="comprobante"
+                type="file"
+                accept=".pdf,application/pdf,image/jpeg,image/png,image/gif,image/webp"
+                onChange={handleFileChange}
+                className="block w-full text-sm text-gray-600 file:mr-3 file:rounded-lg file:border-0 file:bg-amber-50 file:px-3 file:py-2 file:text-sm file:font-medium file:text-amber-800 hover:file:bg-amber-100"
+              />
+              {archivo && (
+                <p className="text-xs text-gray-500 mt-1 truncate" title={archivo.name}>
+                  Seleccionado: {archivo.name}
+                </p>
+              )}
+            </div>
+
             <div className="flex items-center gap-2">
               <input
                 id="vincular"
@@ -148,32 +195,53 @@ export default function DonacionesPage() {
           </form>
         </div>
 
-        {/* Última donación registrada */}
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
+        {/* Tabla: última donación registrada */}
+        <div className="bg-white rounded-xl border border-gray-200 p-6 overflow-x-auto">
           <h2 className="font-semibold text-gray-800 mb-5">Última donación registrada</h2>
           {donacion ? (
-            <div className="space-y-3">
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500">ID</span>
-                <span className="font-mono text-gray-700 text-xs">{donacion.id}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500">Monto</span>
-                <span className="font-bold text-amber-700">{formatCOP(Number(donacion.total))}</span>
-              </div>
-              {donacion.descripcion && (
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Descripción</span>
-                  <span className="text-gray-700 text-right max-w-[60%]">{donacion.descripcion}</span>
-                </div>
-              )}
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500">Fecha</span>
-                <span className="text-gray-700">
-                  {new Date(donacion.created_at).toLocaleDateString('es-CO')}
-                </span>
-              </div>
-              <div className="mt-4 p-3 bg-green-50 rounded-lg text-center">
+            <div className="space-y-4">
+              <table className="w-full text-sm border border-gray-200 rounded-lg overflow-hidden">
+                <thead className="bg-gray-50 text-gray-600">
+                  <tr>
+                    <th className="text-left font-medium px-3 py-2 border-b border-gray-200">ID</th>
+                    <th className="text-left font-medium px-3 py-2 border-b border-gray-200">Monto</th>
+                    <th className="text-left font-medium px-3 py-2 border-b border-gray-200">Descripción</th>
+                    <th className="text-left font-medium px-3 py-2 border-b border-gray-200">Comprobante</th>
+                    <th className="text-left font-medium px-3 py-2 border-b border-gray-200">Fecha</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="bg-white">
+                    <td className="px-3 py-2.5 border-b border-gray-100 font-mono text-xs text-gray-700 align-top">
+                      {donacion.id}
+                    </td>
+                    <td className="px-3 py-2.5 border-b border-gray-100 font-bold text-amber-700 align-top whitespace-nowrap">
+                      {formatCOP(Number(donacion.total))}
+                    </td>
+                    <td className="px-3 py-2.5 border-b border-gray-100 text-gray-700 align-top max-w-[140px]">
+                      <span className="line-clamp-3">{donacion.descripcion ?? '—'}</span>
+                    </td>
+                    <td className="px-3 py-2.5 border-b border-gray-100 align-top">
+                      {comprobanteHref ? (
+                        <a
+                          href={comprobanteHref}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-amber-700 hover:text-amber-900 font-medium underline underline-offset-2"
+                        >
+                          {comprobanteLabel(donacion.comprobante_url ?? '')}
+                        </a>
+                      ) : (
+                        <span className="text-gray-400">—</span>
+                      )}
+                    </td>
+                    <td className="px-3 py-2.5 border-b border-gray-100 text-gray-700 align-top whitespace-nowrap">
+                      {new Date(donacion.created_at).toLocaleDateString('es-CO')}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div className="p-3 bg-green-50 rounded-lg text-center">
                 <span className="text-green-700 text-sm font-medium">✓ Donación confirmada</span>
               </div>
             </div>

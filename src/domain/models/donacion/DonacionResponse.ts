@@ -4,6 +4,8 @@ export interface Donacion {
   total: string;
   descripcion: string | null;
   created_at: string;
+  /** Ruta relativa servida por el backend bajo `/uploads/...` */
+  comprobante_url?: string | null;
 }
 
 export interface DonacionResponse {
