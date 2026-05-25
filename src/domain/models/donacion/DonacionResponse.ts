@@ -1,14 +1,31 @@
 export interface Donacion {
   id: string;
-  user_id: string | null;
-  total: string;
-  descripcion: string | null;
-  created_at: string;
-  /** Ruta relativa servida por el backend bajo `/uploads/...` */
-  comprobante_url?: string | null;
+  userId: string | null;
+  total: number;
+  description: string | null;
+  receiptUrl?: string | null;
+  createdAt: string;
+}
+
+export interface DonacionDonor {
+  id: string;
+  name: string;
+  lastName: string;
+  email: string;
+}
+
+export interface DonacionWithDonor extends Donacion {
+  donor: DonacionDonor | null;
 }
 
 export interface DonacionResponse {
   data: Donacion;
-  message: string;
+}
+
+export interface DonacionesMineResponse {
+  data: Donacion[];
+}
+
+export interface DonacionesAllResponse {
+  data: DonacionWithDonor[];
 }

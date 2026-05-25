@@ -69,16 +69,18 @@ export default function RegisterForm() {
       return;
     }
 
-    const success = await register({
-      nombre: form.nombre,
-      apellidos: form.apellidos,
+    const role = await register({
+      name: form.nombre,
+      lastName: form.apellidos,
       email: form.email,
       password: form.password,
-      acepta_terminos: form.aceptaTerminos,
+      acceptsTerms: form.aceptaTerminos,
     });
 
-    if (success) {
-      router.push('/');
+    if (role === 'admin') {
+      router.push('/dashboard/admin');
+    } else if (role === 'donante') {
+      router.push('/dashboard/donante');
     }
   };
 

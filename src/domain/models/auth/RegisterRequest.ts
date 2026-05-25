@@ -1,7 +1,7 @@
 export interface RegisterRequest {
-  nombre: string;
-  apellidos: string;
+  name: string;
+  lastName: string;
   email: string;
   password: string;
-  acepta_terminos: boolean;
+  acceptsTerms: boolean;
 }

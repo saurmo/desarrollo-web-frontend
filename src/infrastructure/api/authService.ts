@@ -6,8 +6,8 @@ import { httpClient } from '../http/httpClient';
 
 export const authService = {
   login: (credentials: LoginRequest): Promise<LoginResponse> =>
-    httpClient.post<LoginResponse>('/api/v1/login', credentials),
+    httpClient.post<LoginResponse>('/api/v1/auth/login', credentials),
 
   register: (data: RegisterRequest): Promise<RegisterResponse> =>
-    httpClient.post<RegisterResponse>('/api/v1/register', data),
+    httpClient.post<RegisterResponse>('/api/v1/auth/register', data),
 };

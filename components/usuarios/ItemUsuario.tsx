@@ -1,13 +1,11 @@
-import { Usuario } from "@/src/domain/models/Usuario";
+import { UsuarioExterno } from './ListaUsuarios';
 
-
-// Parámetros: usuario: Usuario
-const ItemUsuario = (params: { usuario: Usuario }) => {
-    return (
-        <li className="list-item" id={params.usuario.id.toString()}>
-            <p>{params.usuario.name}</p> <code>{params.usuario.email}</code>
-        </li>
-    )
-}
+const ItemUsuario = (params: { usuario: UsuarioExterno }) => {
+  return (
+    <li className="list-item" id={params.usuario.id.toString()}>
+      <p>{params.usuario.name}</p> <code>{params.usuario.email}</code>
+    </li>
+  );
+};
 
 export default ItemUsuario;

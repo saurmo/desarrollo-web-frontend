@@ -1,40 +1,32 @@
 import { httpClient } from '../http/httpClient';
+import { UserRole } from '@/src/domain/models/Usuario';
 
 export interface UsuarioPublico {
   id: string;
-  nombre: string;
-  apellidos: string;
+  name: string;
+  lastName: string;
   email: string;
-  created_at: string;
-}
-
-export interface CrearUsuarioPayload {
-  nombre: string;
-  apellidos: string;
-  email: string;
-  password: string;
-  acepta_terminos: boolean;
+  role: UserRole;
+  profilePhoto?: string | null;
+  createdAt: string;
 }
 
 export interface ActualizarUsuarioPayload {
-  nombre?: string;
-  apellidos?: string;
+  name?: string;
+  lastName?: string;
   email?: string;
 }
 
 export const usuarioApiService = {
   getAll: (): Promise<{ data: UsuarioPublico[] }> =>
-    httpClient.get('/api/v1/usuarios'),
+    httpClient.get('/api/v1/users'),
 
   getById: (id: string): Promise<{ data: UsuarioPublico }> =>
-    httpClient.get(`/api/v1/usuarios/${id}`),
-
-  create: (data: CrearUsuarioPayload): Promise<{ data: UsuarioPublico }> =>
-    httpClient.post('/api/v1/usuarios', data),
+    httpClient.get(`/api/v1/users/${id}`),
 
   update: (id: string, data: ActualizarUsuarioPayload): Promise<{ data: UsuarioPublico }> =>
-    httpClient.put(`/api/v1/usuarios/${id}`, data),
+    httpClient.put(`/api/v1/users/${id}`, data),
 
-  remove: (id: string): Promise<{ message: string }> =>
-    httpClient.delete(`/api/v1/usuarios/${id}`),
+  remove: (id: string): Promise<void> =>
+    httpClient.delete(`/api/v1/users/${id}`),
 };

@@ -1,11 +1,8 @@
+import { Usuario } from '../Usuario';
+
 export interface RegisterResponse {
   data: {
     token: string;
-    usuario: {
-      id: number;
-      nombre: string;
-      apellidos: string;
-      email: string;
-    };
+    user: Usuario;
   };
 }

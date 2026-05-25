@@ -13,9 +13,11 @@ export default function LoginForm() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const success = await login({ email, password });
-    if (success) {
-      router.push('/dashboard');
+    const role = await login({ email, password });
+    if (role === 'admin') {
+      router.push('/dashboard/admin');
+    } else if (role === 'donante') {
+      router.push('/dashboard/donante');
     }
   };
 
