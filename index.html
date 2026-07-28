@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guía de Etiquetas HTML y CSS</title>
+  <style>
+    /* ===== RESET Y BASE ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box; /* incluye padding y border en el ancho/alto total */
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+      color: #222;
+      background-color: #f4f4f9;
+    }
+
+    /* ===== LAYOUT GENERAL ===== */
+    header {
+      background-color: #2c3e50;
+      color: #fff;
+      padding: 24px 16px;
+      text-align: center;
+    }
+
+    nav {
+      background-color: #34495e;
+      padding: 10px;
+      position: sticky; /* se queda fija al hacer scroll */
+      top: 0;
+      z-index: 100;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: 4px;
+    }
+
+    nav a:hover {
+      background-color: #1abc9c;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 0 auto; /* centra el contenedor horizontalmente */
+      padding: 20px;
+    }
+
+    section {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    section h2 {
+      color: #2c3e50;
+      border-bottom: 3px solid #1abc9c;
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+    }
+
+    .demo {
+      border: 1px dashed #999;
+      background-color: #fafafa;
+      padding: 14px;
+      margin: 10px 0;
+      border-radius: 6px;
+    }
+
+    .codigo {
+      background-color: #2d2d2d;
+      color: #f8f8f2;
+      padding: 12px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-family: "Courier New", monospace;
+      font-size: 0.9em;
+      margin: 10px 0;
+    }
+
+    .explicacion {
+      background-color: #eafaf1;
+      border-left: 4px solid #1abc9c;
+      padding: 10px 14px;
+      margin: 10px 0;
+      font-size: 0.95em;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse; /* une los bordes de las celdas en uno solo */
+      margin: 10px 0;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #2c3e50;
+      color: #fff;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2; /* filas alternadas */
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #2c3e50;
+      color: #fff;
+      margin-top: 40px;
+    }
+
+    /* ===== EJEMPLOS DE CSS APLICADOS EN VIVO ===== */
+    .caja-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      background: #dff0ff;
+      padding: 10px;
+      border-radius: 6px;
+    }
+
+    .caja-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 10px 0;
+    }
+
+    .caja-grid div {
+      background-color: #1abc9c;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      border-radius: 6px;
+    }
+
+    .boton {
+      display: inline-block;
+      background-color: #e74c3c;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer; /* cambia el cursor al pasar el mouse */
+      font-size: 1em;
+      transition: background-color 0.3s ease; /* animación suave */
+    }
+
+    .boton:hover {
+      background-color: #c0392b;
+    }
+
+    .imagen-demo {
+      max-width: 200px;
+      border-radius: 8px;
+      border: 3px solid #1abc9c;
+    }
+
+    .texto-flotante {
+      float: left;
+      margin-right: 15px;
+      width: 100px;
+      height: 100px;
+      background-color: #f39c12;
+    }
+
+    .oculto-demo {
+      display: none; /* oculta el elemento por completo */
+    }
+
+    .opacidad-demo {
+      opacity: 0.5; /* 0 = invisible, 1 = totalmente visible */
+      background-color: purple;
+      color: white;
+      padding: 8px;
+    }
+
+    .posicion-relativa {
+      position: relative;
+      height: 60px;
+      background: #ecf0f1;
+    }
+
+    .posicion-absoluta {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #e67e22;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 4px;
+    }
+
+    code {
+      background-color: #eee;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      color: #c0392b;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===================== HEADER ===================== -->
+  <header>
+    <h1>Guía Completa de Etiquetas HTML y Propiedades CSS</h1>
+    <p>Ejemplos en vivo con explicación de atributos y estilos más usados</p>
+  </header>
+
+  <!-- ===================== NAVEGACIÓN ===================== -->
+  <nav>
+    <ul>
+      <li><a href="#estructura">Estructura</a></li>
+      <li><a href="#texto">Texto</a></li>
+      <li><a href="#listas">Listas</a></li>
+      <li><a href="#enlaces-imagenes">Enlaces / Imágenes</a></li>
+      <li><a href="#tablas">Tablas</a></li>
+      <li><a href="#formularios">Formularios</a></li>
+      <li><a href="#multimedia">Multimedia</a></li>
+      <li><a href="#semantico">Semántico</a></li>
+      <li><a href="#css-basico">CSS Básico</a></li>
+      <li><a href="#css-layout">CSS Layout</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <!-- ===================== ESTRUCTURA ===================== -->
+    <section id="estructura">
+      <h2>1. Etiquetas de Estructura</h2>
+
+      <div class="explicacion">
+        <strong>&lt;!DOCTYPE html&gt;</strong>: indica al navegador que el documento usa HTML5.<br>
+        <strong>&lt;html lang="es"&gt;</strong>: etiqueta raíz. Atributo <code>lang</code> define el idioma (accesibilidad y SEO).<br>
+        <strong>&lt;head&gt;</strong>: contiene metadatos (no visibles): título, enlaces a CSS, meta etiquetas.<br>
+        <strong>&lt;meta charset="UTF-8"&gt;</strong>: define la codificación de caracteres (tildes, ñ, etc.).<br>
+        <strong>&lt;meta name="viewport"&gt;</strong>: hace la página responsiva en móviles.<br>
+        <strong>&lt;body&gt;</strong>: contiene todo el contenido visible de la página.
+      </div>
+
+      <div class="codigo">
+&lt;!DOCTYPE html&gt;<br>
+&lt;html lang="es"&gt;<br>
+&nbsp;&nbsp;&lt;head&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;meta charset="UTF-8"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;title&gt;Mi página&lt;/title&gt;<br>
+&nbsp;&nbsp;&lt;/head&gt;<br>
+&nbsp;&nbsp;&lt;body&gt;...&lt;/body&gt;<br>
+&lt;/html&gt;
+      </div>
+    </section>
+
+    <!-- ===================== TEXTO ===================== -->
+    <section id="texto">
+      <h2>2. Etiquetas de Texto</h2>
+
+      <div class="demo">
+        <h1>Título h1 (el más importante)</h1>
+        <h2>Título h2</h2>
+        <h3>Título h3</h3>
+        <p>Este es un <strong>párrafo</strong> con texto <b>en negrita (b)</b>,
+        texto <em>en cursiva (em)</em>, texto <i>itálico (i)</i>,
+        texto <u>subrayado (u)</u>, texto <mark>resaltado (mark)</mark>,
+        texto <small>pequeño (small)</small>, texto <del>tachado (del)</del>
+        y texto <sub>subíndice</sub> / <sup>superíndice</sup>.</p>
+        <p>Salto de línea sin nuevo párrafo:<br>segunda línea con &lt;br&gt;</p>
+        <hr>
+        <blockquote>Esta es una cita larga usando &lt;blockquote&gt;.</blockquote>
+        <p><q>Esta es una cita corta con &lt;q&gt;</q></p>
+        <p>Código en línea: <code>console.log("hola")</code></p>
+        <pre>Texto preformateado:
+  Respeta   espacios
+      y saltos de línea</pre>
+        <p><span style="color:#1abc9c;">Este texto usa &lt;span&gt; para aplicar un estilo puntual.</span></p>
+      </div>
+
+      <table>
+        <thead>
+          <tr><th>Etiqueta</th><th>Uso</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>&lt;h1&gt;-&lt;h6&gt;</td><td>Encabezados, de mayor a menor importancia</td></tr>
+          <tr><td>&lt;p&gt;</td><td>Párrafo de texto</td></tr>
+          <tr><td>&lt;strong&gt;</td><td>Negrita con importancia semántica</td></tr>
+          <tr><td>&lt;b&gt;</td><td>Negrita solo visual</td></tr>
+          <tr><td>&lt;em&gt;</td><td>Énfasis (cursiva semántica)</td></tr>
+          <tr><td>&lt;span&gt;</td><td>Contenedor en línea sin significado, para aplicar CSS/JS</td></tr>
+          <tr><td>&lt;div&gt;</td><td>Contenedor en bloque genérico</td></tr>
+          <tr><td>&lt;br&gt;</td><td>Salto de línea</td></tr>
+          <tr><td>&lt;hr&gt;</td><td>Línea horizontal divisoria</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ===================== LISTAS ===================== -->
+    <section id="listas">
+      <h2>3. Listas</h2>
+
+      <div class="demo">
+        <p><strong>Lista no ordenada (ul/li):</strong></p>
+        <ul>
+          <li>HTML</li>
+          <li>CSS</li>
+          <li>JavaScript</li>
+        </ul>
+
+        <p><strong>Lista ordenada (ol/li):</strong></p>
+        <ol>
+          <li>Planear</li>
+          <li>Programar</li>
+          <li>Publicar</li>
+        </ol>
+
+        <p><strong>Lista de definiciones (dl/dt/dd):</strong></p>
+        <dl>
+          <dt>HTML</dt>
+          <dd>Lenguaje de marcado para estructurar contenido.</dd>
+          <dt>CSS</dt>
+          <dd>Lenguaje de estilos para dar apariencia.</dd>
+        </dl>
+      </div>
+
+      <table>
+        <tr><th>Etiqueta</th><th>Atributo usado</th><th>Uso</th></tr>
+        <tr><td>&lt;ol&gt;</td><td><code>type</code>, <code>start</code></td><td>type="a" usa letras, start="5" inicia en 5</td></tr>
+        <tr><td>&lt;li&gt;</td><td><code>value</code></td><td>Cambia el número de un ítem en &lt;ol&gt;</td></tr>
+      </table>
+    </section>
+
+    <!-- ===================== ENLACES E IMÁGENES ===================== -->
+    <section id="enlaces-imagenes">
+      <h2>4. Enlaces e Imágenes</h2>
+
+      <div class="demo">
+        <p><a href="https://www.udem.edu.co" target="_blank" rel="noopener noreferrer">Enlace externo (abre en pestaña nueva)</a></p>
+        <p><a href="#estructura">Enlace interno (ancla a la sección Estructura)</a></p>
+        <p><a href="mailto:correo@ejemplo.com">Enlace de correo (mailto)</a></p>
+        <br>
+        <img src="https://via.placeholder.com/200x120" alt="Imagen de ejemplo" title="Muestra un texto al pasar el mouse" class="imagen-demo">
+      </div>
+
+      <table>
+        <tr><th>Etiqueta</th><th>Atributo</th><th>Uso</th></tr>
+        <tr><td>&lt;a&gt;</td><td><code>href</code></td><td>Define el destino del enlace (URL, ancla, correo)</td></tr>
+        <tr><td>&lt;a&gt;</td><td><code>target="_blank"</code></td><td>Abre el enlace en una pestaña/ventana nueva</td></tr>
+        <tr><td>&lt;a&gt;</td><td><code>rel="noopener noreferrer"</code></td><td>Seguridad al abrir en pestaña nueva</td></tr>
+        <tr><td>&lt;img&gt;</td><td><code>src</code></td><td>Ruta o URL de la imagen</td></tr>
+        <tr><td>&lt;img&gt;</td><td><code>alt</code></td><td>Texto alternativo (accesibilidad y SEO)</td></tr>
+        <tr><td>&lt;img&gt;</td><td><code>width</code> / <code>height</code></td><td>Tamaño de la imagen</td></tr>
+        <tr><td>&lt;img&gt;</td><td><code>title</code></td><td>Texto emergente al pasar el mouse</td></tr>
+      </table>
+    </section>
+
+    <!-- ===================== TABLAS ===================== -->
+    <section id="tablas">
+      <h2>5. Tablas</h2>
+
+      <div class="demo">
+        <table border="1">
+          <caption>Notas del curso</caption>
+          <thead>
+            <tr>
+              <th>Estudiante</th>
+              <th>Seguimiento 1</th>
+              <th>Seguimiento 2</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ana</td>
+              <td>4.5</td>
+              <td>4.8</td>
+            </tr>
+            <tr>
+              <td>Luis</td>
+              <td>3.9</td>
+              <td>4.2</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <table>
+        <tr><th>Etiqueta</th><th>Uso</th></tr>
+        <tr><td>&lt;table&gt;</td><td>Contenedor de la tabla</td></tr>
+        <tr><td>&lt;thead&gt;/&lt;tbody&gt;</td><td>Agrupa encabezado y cuerpo de la tabla</td></tr>
+        <tr><td>&lt;tr&gt;</td><td>Fila (table row)</td></tr>
+        <tr><td>&lt;th&gt;</td><td>Celda de encabezado (negrita y centrada por defecto)</td></tr>
+        <tr><td>&lt;td&gt;</td><td>Celda de datos</td></tr>
+        <tr><td>&lt;caption&gt;</td><td>Título descriptivo de la tabla</td></tr>
+        <tr><td><code>colspan</code></td><td>Une celdas horizontalmente</td></tr>
+        <tr><td><code>rowspan</code></td><td>Une celdas verticalmente</td></tr>
+      </table>
+    </section>
+
+    <!-- ===================== FORMULARIOS ===================== -->
+    <section id="formularios">
+      <h2>6. Formularios</h2>
+
+      <div class="demo">
+        <form action="#" method="post">
+          <label for="nombre">Nombre:</label><br>
+          <input type="text" id="nombre" name="nombre" placeholder="Escribe tu nombre" required maxlength="30"><br><br>
+
+          <label for="correo">Correo:</label><br>
+          <input type="email" id="correo" name="correo" placeholder="correo@ejemplo.com" required><br><br>
+
+          <label for="clave">Contraseña:</label><br>
+          <input type="password" id="clave" name="clave" minlength="6"><br><br>
+
+          <label for="edad">Edad:</label><br>
+          <input type="number" id="edad" name="edad" min="0" max="100"><br><br>
+
+          <label for="nacimiento">Fecha de nacimiento:</label><br>
+          <input type="date" id="nacimiento" name="nacimiento"><br><br>
+
+          <label>Género:</label><br>
+          <input type="radio" id="m" name="genero" value="m"><label for="m">Masculino</label>
+          <input type="radio" id="f" name="genero" value="f"><label for="f">Femenino</label><br><br>
+
+          <input type="checkbox" id="terminos" name="terminos" checked>
+          <label for="terminos">Acepto los términos</label><br><br>
+
+          <label for="pais">País:</label><br>
+          <select id="pais" name="pais">
+            <option value="co" selected>Colombia</option>
+            <option value="mx">México</option>
+            <option value="ar">Argentina</option>
+          </select><br><br>
+
+          <label for="comentarios">Comentarios:</label><br>
+          <textarea id="comentarios" name="comentarios" rows="3" cols="30" placeholder="Escribe aquí..."></textarea><br><br>
+
+          <input type="range" id="volumen" name="volumen" min="0" max="10"><br><br>
+
+          <button type="submit" class="boton">Enviar</button>
+          <button type="reset">Limpiar</button>
+        </form>
+      </div>
+
+      <table>
+        <tr><th>Atributo</th><th>Uso</th></tr>
+        <tr><td><code>type</code></td><td>Define el tipo de input: text, email, password, number, date, radio, checkbox, range, etc.</td></tr>
+        <tr><td><code>name</code></td><td>Identifica el campo al enviar el formulario</td></tr>
+        <tr><td><code>id</code></td><td>Identificador único, se enlaza con &lt;label for=""&gt;</td></tr>
+        <tr><td><code>placeholder</code></td><td>Texto guía dentro del campo vacío</td></tr>
+        <tr><td><code>required</code></td><td>Hace obligatorio el campo</td></tr>
+        <tr><td><code>value</code></td><td>Valor por defecto del campo</td></tr>
+        <tr><td><code>checked</code> / <code>selected</code></td><td>Marca por defecto checkbox/radio u opción de select</td></tr>
+        <tr><td><code>min</code> / <code>max</code></td><td>Límites para number, range o date</td></tr>
+        <tr><td><code>maxlength</code> / <code>minlength</code></td><td>Límite de caracteres en texto</td></tr>
+        <tr><td><code>action</code> / <code>method</code></td><td>En &lt;form&gt;: a dónde y cómo se envían los datos (GET/POST)</td></tr>
+      </table>
+    </section>
+
+    <!-- ===================== MULTIMEDIA ===================== -->
+    <section id="multimedia">
+      <h2>7. Multimedia e Iframe</h2>
+
+      <div class="explicacion">
+        Estos ejemplos muestran la sintaxis; algunos requieren un archivo real para reproducirse.
+      </div>
+
+      <div class="codigo">
+&lt;video src="video.mp4" controls width="300" autoplay muted loop&gt;&lt;/video&gt;<br><br>
+&lt;audio src="audio.mp3" controls&gt;&lt;/audio&gt;<br><br>
+&lt;iframe src="https://www.youtube.com/embed/xxxx" width="300" height="150" allowfullscreen&gt;&lt;/iframe&gt;
+      </div>
+
+      <table>
+        <tr><th>Atributo</th><th>Uso</th></tr>
+        <tr><td><code>controls</code></td><td>Muestra los controles de reproducción</td></tr>
+        <tr><td><code>autoplay</code></td><td>Reproduce automáticamente (suele requerir <code>muted</code>)</td></tr>
+        <tr><td><code>loop</code></td><td>Repite el video/audio en bucle</td></tr>
+        <tr><td><code>muted</code></td><td>Inicia sin sonido</td></tr>
+        <tr><td><code>src</code></td><td>Ruta del recurso multimedia o del iframe</td></tr>
+      </table>
+    </section>
+
+    <!-- ===================== SEMÁNTICO ===================== -->
+    <section id="semantico">
+      <h2>8. Etiquetas Semánticas (HTML5)</h2>
+
+      <div class="explicacion">
+        Dan significado a las secciones de la página, mejorando accesibilidad y SEO,
+        en lugar de usar &lt;div&gt; para todo.
+      </div>
+
+      <table>
+        <tr><th>Etiqueta</th><th>Uso</th></tr>
+        <tr><td>&lt;header&gt;</td><td>Cabecera de la página o de una sección</td></tr>
+        <tr><td>&lt;nav&gt;</td><td>Bloque de navegación/menú</td></tr>
+        <tr><td>&lt;main&gt;</td><td>Contenido principal único de la página</td></tr>
+        <tr><td>&lt;section&gt;</td><td>Sección temática de contenido</td></tr>
+        <tr><td>&lt;article&gt;</td><td>Contenido independiente (post, noticia)</td></tr>
+        <tr><td>&lt;aside&gt;</td><td>Contenido secundario (barra lateral)</td></tr>
+        <tr><td>&lt;footer&gt;</td><td>Pie de página</td></tr>
+        <tr><td>&lt;figure&gt;/&lt;figcaption&gt;</td><td>Imagen con su descripción/pie de foto</td></tr>
+      </table>
+    </section>
+
+    <!-- ===================== CSS BÁSICO ===================== -->
+    <section id="css-basico">
+      <h2>9. Propiedades CSS más usadas</h2>
+
+      <div class="demo">
+        <p style="color: #2980b9; background-color: #eafaf1; font-size: 1.2em; font-weight: bold; text-align: center; padding: 10px; border: 2px solid #2980b9; border-radius: 8px;">
+          Texto con color, fondo, tamaño, negrita, alineación, borde y bordes redondeados aplicados por CSS.
+        </p>
+        <div class="texto-flotante"></div>
+        <p>Este párrafo tiene un cuadro flotante a la izquierda usando <code>float: left</code>, para que el texto lo rodee como en revistas o periódicos digitales.</p>
+      </div>
+
+      <table>
+        <tr><th>Propiedad</th><th>Uso</th></tr>
+        <tr><td><code>color</code></td><td>Color del texto</td></tr>
+        <tr><td><code>background-color</code></td><td>Color de fondo</td></tr>
+        <tr><td><code>font-size</code></td><td>Tamaño de la fuente</td></tr>
+        <tr><td><code>font-family</code></td><td>Tipo de letra</td></tr>
+        <tr><td><code>font-weight</code></td><td>Grosor del texto (normal, bold, 400, 700...)</td></tr>
+        <tr><td><code>text-align</code></td><td>Alineación del texto (left, center, right, justify)</td></tr>
+        <tr><td><code>margin</code></td><td>Espacio exterior del elemento</td></tr>
+        <tr><td><code>padding</code></td><td>Espacio interior del elemento</td></tr>
+        <tr><td><code>border</code></td><td>Borde: grosor, estilo y color</td></tr>
+        <tr><td><code>border-radius</code></td><td>Redondea las esquinas</td></tr>
+        <tr><td><code>width</code> / <code>height</code></td><td>Ancho y alto del elemento</td></tr>
+        <tr><td><code>float</code></td><td>Saca el elemento del flujo normal, alineándolo a un lado</td></tr>
+        <tr><td><code>cursor</code></td><td>Tipo de cursor al pasar el mouse</td></tr>
+        <tr><td><code>opacity</code></td><td>Transparencia (0 a 1)</td></tr>
+        <tr><td><code>box-shadow</code></td><td>Sombra alrededor del elemento</td></tr>
+        <tr><td><code>transition</code></td><td>Anima el cambio de una propiedad (ej: al hacer hover)</td></tr>
+      </table>
+
+      <p>Ejemplo de botón con <code>:hover</code> y <code>transition</code> (pasa el mouse encima):</p>
+      <button class="boton">Pasa el mouse aquí</button>
+
+      <p style="margin-top:15px;">Ejemplo de opacidad:</p>
+      <div class="opacidad-demo">Este texto tiene opacity: 0.5</div>
+    </section>
+
+    <!-- ===================== CSS LAYOUT ===================== -->
+    <section id="css-layout">
+      <h2>10. CSS de Layout (Flexbox, Grid, Position)</h2>
+
+      <p><strong>Flexbox</strong> (<code>display: flex</code>): distribuye elementos en fila o columna fácilmente.</p>
+      <div class="caja-flex">
+        <div>Item 1</div>
+        <div>Item 2</div>
+        <div>Item 3</div>
+      </div>
+
+      <p><strong>Grid</strong> (<code>display: grid</code>): organiza elementos en filas y columnas.</p>
+      <div class="caja-grid">
+        <div>A</div>
+        <div>B</div>
+        <div>C</div>
+      </div>
+
+      <p><strong>Position</strong> (<code>relative</code> / <code>absolute</code>): posiciona un elemento respecto a su contenedor.</p>
+      <div class="posicion-relativa">
+        <div class="posicion-absoluta">Posicionado</div>
+      </div>
+
+      <table>
+        <tr><th>Propiedad</th><th>Uso</th></tr>
+        <tr><td><code>display: flex</code></td><td>Convierte el contenedor en flexbox (layout en una dimensión)</td></tr>
+        <tr><td><code>justify-content</code></td><td>Alinea elementos en el eje principal (horizontal en flex-row)</td></tr>
+        <tr><td><code>align-items</code></td><td>Alinea elementos en el eje transversal (vertical en flex-row)</td></tr>
+        <tr><td><code>gap</code></td><td>Espacio entre elementos flex o grid</td></tr>
+        <tr><td><code>display: grid</code></td><td>Convierte el contenedor en grid (layout en dos dimensiones)</td></tr>
+        <tr><td><code>grid-template-columns</code></td><td>Define cuántas columnas y su tamaño</td></tr>
+        <tr><td><code>position</code></td><td>static (normal), relative, absolute, fixed, sticky</td></tr>
+        <tr><td><code>top / right / bottom / left</code></td><td>Desplazamiento cuando se usa position</td></tr>
+        <tr><td><code>z-index</code></td><td>Controla qué elemento queda "encima" de otro</td></tr>
+        <tr><td><code>display: none</code></td><td>Oculta el elemento completamente del flujo</td></tr>
+      </table>
+    </section>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer>
+    <p>Guía creada con fines educativos — Desarrollo Web Frontend</p>
+  </footer>
+
+</body>
+</html>
