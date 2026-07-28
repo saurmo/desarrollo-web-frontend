@@ -1,0 +1,14 @@
+
+body {
+    margin: 50px;
+}
+
+.link {
+    text-decoration: none;
+    color: black;
+}
+
+#send {
+    border: 1px solid red;
+    border-radius: 9px;
+}
