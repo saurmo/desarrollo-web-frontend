@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Display Flex explicado línea por línea</title>
+
+  <style>
+    /* ============================================================
+       RESET Y ESTILOS BASE
+       Nada de esto es Flexbox todavía: solo prepara la página.
+       ============================================================ */
+
+    * {
+      margin: 0;              /* Quita el margen que el navegador pone por defecto a h1, p, etc. */
+      padding: 0;             /* Quita el relleno por defecto (sobre todo de ul y ol). */
+      box-sizing: border-box; /* Hace que width incluya padding y borde. Sin esto, un elemento
+                                 de width:100px con padding:10px mediría 120px en pantalla. */
+    }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif; /* Fuente del sistema: rápida, sin descargar nada. */
+      background: #f4f6fb;    /* Gris azulado muy claro de fondo para que las tarjetas blancas resalten. */
+      color: #1f2430;         /* Color de texto por defecto. Se hereda a todos los hijos. */
+      line-height: 1.6;       /* Altura de línea = 1.6 veces el tamaño de fuente. Mejora la lectura. */
+      padding: 32px 20px;     /* Aire alrededor del contenido: 32px arriba/abajo, 20px a los lados. */
+    }
+
+    /* max-width + margin auto = el truco clásico para centrar una columna de contenido. */
+    .contenedor-pagina {
+      max-width: 1000px;      /* El contenido nunca pasa de 1000px de ancho, aunque la pantalla sea enorme. */
+      margin: 0 auto;         /* 0 arriba/abajo, "auto" a los lados => reparte el sobrante y centra. */
+    }
+
+    h1 {
+      font-size: 2rem;        /* rem = relativo al tamaño de fuente raíz (16px normalmente) => 32px. */
+      margin-bottom: 8px;     /* Separa el título del subtítulo que viene debajo. */
+    }
+
+    .subtitulo {
+      color: #5a6478;         /* Gris medio: indica visualmente que es texto secundario. */
+      margin-bottom: 32px;    /* Separa la introducción del primer bloque de ejemplos. */
+    }
+
+    /* Cada ejemplo vive dentro de una "tarjeta" blanca. */
+    .ejemplo {
+      background: #ffffff;                    /* Fondo blanco de la tarjeta. */
+      border: 1px solid #dfe3ec;              /* Borde fino gris para delimitarla. */
+      border-radius: 12px;                    /* Esquinas redondeadas de 12px. */
+      padding: 20px;                          /* Espacio interior entre el borde y el contenido. */
+      margin-bottom: 28px;                    /* Separación vertical entre una tarjeta y la siguiente. */
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06); /* Sombra sutil: desplazada 1px abajo, difuminada 3px, negro al 6%. */
+    }
+
+    .ejemplo h2 {
+      font-size: 1.15rem;     /* Título de la tarjeta, un poco mayor que el texto normal (~18px). */
+      margin-bottom: 4px;     /* Poco margen: la descripción va justo debajo. */
+    }
+
+    .ejemplo p {
+      color: #5a6478;         /* Gris para la descripción del ejemplo. */
+      font-size: 0.92rem;     /* Ligeramente más pequeño que el texto base. */
+      margin-bottom: 14px;    /* Separa la explicación de la demostración visual. */
+    }
+
+    /* Bloque de código que muestra la propiedad usada en cada ejemplo. */
+    code {
+      background: #eef1f8;    /* Fondo gris claro para diferenciar el código del texto. */
+      color: #2b3a67;         /* Azul oscuro para el texto del código. */
+      padding: 2px 6px;       /* Pequeño relleno para que el fondo no quede pegado a las letras. */
+      border-radius: 4px;     /* Esquinas apenas redondeadas. */
+      font-family: ui-monospace, "SF Mono", Consolas, monospace; /* Fuente monoespaciada: propia del código. */
+      font-size: 0.85rem;     /* Un poco menor que el texto normal. */
+    }
+
+    /* Las cajitas de colores que usaremos como hijos flex en todos los ejemplos. */
+    .caja {
+      background: #4c6ef5;    /* Azul de fondo. */
+      color: #ffffff;         /* Texto blanco para contrastar con el azul. */
+      padding: 16px 22px;     /* Relleno interno: 16px arriba/abajo, 22px a los lados. */
+      border-radius: 8px;     /* Esquinas redondeadas. */
+      font-weight: 600;       /* Semi-negrita. */
+      text-align: center;     /* Centra el número dentro de la caja. */
+    }
+
+    /* Fondo a rayas para que se vea DÓNDE termina el contenedor flex.
+       Sin esto, sería imposible notar el efecto de justify-content. */
+    .pista {
+      background: repeating-linear-gradient(  /* Degradado que se repite formando rayas diagonales. */
+        45deg,                                 /* Ángulo de las rayas: 45 grados. */
+        #f0f2f8,                               /* Color 1: desde 0px... */
+        #f0f2f8 10px,                          /* ...hasta 10px. */
+        #e7eaf4 10px,                          /* Color 2: desde 10px... */
+        #e7eaf4 20px                           /* ...hasta 20px. Luego el patrón se repite. */
+      );
+      border: 1px dashed #b9c0d4;              /* Borde discontinuo: marca el límite del contenedor. */
+      border-radius: 8px;                      /* Esquinas redondeadas. */
+      padding: 12px;                           /* Aire entre el borde punteado y las cajas hijas. */
+    }
+
+    /* ============================================================
+       AQUÍ EMPIEZA FLEXBOX
+       ============================================================ */
+
+    /* -------- Ejemplo 1: activar Flexbox -------- */
+    .demo-flex-basico {
+      display: flex;          /* ¡LA LÍNEA CLAVE! Convierte a este elemento en "contenedor flex".
+                                 Sus HIJOS DIRECTOS pasan a ser "ítems flex" y se colocan en fila.
+                                 Sin esto, los divs son de bloque y se apilarían uno debajo de otro. */
+      gap: 12px;              /* Separación de 12px ENTRE los ítems. No añade espacio en los extremos,
+                                 a diferencia de usar margin en cada hijo. */
+    }
+
+    /* -------- Ejemplo 2: flex-direction -------- */
+    /* flex-direction define el "eje principal": la dirección en la que se acomodan los ítems. */
+
+    .demo-row {
+      display: flex;
+      flex-direction: row;    /* Valor POR DEFECTO: de izquierda a derecha. */
+      gap: 10px;
+    }
+
+    .demo-row-reverse {
+      display: flex;
+      flex-direction: row-reverse; /* Misma fila, pero de DERECHA a IZQUIERDA.
+                                      Fíjate que el ítem 1 aparece a la derecha. */
+      gap: 10px;
+    }
+
+    .demo-column {
+      display: flex;
+      flex-direction: column; /* Los ítems se apilan de ARRIBA hacia ABAJO.
+                                 Al cambiar el eje principal a vertical, justify-content ahora
+                                 controla el eje VERTICAL y align-items el HORIZONTAL. */
+      gap: 10px;
+    }
+
+    /* -------- Ejemplo 3: justify-content -------- */
+    /* justify-content = distribución a lo largo del EJE PRINCIPAL (horizontal si es row). */
+
+    .demo-justify {
+      display: flex;
+      margin-bottom: 10px;    /* Separa una demo de justify de la siguiente. */
+    }
+
+    .j-start        { justify-content: flex-start; }    /* Todo pegado al inicio (por defecto). */
+    .j-center       { justify-content: center; }        /* Grupo de ítems centrado. */
+    .j-end          { justify-content: flex-end; }      /* Todo pegado al final. */
+    .j-between      { justify-content: space-between; } /* Primero pegado al inicio, último al final,
+                                                           el sobrante se reparte ENTRE ellos. */
+    .j-around       { justify-content: space-around; }  /* Cada ítem recibe el mismo espacio a sus lados;
+                                                           los extremos quedan con la MITAD de hueco. */
+    .j-evenly       { justify-content: space-evenly; }  /* TODOS los huecos son idénticos, incluidos los extremos. */
+
+    /* -------- Ejemplo 4: align-items -------- */
+    /* align-items = alineación en el EJE TRANSVERSAL (vertical si flex-direction es row). */
+
+    .demo-align {
+      display: flex;
+      height: 130px;          /* Damos altura fija al contenedor: sin altura sobrante,
+                                 align-items no tendría nada que alinear y no se vería el efecto. */
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .a-stretch { align-items: stretch; }    /* POR DEFECTO: los ítems se estiran hasta ocupar toda la altura. */
+    .a-start   { align-items: flex-start; } /* Alineados arriba, cada uno con su altura natural. */
+    .a-center  { align-items: center; }     /* Centrados verticalmente. */
+    .a-end     { align-items: flex-end; }   /* Alineados abajo. */
+
+    /* -------- Ejemplo 5: el centrado perfecto -------- */
+    .demo-centrado {
+      display: flex;
+      justify-content: center; /* Centra en horizontal (eje principal). */
+      align-items: center;     /* Centra en vertical (eje transversal). */
+      height: 160px;           /* Necesita altura para que el centrado vertical tenga sentido. */
+      /* Estas 4 líneas juntas son la forma más simple de centrar algo en CSS. */
+    }
+
+    /* -------- Ejemplo 6: flex-wrap -------- */
+    .demo-nowrap {
+      display: flex;
+      flex-wrap: nowrap;      /* POR DEFECTO: los ítems NO saltan de línea. Si no caben,
+                                 se ENCOGEN para caber a la fuerza. */
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .demo-wrap {
+      display: flex;
+      flex-wrap: wrap;        /* Si no caben en una línea, saltan a la siguiente conservando su tamaño. */
+      gap: 10px;
+    }
+
+    /* Cajas anchas a propósito, para forzar que no quepan y se note el wrap. */
+    .caja-ancha {
+      min-width: 180px;       /* Ancho mínimo: el ítem no se encogerá por debajo de 180px cuando hay wrap. */
+    }
+
+    /* -------- Ejemplo 7: flex-grow en los hijos -------- */
+    /* Las propiedades anteriores van en el CONTENEDOR. Estas van en cada HIJO. */
+
+    .demo-grow {
+      display: flex;
+      gap: 10px;
+    }
+
+    .crece-1 {
+      flex-grow: 1;           /* Reparte el espacio sobrante. Con 1 y 2, el sobrante se divide en 3 partes:
+                                 este hijo recibe 1 de esas 3 partes. */
+      background: #2f9e6f;    /* Verde, para distinguirlo del hijo que crece el doble. */
+    }
+
+    .crece-2 {
+      flex-grow: 2;           /* Recibe 2 de las 3 partes => el doble de espacio EXTRA que .crece-1.
+                                 Ojo: reparte el SOBRANTE, no el ancho total. */
+      background: #e8590c;    /* Naranja. */
+    }
+
+    /* flex: 1 es el atajo más usado en el día a día. */
+    .flex-1 {
+      flex: 1;                /* Equivale a: flex-grow:1; flex-shrink:1; flex-basis:0.
+                                 Con flex-basis:0 todos parten de ancho cero, así que el reparto
+                                 da columnas EXACTAMENTE iguales sin importar su contenido. */
+    }
+
+    /* -------- Ejemplo 8: caso real, una barra de navegación -------- */
+    .navbar {
+      display: flex;
+      align-items: center;         /* Alinea verticalmente logo, enlaces y botón en el mismo centro. */
+      justify-content: space-between; /* Logo a la izquierda, el resto empujado a la derecha. */
+      background: #1f2430;         /* Fondo oscuro de la barra. */
+      padding: 12px 20px;          /* Relleno interno. */
+      border-radius: 10px;         /* Esquinas redondeadas. */
+    }
+
+    .navbar-logo {
+      color: #ffffff;         /* Texto blanco sobre el fondo oscuro. */
+      font-weight: 700;       /* Negrita. */
+      font-size: 1.05rem;     /* Un poco más grande que los enlaces. */
+    }
+
+    .navbar-links {
+      display: flex;          /* Contenedor flex ANIDADO: la lista de enlaces también es flex.
+                                 Anidar contenedores flex es totalmente normal y muy común. */
+      gap: 20px;              /* Separación entre enlaces. */
+      list-style: none;       /* Quita las viñetas de la lista <ul>. */
+    }
+
+    .navbar-links a {
+      color: #c3c9d8;         /* Gris claro para los enlaces. */
+      text-decoration: none;  /* Quita el subrayado por defecto de los enlaces. */
+      font-size: 0.9rem;      /* Texto algo menor. */
+    }
+
+    .navbar-links a:hover {
+      color: #ffffff;         /* Al pasar el mouse, el enlace se vuelve blanco: da feedback al usuario. */
+    }
+
+    .navbar-boton {
+      background: #4c6ef5;    /* Azul del botón. */
+      color: #ffffff;         /* Texto blanco. */
+      border: none;           /* Quita el borde gris por defecto de los <button>. */
+      padding: 8px 16px;      /* Relleno del botón. */
+      border-radius: 6px;     /* Esquinas redondeadas. */
+      cursor: pointer;        /* Cambia el cursor a "manita": indica que es clicable. */
+      font-size: 0.88rem;     /* Tamaño del texto del botón. */
+    }
+
+    /* Tabla resumen del final. */
+    table {
+      width: 100%;             /* La tabla ocupa todo el ancho de la tarjeta. */
+      border-collapse: collapse; /* Une los bordes de las celdas en una sola línea (sin dobles bordes). */
+      font-size: 0.9rem;       /* Texto un poco menor dentro de la tabla. */
+    }
+
+    th, td {
+      text-align: left;              /* Alinea el texto a la izquierda (por defecto th va centrado). */
+      padding: 10px 8px;             /* Relleno de cada celda. */
+      border-bottom: 1px solid #e4e7f0; /* Línea separadora entre filas. */
+    }
+
+    th {
+      color: #2b3a67;         /* Azul oscuro para los encabezados. */
+      font-weight: 600;       /* Semi-negrita. */
+    }
+
+    /* Etiqueta pequeña que nombra cada variante dentro de un ejemplo. */
+    .etiqueta {
+      display: inline-block;  /* Permite aplicarle padding y márgenes como a un bloque,
+                                 pero sin ocupar toda la línea. */
+      font-size: 0.78rem;     /* Texto pequeño. */
+      color: #5a6478;         /* Gris. */
+      margin: 12px 0 6px;     /* 12px arriba, 0 a los lados, 6px abajo. */
+      font-family: ui-monospace, Consolas, monospace; /* Monoespaciada: se lee como código. */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="contenedor-pagina">
+
+    <h1>Display: flex</h1>
+    <p class="subtitulo">
+      Flexbox organiza elementos en <strong>una sola dimensión</strong>: una fila o una columna.
+      Al escribir <code>display: flex</code> en un elemento, ese elemento se vuelve
+      <strong>contenedor flex</strong> y sus hijos directos se convierten en <strong>ítems flex</strong>.
+    </p>
+
+    <!-- Ejemplo 1 -->
+    <section class="ejemplo">
+      <h2>1. Activar Flexbox</h2>
+      <p>Sin <code>display: flex</code> los divs se apilan. Con él, se colocan en fila.</p>
+
+      <div class="etiqueta">display: flex; gap: 12px;</div>
+      <div class="pista">
+        <div class="demo-flex-basico">
+          <div class="caja">1</div>
+          <div class="caja">2</div>
+          <div class="caja">3</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ejemplo 2 -->
+    <section class="ejemplo">
+      <h2>2. flex-direction: la dirección del eje principal</h2>
+      <p>Define si los ítems van en fila o en columna, y en qué sentido.</p>
+
+      <div class="etiqueta">flex-direction: row (por defecto)</div>
+      <div class="pista">
+        <div class="demo-row">
+          <div class="caja">1</div><div class="caja">2</div><div class="caja">3</div>
+        </div>
+      </div>
+
+      <div class="etiqueta">flex-direction: row-reverse</div>
+      <div class="pista">
+        <div class="demo-row-reverse">
+          <div class="caja">1</div><div class="caja">2</div><div class="caja">3</div>
+        </div>
+      </div>
+
+      <div class="etiqueta">flex-direction: column</div>
+      <div class="pista">
+        <div class="demo-column">
+          <div class="caja">1</div><div class="caja">2</div><div class="caja">3</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ejemplo 3 -->
+    <section class="ejemplo">
+      <h2>3. justify-content: repartir en el eje principal</h2>
+      <p>Controla el espacio sobrante en horizontal (cuando la dirección es <code>row</code>).</p>
+
+      <div class="etiqueta">flex-start</div>
+      <div class="pista"><div class="demo-justify j-start">
+        <div class="caja">1</div><div class="caja">2</div><div class="caja">3</div>
+      </div></div>
+
+      <div class="etiqueta">center</div>
+      <div class="pista"><div class="demo-justify j-center">
+        <div class="caja">1</div><div class="caja">2</div><div class="caja">3</div>
+      </div></div>
+
+      <div class="etiqueta">flex-end</div>
+      <div class="pista"><div class="demo-justify j-end">
+        <div class="caja">1</div><div class="caja">2</div><div class="caja">3</div>
+      </div></div>
+
+      <div class="etiqueta">space-between</div>
+      <div class="pista"><div class="demo-justify j-between">
+        <div class="caja">1</div><div class="caja">2</div><div class="caja">3</div>
+      </div></div>
+
+      <div class="etiqueta">space-around</div>
+      <div class="pista"><div class="demo-justify j-around">
+        <div class="caja">1</div><div class="caja">2</div><div class="caja">3</div>
+      </div></div>
+
+      <div class="etiqueta">space-evenly</div>
+      <div class="pista"><div class="demo-justify j-evenly">
+        <div class="caja">1</div><div class="caja">2</div><div class="caja">3</div>
+      </div></div>
+    </section>
+
+    <!-- Ejemplo 4 -->
+    <section class="ejemplo">
+      <h2>4. align-items: alinear en el eje transversal</h2>
+      <p>Controla la posición vertical. El contenedor tiene <code>height: 130px</code> para que se note.</p>
+
+      <div class="etiqueta">stretch (por defecto)</div>
+      <div class="pista"><div class="demo-align a-stretch">
+        <div class="caja">1</div><div class="caja">2</div><div class="caja">3</div>
+      </div></div>
+
+      <div class="etiqueta">flex-start</div>
+      <div class="pista"><div class="demo-align a-start">
+        <div class="caja">1</div><div class="caja">2</div><div class="caja">3</div>
+      </div></div>
+
+      <div class="etiqueta">center</div>
+      <div class="pista"><div class="demo-align a-center">
+        <div class="caja">1</div><div class="caja">2</div><div class="caja">3</div>
+      </div></div>
+
+      <div class="etiqueta">flex-end</div>
+      <div class="pista"><div class="demo-align a-end">
+        <div class="caja">1</div><div class="caja">2</div><div class="caja">3</div>
+      </div></div>
+    </section>
+
+    <!-- Ejemplo 5 -->
+    <section class="ejemplo">
+      <h2>5. El centrado perfecto</h2>
+      <p>Combinar <code>justify-content: center</code> y <code>align-items: center</code> centra en ambos ejes.</p>
+
+      <div class="etiqueta">display:flex; justify-content:center; align-items:center;</div>
+      <div class="pista">
+        <div class="demo-centrado">
+          <div class="caja">Centrado</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ejemplo 6 -->
+    <section class="ejemplo">
+      <h2>6. flex-wrap: permitir salto de línea</h2>
+      <p>Con <code>nowrap</code> las cajas se comprimen; con <code>wrap</code> bajan a otra línea.</p>
+
+      <div class="etiqueta">flex-wrap: nowrap (por defecto)</div>
+      <div class="pista">
+        <div class="demo-nowrap">
+          <div class="caja caja-ancha">1</div><div class="caja caja-ancha">2</div>
+          <div class="caja caja-ancha">3</div><div class="caja caja-ancha">4</div>
+          <div class="caja caja-ancha">5</div>
+        </div>
+      </div>
+
+      <div class="etiqueta">flex-wrap: wrap</div>
+      <div class="pista">
+        <div class="demo-wrap">
+          <div class="caja caja-ancha">1</div><div class="caja caja-ancha">2</div>
+          <div class="caja caja-ancha">3</div><div class="caja caja-ancha">4</div>
+          <div class="caja caja-ancha">5</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ejemplo 7 -->
+    <section class="ejemplo">
+      <h2>7. flex-grow: repartir el espacio sobrante</h2>
+      <p>Esta propiedad va en los <strong>hijos</strong>, no en el contenedor.</p>
+
+      <div class="etiqueta">hijo verde: flex-grow:1 &nbsp;|&nbsp; hijo naranja: flex-grow:2</div>
+      <div class="pista">
+        <div class="demo-grow">
+          <div class="caja crece-1">grow: 1</div>
+          <div class="caja crece-2">grow: 2</div>
+          <div class="caja">sin grow</div>
+        </div>
+      </div>
+
+      <div class="etiqueta">los tres hijos con flex: 1 → columnas iguales</div>
+      <div class="pista">
+        <div class="demo-grow">
+          <div class="caja flex-1">flex: 1</div>
+          <div class="caja flex-1">flex: 1</div>
+          <div class="caja flex-1">flex: 1</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ejemplo 8 -->
+    <section class="ejemplo">
+      <h2>8. Caso real: barra de navegación</h2>
+      <p>El uso más frecuente de Flexbox: <code>space-between</code> + <code>align-items: center</code>.</p>
+
+      <nav class="navbar">
+        <div class="navbar-logo">MiSitio</div>
+        <ul class="navbar-links">
+          <li><a href="#">Inicio</a></li>
+          <li><a href="#">Servicios</a></li>
+          <li><a href="#">Contacto</a></li>
+        </ul>
+        <button class="navbar-boton">Ingresar</button>
+      </nav>
+    </section>
+
+    <!-- Resumen -->
+    <section class="ejemplo">
+      <h2>Resumen de propiedades</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Propiedad</th>
+            <th>Dónde se aplica</th>
+            <th>Qué hace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>display: flex</code></td><td>Contenedor</td><td>Activa Flexbox</td></tr>
+          <tr><td><code>flex-direction</code></td><td>Contenedor</td><td>Fila o columna (eje principal)</td></tr>
+          <tr><td><code>justify-content</code></td><td>Contenedor</td><td>Reparte en el eje principal</td></tr>
+          <tr><td><code>align-items</code></td><td>Contenedor</td><td>Alinea en el eje transversal</td></tr>
+          <tr><td><code>flex-wrap</code></td><td>Contenedor</td><td>Permite el salto de línea</td></tr>
+          <tr><td><code>gap</code></td><td>Contenedor</td><td>Separación entre ítems</td></tr>
+          <tr><td><code>flex-grow</code></td><td>Hijo</td><td>Cuánto crece con el espacio sobrante</td></tr>
+          <tr><td><code>flex: 1</code></td><td>Hijo</td><td>Atajo para repartir en partes iguales</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+  </div>
+</body>
+</html>
