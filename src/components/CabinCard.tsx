@@ -3,22 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { Star, MapPin, Users, Sun, Check, ChevronLeft, ChevronRight, Video } from 'lucide-react';
-
-// Interfaz para definir los tipos de datos de la cabaña
-export interface Cabin {
-  id: string;
-  nombre: string;
-  ubicacion: string;
-  precio: number;
-  capacidad: number;
-  comodidades: string[];
-  clima: string;
-  calificacion: number;
-  fotos: string[];
-  videos?: string[];
-  politicaCancelacion: string;
-  categorias: string[];
-}
+import { Cabin } from '../models/Cabin';
 
 interface CabinCardProps {
   cabin: Cabin;
@@ -30,12 +15,12 @@ export const CabinCard: React.FC<CabinCardProps> = ({ cabin, onBook }) => {
 
   const nextImage = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setCurrentImageIndex((prev) => (prev + 1) % cabin.fotos.length);
+    setCurrentImageIndex((prev) => (prev + 1) % cabin.photos.length);
   };
 
   const prevImage = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setCurrentImageIndex((prev) => (prev - 1 + cabin.fotos.length) % cabin.fotos.length);
+    setCurrentImageIndex((prev) => (prev - 1 + cabin.photos.length) % cabin.photos.length);
   };
 
   return (
@@ -44,16 +29,16 @@ export const CabinCard: React.FC<CabinCardProps> = ({ cabin, onBook }) => {
       {/* Galería de Fotos / Media */}
       <div className="relative h-64 w-full overflow-hidden bg-gray-100">
         <Image
-          src={cabin.fotos[currentImageIndex] || '/placeholder.jpg'}
-          alt={cabin.nombre}
+          src={cabin.photos[currentImageIndex] || '/placeholder.jpg'}
+          alt={cabin.name}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
 
         {/* Badge de Categoría Principal */}
-        {cabin.categorias.length > 0 && (
+        {cabin.categories.length > 0 && (
           <span className="absolute left-3 top-3 rounded-full bg-black/60 px-3 py-1 text-xs font-semibold text-white backdrop-blur-md">
-            {cabin.categorias[0]}
+            {cabin.categories[0]}
           </span>
         )}
 
@@ -66,7 +51,7 @@ export const CabinCard: React.FC<CabinCardProps> = ({ cabin, onBook }) => {
         )}
 
         {/* Navegación de Imágenes */}
-        {cabin.fotos.length > 1 && (
+        {cabin.photos.length > 1 && (
           <>
             <button
               onClick={prevImage}
@@ -85,7 +70,7 @@ export const CabinCard: React.FC<CabinCardProps> = ({ cabin, onBook }) => {
             
             {/* Puntos de navegación */}
             <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1.5">
-              {cabin.fotos.map((_, idx) => (
+              {cabin.photos.map((_, idx) => (
                 <div
                   key={idx}
                   className={`h-1.5 rounded-full transition-all ${
@@ -104,32 +89,32 @@ export const CabinCard: React.FC<CabinCardProps> = ({ cabin, onBook }) => {
         <div className="flex items-center justify-between text-xs text-gray-500">
           <div className="flex items-center gap-1">
             <MapPin className="h-3.5 w-3.5 text-emerald-600" />
-            <span>{cabin.ubicacion}</span>
+            <span>{cabin.location}</span>
           </div>
           <div className="flex items-center gap-1 font-semibold text-gray-700">
             <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
-            <span>{cabin.calificacion.toFixed(1)}</span>
+            <span>{cabin.rating.toFixed(1)}</span>
           </div>
         </div>
 
         {/* Título */}
-        <h3 className="mt-2 text-lg font-bold text-gray-900 line-clamp-1">{cabin.nombre}</h3>
+        <h3 className="mt-2 text-lg font-bold text-gray-900 line-clamp-1">{cabin.name}</h3>
 
         {/* Info rápida: Capacidad y Clima */}
         <div className="mt-3 flex items-center gap-4 text-xs font-medium text-gray-600">
           <div className="flex items-center gap-1">
             <Users className="h-4 w-4 text-gray-400" />
-            <span>{cabin.capacidad} huéspedes</span>
+            <span>{cabin.capacity} huéspedes</span>
           </div>
           <div className="flex items-center gap-1">
             <Sun className="h-4 w-4 text-amber-500" />
-            <span>{cabin.clima}</span>
+            <span>{cabin.weather}</span>
           </div>
         </div>
 
         {/* Comodidades destacadas (primeras 3) */}
         <div className="mt-3 flex flex-wrap gap-1.5">
-          {cabin.comodidades.slice(0, 3).map((item, index) => (
+          {cabin.comodities.slice(0, 3).map((item, index) => (
             <span
               key={index}
               className="rounded-md bg-gray-100 px-2 py-0.5 text-[11px] font-medium text-gray-600"
@@ -137,18 +122,13 @@ export const CabinCard: React.FC<CabinCardProps> = ({ cabin, onBook }) => {
               {item}
             </span>
           ))}
-          {cabin.comodidades.length > 3 && (
+          {cabin.comodities.length > 3 && (
             <span className="text-[11px] font-medium text-gray-400">
-              +{cabin.comodidades.length - 3} más
+              +{cabin.comodities.length - 3} más
             </span>
           )}
         </div>
 
-        {/* Política de Cancelación */}
-        <p className="mt-3 flex items-center gap-1 text-[11px] font-medium text-emerald-600">
-          <Check className="h-3 w-3" />
-          {cabin.politicaCancelacion}
-        </p>
 
         {/* Separador flex-grow para empujar el footer hacia abajo */}
         <div className="mt-auto pt-4">
@@ -156,7 +136,7 @@ export const CabinCard: React.FC<CabinCardProps> = ({ cabin, onBook }) => {
             {/* Precio */}
             <div>
               <span className="text-xl font-extrabold text-gray-900">
-                ${cabin.precio.toLocaleString()}
+                ${cabin.price.toLocaleString()}
               </span>
               <span className="text-xs text-gray-500"> / noche</span>
             </div>

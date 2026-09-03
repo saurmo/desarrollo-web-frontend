@@ -34,3 +34,21 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+Estoy realizando un proyecto web en nextjs con https://tailwindcss.com/. Este proyecto es sobre una plataforma para alquilar cabañas-fincas, la informacion de cada cabaña es:
+
+- Nombre
+- Ubicación
+- Precio
+- Capacidad
+- comodidades
+- clima
+- calificación 
+- fotos
+- videos
+- opción de reserva
+- cancelación de reserva
+- categorias
+
+Inicialmente quiero generar una card como componente de nextjs para reutilizar en el home.

@@ -1,41 +1,37 @@
-import { Cabana } from "@/src/models/Cabana";
+import { Cabin } from "../models/Cabin";
 
-export const cabanas: Cabana[] = [
+export const CABINS: Cabin[] = [
   {
-    id: 1,
-    nombre: "Cabaña El Paraíso",
-    ubicacion: "Santa Elena, Medellín",
-    precio: 350000,
-    capacidad: 6,
-    comodidades: [
-      "Jacuzzi",
-      "WiFi",
-      "BBQ",
-      "Chimenea",
+    id: '1',
+    name: 'Cabaña Alpina El Refugio',
+    location: 'Guatavita, Cundinamarca',
+    price: 280000,
+    capacity: 4,
+    comodities: ['Jacuzzi privado', 'Malla catamarán', 'Zona de fogata', 'Wifi high-speed'],
+    weather: 'Frío (14°C)',
+    rating: 4.9,
+    photos: [
+      'https://images.unsplash.com/photo-1587061949409-02df41d5e562',
+      'https://images.unsplash.com/photo-1510798831971-661eb04b3739',
     ],
-    clima: "Frío",
-    calificacion: 4.8,
-    fotos: ["/cabanas/paraiso.jpg"],
-    videos: [],
-    categoria: "Romántica",
+    videos: ['https://example.com/video.mp4'],
+    categories: ['Glamping', 'Romántica'],
   },
-
-  {
-    id: 2,
-    nombre: "Finca La Montaña",
-    ubicacion: "Guatapé, Antioquia",
-    precio: 480000,
-    capacidad: 10,
-    comodidades: [
-      "Piscina",
-      "BBQ",
-      "WiFi",
-      "Parqueadero",
+   {
+    id: '2',
+    name: 'Cabaña Alpina El Refugio',
+    location: 'Guatavita, Cundinamarca',
+    price: 280000,
+    capacity: 4,
+    comodities: ['Jacuzzi privado', 'Malla catamarán', 'Zona de fogata', 'Wifi high-speed'],
+    weather: 'Frío (14°C)',
+    rating: 4.9,
+    photos: [
+      'https://images.unsplash.com/photo-1587061949409-02df41d5e562',
+      'https://images.unsplash.com/photo-1510798831971-661eb04b3739',
     ],
-    clima: "Templado",
-    calificacion: 4.9,
-    fotos: ["/cabanas/montana.jpg"],
-    videos: [],
-    categoria: "Familiar",
+    videos: ['https://example.com/video.mp4'],
+    categories: ['Glamping', 'Romántica'],
   },
 ];
+
