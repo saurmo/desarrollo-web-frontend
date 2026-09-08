@@ -1,5 +1,5 @@
 // Interfaz para definir los tipos de datos de la cabaña
-export interface Cabin {
+export interface Listing {
   id: string;
   name: string;
   location: string;

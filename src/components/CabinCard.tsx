@@ -3,10 +3,10 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { Star, MapPin, Users, Sun, Check, ChevronLeft, ChevronRight, Video } from 'lucide-react';
-import { Cabin } from '../models/Cabin';
+import { Listing } from '../models/Cabin';
 
 interface CabinCardProps {
-  cabin: Cabin;
+  cabin: Listing;
   onBook?: (id: string) => void;
 }
 

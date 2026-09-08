@@ -1,6 +1,6 @@
-import { Cabin } from "../models/Cabin";
+import { Listing } from "../models/Cabin";
 
-export const CABINS: Cabin[] = [
+export const CABINS: Listing[] = [
   {
     id: '1',
     name: 'Cabaña Alpina El Refugio',
