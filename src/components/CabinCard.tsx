@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { Star, MapPin, Users, Sun, Check, ChevronLeft, ChevronRight, Video } from 'lucide-react';
-import { Listing } from '../models/Cabin';
+import { Listing } from '../features/listings/domain/Listing';
 
 interface CabinCardProps {
   cabin: Listing;
@@ -36,7 +36,7 @@ export const CabinCard: React.FC<CabinCardProps> = ({ cabin, onBook }) => {
         />
 
         {/* Badge de Categoría Principal */}
-        {cabin.categories.length > 0 && (
+        {cabin.categories?.length > 0 && (
           <span className="absolute left-3 top-3 rounded-full bg-black/60 px-3 py-1 text-xs font-semibold text-white backdrop-blur-md">
             {cabin.categories[0]}
           </span>
@@ -51,7 +51,7 @@ export const CabinCard: React.FC<CabinCardProps> = ({ cabin, onBook }) => {
         )}
 
         {/* Navegación de Imágenes */}
-        {cabin.photos.length > 1 && (
+        {cabin.photos?.length > 1 && (
           <>
             <button
               onClick={prevImage}
@@ -93,7 +93,7 @@ export const CabinCard: React.FC<CabinCardProps> = ({ cabin, onBook }) => {
           </div>
           <div className="flex items-center gap-1 font-semibold text-gray-700">
             <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
-            <span>{cabin.rating.toFixed(1)}</span>
+            <span>{cabin.rating}</span>
           </div>
         </div>
 
@@ -114,7 +114,7 @@ export const CabinCard: React.FC<CabinCardProps> = ({ cabin, onBook }) => {
 
         {/* Comodidades destacadas (primeras 3) */}
         <div className="mt-3 flex flex-wrap gap-1.5">
-          {cabin.comodities.slice(0, 3).map((item, index) => (
+          {cabin.comodities?.slice(0, 3).map((item, index) => (
             <span
               key={index}
               className="rounded-md bg-gray-100 px-2 py-0.5 text-[11px] font-medium text-gray-600"
@@ -122,9 +122,9 @@ export const CabinCard: React.FC<CabinCardProps> = ({ cabin, onBook }) => {
               {item}
             </span>
           ))}
-          {cabin.comodities.length > 3 && (
+          {cabin.comodities?.length > 3 && (
             <span className="text-[11px] font-medium text-gray-400">
-              +{cabin.comodities.length - 3} más
+              +{cabin.comodities?.length - 3} más
             </span>
           )}
         </div>

@@ -1,4 +1,4 @@
-import { Listing } from "../models/Cabin";
+import { Listing } from "../features/listings/domain/Listing";
 
 export const CABINS: Listing[] = [
   {

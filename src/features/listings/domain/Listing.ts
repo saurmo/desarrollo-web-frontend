@@ -7,7 +7,7 @@ export interface Listing {
   capacity: number;
   comodities: string[];
   weather: string;
-  rating: number;
+  rating: string;
   photos: string[];
   videos?: string[];
   categories: string[];
