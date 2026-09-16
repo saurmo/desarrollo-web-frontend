@@ -18,10 +18,7 @@ export default function HomePage() {
         {lintings.map((linting) => (
            <CabinCard key={linting.id} cabin={linting}  />
         ))}
-        {/* <Contador /> */}
-        <hr />
-        <br />
-        {/* <Contador /> */}
+
       </div>
     </main>
   );

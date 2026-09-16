@@ -1,24 +1,32 @@
 'use client'
-import {  useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 
 
 export const Contador = () => {
     const [contador, setContador] = useState(0)
 
-    const handlerContador = () => { 
-        setContador(contador + 1) }
+    useEffect(() => {
+        const printHelloPage = () => {
+            console.log("Hola Mundo")
+        }
+        printHelloPage()
 
-    useEffect(()=>{
-        console.log("Carga de página")
     }, [])
 
-    useEffect(()=>{
-        console.log("Cambia el contador", contador)
+    useEffect(() => {
+        const printHelloPage = () => {
+            console.log("Se actualizo el contador " + contador)
+        }
+        printHelloPage()
+
     }, [contador])
 
+    // funciones
+    const handdlerContador = () => { setContador(contador + 1) }
+
     return <>
-        <span> {contador} </span>
-        <button onClick={handlerContador }>
+        <span>Contador: {contador} </span>
+        <button onClick={handdlerContador}>
             Incrementar
         </button>
 
