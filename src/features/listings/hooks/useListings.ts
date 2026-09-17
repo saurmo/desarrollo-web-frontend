@@ -6,7 +6,7 @@ import { getAllListings } from "../services/linting.service"
 
 
 export const useListings = () => {
-    const [lintings, setListings] = useState<Listing[]>([])
+    const [lintings, setListings] = useState<{data: Listing[]}>( {data: []} )
     const [isLoading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<string | null>(null)
 

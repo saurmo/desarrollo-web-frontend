@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "./config";
 
 interface Pagination {
     totalItems: number;
@@ -7,7 +8,7 @@ interface Pagination {
 
 export const getAllListings = async (pagination?: Pagination) => {
     try {
-        const url = 'http://localhost:3001/api/listings'
+        const url = `${API_BASE_URL}/listings?limit=${pagination?.limit ?? 10}&page=${pagination?.page ?? 0}`
         const response = await fetch(url)
         if (!response.ok) {
             throw new Error("Error al obtener los datos" + response,)
