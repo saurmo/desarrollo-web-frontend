@@ -3,10 +3,11 @@
 import { useEffect, useState } from "react"
 import { Listing } from "../domain/Listing"
 import { getAllListings } from "../services/linting.service"
+import { DEFAULT_PAGINATION, ResponseList } from "../../common/ResponseList"
 
 
 export const useListings = () => {
-    const [lintings, setListings] = useState<{data: Listing[]}>( {data: []} )
+    const [lintings, setListings] = useState<ResponseList<Listing>>({ pagination: DEFAULT_PAGINATION, data: [] })
     const [isLoading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<string | null>(null)
 

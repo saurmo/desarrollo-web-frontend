@@ -1,10 +1,7 @@
-import { API_BASE_URL } from "./config";
+import { Pagination } from "../../common/ResponseList";
+import { API_BASE_URL } from "../../common/config";
 
-interface Pagination {
-    totalItems: number;
-    page: number;
-    limit: number;
-}
+
 
 export const getAllListings = async (pagination?: Pagination) => {
     try {
