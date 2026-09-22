@@ -5,7 +5,7 @@ import { API_BASE_URL } from "../../common/config";
 
 export const getAllListings = async (pagination?: Pagination) => {
     try {
-        const url = `${API_BASE_URL}/listings?limit=${pagination?.limit ?? 10}&page=${pagination?.page ?? 0}`
+        const url = `${API_BASE_URL}/listings?limit=${pagination?.limit ?? 10}&page=${pagination?.page}`
         const response = await fetch(url)
         if (!response.ok) {
             throw new Error("Error al obtener los datos" + response,)
