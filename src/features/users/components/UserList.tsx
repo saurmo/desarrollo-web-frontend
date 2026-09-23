@@ -1,10 +1,24 @@
 'use client';
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { Pagination } from "../../common/components/Pagination";
 import { useUsers } from "../hooks/useUsers";
 import { UserCard } from "./UserCard";
 
 export default function UserListPage() {
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const currentPath = usePathname()
 
-  const { error, isLoading, users } = useUsers();
+  const currentPage = Number(searchParams.get("page") ?? 1)
+  const { error, isLoading, users } = useUsers(currentPage);
+
+  const totalPages = users.pagination.totalPages ?? 0
+
+  const handlerOnPageChange = (newPage: number) => {
+    const params=new URLSearchParams(searchParams) // IMPORTANTE: Conserva los parametros de la url actual
+    params.set("page", String(newPage))
+    router.push(`${currentPath}?${params.toString()}`)
+  }
 
   if (error) {
     return <>Ha ocurrido un error {error}</>
@@ -22,6 +36,9 @@ export default function UserListPage() {
           ))}
         </div>
       )}
+      <div className="mt-10">
+        <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlerOnPageChange} isLoading={isLoading} />
+      </div>
 
     </main>
   );
