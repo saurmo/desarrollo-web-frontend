@@ -3,7 +3,7 @@ export type UserRole = 'admin' | 'user' | 'owner';
 
 // Main User Entity
 export interface User {
-  id: number;
+  id: number | string;
   name: string;
   identification: string;
   role: UserRole;
@@ -11,4 +11,6 @@ export interface User {
   email: string;
   password?: string;
   createdAt?: Date;
+  avatarUrl?: string;
 }
+
