@@ -198,34 +198,7 @@ export function LoginFormView({
           </span>
         </Button>
       </form>
-
-      {/* Quick Demo Presets for Testing */}
-      <div className="mt-8 pt-6 border-t border-emerald-100/80 text-center">
-        <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Probador de Escenarios (Demo)</p>
-        <div className="grid grid-cols-3 gap-2">
-          <button
-            type="button"
-            onClick={() => form.fillDemoCredentials('valid')}
-            className="px-2 py-1.5 text-xs bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-lg font-medium border border-emerald-200 transition-colors"
-          >
-            ✅ Éxito
-          </button>
-          <button
-            type="button"
-            onClick={() => form.fillDemoCredentials('invalid')}
-            className="px-2 py-1.5 text-xs bg-amber-50 hover:bg-amber-100 text-amber-800 rounded-lg font-medium border border-amber-200 transition-colors"
-          >
-            ⚠️ Inválido
-          </button>
-          <button
-            type="button"
-            onClick={() => form.fillDemoCredentials('serverError')}
-            className="px-2 py-1.5 text-xs bg-rose-50 hover:bg-rose-100 text-rose-800 rounded-lg font-medium border border-rose-200 transition-colors"
-          >
-            ❌ Error 500
-          </button>
-        </div>
-      </div>
+     
     </div>
   );
 }

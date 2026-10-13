@@ -6,8 +6,8 @@ import { LoginCredentials, ValidationErrors } from "../domain/auth";
 export function useLoginForm(onSubmitCallback: (credentials: LoginCredentials) => void) {
    
     const [credentials, setCredentials] = useState<LoginCredentials>({
-        email: 'usuario@udem.edu.co',
-        password: 'Password123!'
+        email: '',
+        password: ''
     });
 
     const [errors, setErrors] = useState<ValidationErrors>({});
