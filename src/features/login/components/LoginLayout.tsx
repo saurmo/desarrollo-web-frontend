@@ -1,6 +1,6 @@
 'use client';
 import { CheckCircle2, Code2, Layers, LogOut, Server, Sparkles } from "lucide-react";
-import { Button } from "./LoginForm";
+import { Button } from "../../common/components/Button";
 import { User } from "../../users/domain/User";
 
 export 
