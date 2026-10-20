@@ -10,7 +10,7 @@ export interface LoginCredentials {
 export interface AuthToken {
   accessToken: string;
   expiresIn: number; // in seconds
-  tokenType: string;
+  tokenType: 'Bearer';
 }
 
 export interface LoginState {

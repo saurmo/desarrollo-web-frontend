@@ -8,7 +8,7 @@ import { DEFAULT_PAGINATION, ResponseList } from "../../common/ResponseList"
 const PAGE_SIZE = 10
 
 
-export const useListings = (page: number = 0) => {
+export const useListings = (page: number = 1) => {
     const [lintings, setListings] = useState<ResponseList<Listing>>({ pagination: DEFAULT_PAGINATION, data: [] })
     const [isLoading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<string | null>(null)

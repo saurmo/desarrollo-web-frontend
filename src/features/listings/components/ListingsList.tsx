@@ -11,7 +11,7 @@ export const ListingsList = () => {
     const router = useRouter()
     const currentPath = usePathname()
 
-    const page = Number(searchParams.get("page") ?? 0)
+    const page = Number(searchParams.get("page") ?? 1) // la API cuenta las páginas desde 1
 
 
     const { error, isLoading, lintings } = useListings(page)

@@ -4,7 +4,7 @@ import { User, UserRole } from "../domain/User";
 interface UserCardProps {
   user: User;
   onEdit?: (user: User) => void;
-  onDelete?: (id: number) => void;
+  onDelete?: (id: User['id']) => void;
 }
 
 // Estilos visuales según el rol del usuario
