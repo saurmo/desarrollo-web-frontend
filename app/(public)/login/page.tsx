@@ -1,10 +1,11 @@
 'use client';
 import { LoginFormView } from "@/src/features/login/components/LoginForm";
-import { LoginLayout } from "@/src/features/login/components/LoginLayout";
+import { Loading } from "@/src/features/common/components/Loading";
 import { LoginCredentials } from "@/src/features/login/domain/auth";
 import { useAuth } from "@/src/features/login/hooks/useAuth";
 import { useLoginForm } from "@/src/features/login/hooks/useLoginForm";
-import { KeyRound } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function LoginPage() {
   // Invoking custom hooks at the top-level orchestration component
@@ -16,9 +17,17 @@ export default function LoginPage() {
   };
 
   const form = useLoginForm(handleLoginSubmit);
+  const router = useRouter();
+
+  // Con sesión (recién iniciada o guardada de antes) → al panel privado
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      router.replace("/dashboard");
+    }
+  }, [auth.isAuthenticated, router]);
 
   return (
-    <div className="min-h-screen bg-slate-900 bg-gradient-to-br from-slate-950 via-emerald-950 to-slate-900 flex flex-col items-center justify-center p-4 sm:p-6 font-sans text-slate-800 relative">
+    <div className="flex-1 flex flex-col items-center justify-center p-4 sm:p-6 text-slate-800 relative">
       {/* Background Decorative Pattern */}
       <div 
         className="absolute inset-0 opacity-[0.03] pointer-events-none" 
@@ -27,27 +36,14 @@ export default function LoginPage() {
         }} 
       />
 
-      {/* App Header Badge */}
-      <header className="mb-6 text-center z-10">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold backdrop-blur-md mb-2">
-          <KeyRound className="w-3.5 h-3.5" />
-          <span>Listings</span>
-        </div>
-      </header>
-
       {/* Main View Router - Conditional based on Hook state */}
       <main className="w-full flex justify-center z-10">
-        {auth.isAuthenticated && auth.user ? (
-          <LoginLayout user={auth.user} onLogout={auth.logout} />
+        {auth.isAuthenticated ? (
+          <Loading message="Entrando al panel..." />
         ) : (
           <LoginFormView auth={auth} form={form} />
         )}
       </main>
-
-      {/* Footer credits */}
-      <footer className="mt-8 text-center text-xs text-slate-500 z-10">
-       Listings
-      </footer>
     </div>
   );
 }

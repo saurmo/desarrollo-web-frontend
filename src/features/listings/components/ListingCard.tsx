@@ -3,24 +3,24 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { Star, MapPin, Users, Sun, Check, ChevronLeft, ChevronRight, Video } from 'lucide-react';
-import { Listing } from '../features/listings/domain/Listing';
+import { Listing } from '../domain/Listing';
 
-interface CabinCardProps {
-  cabin: Listing;
+interface ListingCardProps {
+  listing: Listing;
   onBook?: (id: string) => void;
 }
 
-export const CabinCard: React.FC<CabinCardProps> = ({ cabin, onBook }) => {
+export const ListingCard: React.FC<ListingCardProps> = ({ listing, onBook }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const nextImage = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setCurrentImageIndex((prev) => (prev + 1) % cabin.photos.length);
+    setCurrentImageIndex((prev) => (prev + 1) % listing.photos.length);
   };
 
   const prevImage = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setCurrentImageIndex((prev) => (prev - 1 + cabin.photos.length) % cabin.photos.length);
+    setCurrentImageIndex((prev) => (prev - 1 + listing.photos.length) % listing.photos.length);
   };
 
   return (
@@ -29,21 +29,21 @@ export const CabinCard: React.FC<CabinCardProps> = ({ cabin, onBook }) => {
       {/* Galería de Fotos / Media */}
       <div className="relative h-64 w-full overflow-hidden bg-gray-100">
         <Image
-          src={cabin.photos[currentImageIndex] || '/placeholder.jpg'}
-          alt={cabin.name}
+          src={listing.photos[currentImageIndex] || '/placeholder.jpg'}
+          alt={listing.name}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
 
         {/* Badge de Categoría Principal */}
-        {cabin.categories?.length > 0 && (
+        {listing.categories?.length > 0 && (
           <span className="absolute left-3 top-3 rounded-full bg-black/60 px-3 py-1 text-xs font-semibold text-white backdrop-blur-md">
-            {cabin.categories[0]}
+            {listing.categories[0]}
           </span>
         )}
 
         {/* Indicador de Video disponible */}
-        {cabin.videos && cabin.videos.length > 0 && (
+        {listing.videos && listing.videos.length > 0 && (
           <span className="absolute right-3 top-3 flex items-center gap-1 rounded-full bg-white/80 px-2 py-1 text-xs font-medium text-gray-800 backdrop-blur-md">
             <Video className="h-3.5 w-3.5 text-red-500" />
             Video
@@ -51,7 +51,7 @@ export const CabinCard: React.FC<CabinCardProps> = ({ cabin, onBook }) => {
         )}
 
         {/* Navegación de Imágenes */}
-        {cabin.photos?.length > 1 && (
+        {listing.photos?.length > 1 && (
           <>
             <button
               onClick={prevImage}
@@ -70,7 +70,7 @@ export const CabinCard: React.FC<CabinCardProps> = ({ cabin, onBook }) => {
             
             {/* Puntos de navegación */}
             <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1.5">
-              {cabin.photos.map((_, idx) => (
+              {listing.photos.map((_, idx) => (
                 <div
                   key={idx}
                   className={`h-1.5 rounded-full transition-all ${
@@ -89,32 +89,32 @@ export const CabinCard: React.FC<CabinCardProps> = ({ cabin, onBook }) => {
         <div className="flex items-center justify-between text-xs text-gray-500">
           <div className="flex items-center gap-1">
             <MapPin className="h-3.5 w-3.5 text-emerald-600" />
-            <span>{cabin.location}</span>
+            <span>{listing.location}</span>
           </div>
           <div className="flex items-center gap-1 font-semibold text-gray-700">
             <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
-            <span>{cabin.rating}</span>
+            <span>{listing.rating}</span>
           </div>
         </div>
 
         {/* Título */}
-        <h3 className="mt-2 text-lg font-bold text-gray-900 line-clamp-1">{cabin.name}</h3>
+        <h3 className="mt-2 text-lg font-bold text-gray-900 line-clamp-1">{listing.name}</h3>
 
         {/* Info rápida: Capacidad y Clima */}
         <div className="mt-3 flex items-center gap-4 text-xs font-medium text-gray-600">
           <div className="flex items-center gap-1">
             <Users className="h-4 w-4 text-gray-400" />
-            <span>{cabin.capacity} huéspedes</span>
+            <span>{listing.capacity} huéspedes</span>
           </div>
           <div className="flex items-center gap-1">
             <Sun className="h-4 w-4 text-amber-500" />
-            <span>{cabin.weather}</span>
+            <span>{listing.weather}</span>
           </div>
         </div>
 
         {/* Comodidades destacadas (primeras 3) */}
         <div className="mt-3 flex flex-wrap gap-1.5">
-          {cabin.comodities?.slice(0, 3).map((item, index) => (
+          {listing.comodities?.slice(0, 3).map((item, index) => (
             <span
               key={index}
               className="rounded-md bg-gray-100 px-2 py-0.5 text-[11px] font-medium text-gray-600"
@@ -122,9 +122,9 @@ export const CabinCard: React.FC<CabinCardProps> = ({ cabin, onBook }) => {
               {item}
             </span>
           ))}
-          {cabin.comodities?.length > 3 && (
+          {listing.comodities?.length > 3 && (
             <span className="text-[11px] font-medium text-gray-400">
-              +{cabin.comodities?.length - 3} más
+              +{listing.comodities?.length - 3} más
             </span>
           )}
         </div>
@@ -136,14 +136,14 @@ export const CabinCard: React.FC<CabinCardProps> = ({ cabin, onBook }) => {
             {/* Precio */}
             <div>
               <span className="text-xl font-extrabold text-gray-900">
-                ${cabin.price.toLocaleString()}
+                ${listing.price.toLocaleString()}
               </span>
               <span className="text-xs text-gray-500"> / noche</span>
             </div>
 
             {/* Botón de Reserva */}
             <button
-              onClick={() => onBook && onBook(cabin.id)}
+              onClick={() => onBook && onBook(listing.id)}
               className="rounded-xl bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-emerald-700 active:scale-95"
             >
               Reservar

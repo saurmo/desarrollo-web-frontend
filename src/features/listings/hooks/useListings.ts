@@ -12,6 +12,8 @@ export const useListings = (page: number = 1) => {
     const [lintings, setListings] = useState<ResponseList<Listing>>({ pagination: DEFAULT_PAGINATION, data: [] })
     const [isLoading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<string | null>(null)
+    // Cambiar este número vuelve a ejecutar el efecto: así funciona el botón "Reintentar"
+    const [reloadKey, setReloadKey] = useState(0)
 
     useEffect(() => {
         // Evita que una respuesta lenta de una página anterior
@@ -26,7 +28,8 @@ export const useListings = (page: number = 1) => {
                     setListings(data)
                 }
             } catch (error: unknown) {
-               if (isActive) setError(error as string)
+                // Se guarda el TEXTO del error: React no puede pintar un objeto Error
+                if (isActive) setError(error instanceof Error ? error.message : "Ha ocurrido un error inesperado.")
 
             } finally {
               if (isActive)  setLoading(false)
@@ -34,8 +37,10 @@ export const useListings = (page: number = 1) => {
         }
         getListings()
         return () => { isActive = false }
-    }, [page])
+    }, [page, reloadKey])
 
-    return { lintings, isLoading, error }
+    const reload = () => setReloadKey((key) => key + 1)
+
+    return { lintings, isLoading, error, reload }
 
 }

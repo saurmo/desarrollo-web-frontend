@@ -14,6 +14,9 @@ export function useAuth() {
     user: null,
     isAuthenticated: false
   });
+  // false hasta que se termina de leer la sesión guardada. Sin esto, una ruta privada
+  // redirigiría al login en el primer render, antes de saber si hay sesión.
+  const [isSessionLoaded, setSessionLoaded] = useState(false);
 
   // Re-hydrate session on mount
   useEffect(() => {
@@ -28,6 +31,7 @@ export function useAuth() {
         isAuthenticated: true
       });
     }
+    setSessionLoaded(true);
   }, []);
 
   const login = async (credentials: LoginCredentials): Promise<boolean> => {
@@ -78,6 +82,7 @@ export function useAuth() {
     error: state.error,
     user: state.user,
     isAuthenticated: state.isAuthenticated,
+    isSessionLoaded,
     login,
     logout,
     clearError

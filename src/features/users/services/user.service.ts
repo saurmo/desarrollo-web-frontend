@@ -1,13 +1,18 @@
-import { API_BASE_URL } from "../../common/config"
+import { ResponseList } from "../../common/ResponseList"
 import { Pagination } from "../../common/ResponseList"
+import { apiRequest } from "../../common/services/http"
+import { User } from "../domain/User"
 
-export const getAllUsers = async (pagination?: Pagination) => {
-    console.log(pagination);
-    
-    const url = `${API_BASE_URL}/users?limit=${pagination?.limit ?? 10}&page=${pagination?.page ?? 1}`
-    const response = await fetch(url)
-    if (!response.ok) {
-        throw new Error("Error al obtener los datos" + response,)
-    }
-    return response.json()
+/**
+ * Lista de usuarios. La API la protege (solo admin), por eso la petición pasa por apiRequest,
+ * que agrega el token de la sesión en el header Authorization.
+ */
+export const getAllUsers = (pagination?: Pagination) => {
+    const params = new URLSearchParams({
+        limit: String(pagination?.limit ?? 10),
+        page: String(pagination?.page ?? 1),
+    })
+    return apiRequest<ResponseList<User>>(`/users?${params}`, {
+        errorMessage: "No se pudieron cargar los usuarios.",
+    })
 }

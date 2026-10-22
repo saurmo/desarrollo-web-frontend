@@ -1,6 +1,7 @@
 'use client';
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { Pagination } from "../../common/components/Pagination";
+import { Loading } from "../../common/components/Loading";
 import { useUsers } from "../hooks/useUsers";
 import { UserCard } from "./UserCard";
 
@@ -28,7 +29,7 @@ export default function UserListPage() {
   return (
     <main className="mx-auto max-w-7xl px-4 py-10">
       {isLoading ? (
-        <p className="text-slate-300">Cargando...</p>
+        <Loading message="Cargando usuarios..." />
       ) : (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {users.data.map((user) => (
