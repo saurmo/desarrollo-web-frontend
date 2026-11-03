@@ -23,7 +23,7 @@ export const fetchFromApi = async (url: string, init?: RequestInit): Promise<Res
  *
  * Se encarga de lo que se repetiría en cada servicio:
  *  - armar la URL con API_BASE_URL,
- *  - enviar el body como JSON,
+ *  - enviar el body como JSON, o como multipart/form-data si es un FormData (formularios con archivos),
  *  - agregar el token de la sesión en el header Authorization,
  *  - convertir los errores de la API en un Error con un mensaje legible,
  *  - cerrar la sesión y volver al login si la API responde 401 (token vencido).
@@ -37,15 +37,18 @@ export async function apiRequest<T>(
 ): Promise<T> {
     const { method = "GET", body, errorMessage = "No se pudo completar la operación." } = options;
 
+    // Con FormData NO se pone Content-Type: el navegador lo arma solo con el "boundary"
+    // que separa cada campo y cada archivo (multipart/form-data; boundary=----abc123).
+    const isFormData = body instanceof FormData;
     const headers: Record<string, string> = {};
-    if (body !== undefined) headers["Content-Type"] = "application/json";
+    if (body !== undefined && !isFormData) headers["Content-Type"] = "application/json";
     const token = tokenStorage.getToken();
     if (token) headers["Authorization"] = `Bearer ${token.accessToken}`;
 
     const response = await fetchFromApi(`${API_BASE_URL}${path}`, {
         method,
         headers,
-        body: body !== undefined ? JSON.stringify(body) : undefined,
+        body: body === undefined ? undefined : isFormData ? body : JSON.stringify(body),
     });
 
     if (!response.ok) {

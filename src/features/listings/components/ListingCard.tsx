@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { Star, MapPin, Users, Sun, Check, ChevronLeft, ChevronRight, Video } from 'lucide-react';
-import { Listing } from '../domain/Listing';
+import { getPhotoUrl, Listing } from '../domain/Listing';
 
 interface ListingCardProps {
   listing: Listing;
@@ -29,7 +29,7 @@ export const ListingCard: React.FC<ListingCardProps> = ({ listing, onBook }) => 
       {/* Galería de Fotos / Media */}
       <div className="relative h-64 w-full overflow-hidden bg-gray-100">
         <Image
-          src={listing.photos[currentImageIndex] || '/placeholder.jpg'}
+          src={getPhotoUrl(listing.photos[currentImageIndex]) ?? '/globe.svg'}
           alt={listing.name}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-105"

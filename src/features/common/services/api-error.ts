@@ -6,6 +6,10 @@
  * formato (por ejemplo, un 500 con HTML), se usa un mensaje genérico con el código HTTP.
  */
 export const getApiErrorMessage = async (response: Response, fallback: string): Promise<string> => {
+    // 429: la API (o el proxy del frontend) frenó las peticiones por rate limit
+    if (response.status === 429) {
+        return `${await readErrorText(response) ?? "Hiciste demasiadas peticiones."} ${formatRetryAfter(response)}`.trim()
+    }
     if (response.status >= 500) {
         return `${fallback} El servidor tuvo un problema (HTTP ${response.status}).`
     }
@@ -22,6 +26,28 @@ export const getApiErrorMessage = async (response: Response, fallback: string): 
         // El cuerpo no era JSON: se usa el mensaje genérico
     }
     return `${fallback} (HTTP ${response.status})`
+}
+
+/** Lee { error: "..." } del cuerpo si existe; si el cuerpo no es JSON, devuelve null. */
+const readErrorText = async (response: Response): Promise<string | null> => {
+    try {
+        const body = await response.json()
+        return typeof body?.error === "string" ? body.error : null
+    } catch {
+        return null
+    }
+}
+
+/**
+ * Retry-After dice cuántos segundos hay que esperar antes de reintentar.
+ * Solo se puede leer si la API lo expone en CORS (exposedHeaders en el backend).
+ */
+const formatRetryAfter = (response: Response): string => {
+    const seconds = Number(response.headers.get("Retry-After"))
+    if (!seconds) return ""
+    return seconds < 60
+        ? `Podrás intentar de nuevo en ${seconds} segundos.`
+        : `Podrás intentar de nuevo en ${Math.ceil(seconds / 60)} minutos.`
 }
 
 /**

@@ -16,4 +16,5 @@ export const DASHBOARD_MENU: MenuItem[] = [
     { href: "/dashboard", label: "Inicio", roles: ["admin", "owner", "user"] },
     { href: "/dashboard/users", label: "Usuarios", roles: ["admin"] },
     { href: "/dashboard/categories", label: "Categorías", roles: ["admin"] },
+    { href: "/dashboard/listings", label: "Propiedades", roles: ["admin", "owner"] },
 ];
