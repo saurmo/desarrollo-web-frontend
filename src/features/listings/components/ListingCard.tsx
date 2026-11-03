@@ -138,7 +138,7 @@ export const ListingCard: React.FC<ListingCardProps> = ({ listing, onBook }) => 
 
         {/* Separador flex-grow para empujar el footer hacia abajo */}
         <div className="mt-auto pt-4">
-          <div className="flex items-center justify-between border-t border-gray-100 pt-3">
+          <div className="border-t border-gray-100 pt-3">
             {/* Precio */}
             <div>
               <span className="text-xl font-extrabold text-gray-900">
@@ -147,13 +147,25 @@ export const ListingCard: React.FC<ListingCardProps> = ({ listing, onBook }) => 
               <span className="text-xs text-gray-500"> / noche</span>
             </div>
 
-            {/* Botón de Reserva */}
-            <button
-              onClick={() => onBook && onBook(listing.id)}
-              className="rounded-xl bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-emerald-700 active:scale-95"
-            >
-              Reservar
-            </button>
+            <div className="mt-3 grid grid-cols-2 gap-2">
+              {/* Link y no <button> + router.push: es un <a href> real, que los buscadores siguen
+                  y que el usuario puede abrir en otra pestaña */}
+              <Link
+                href={`/listings/${listing.id}`}
+                className="rounded-xl border border-emerald-600 px-3 py-2 text-center text-sm font-semibold text-emerald-700 transition-colors hover:bg-emerald-50 active:scale-95"
+                aria-label={`Ver detalles de ${listing.name}`}
+              >
+                Ver detalles
+              </Link>
+
+              {/* Botón de Reserva */}
+              <button
+                onClick={() => onBook && onBook(listing.id)}
+                className="rounded-xl bg-emerald-600 px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-emerald-700 active:scale-95"
+              >
+                Reservar
+              </button>
+            </div>
           </div>
         </div>
       </div>
