@@ -26,6 +26,8 @@ export interface ListingFormValues {
   price: string;
   capacity: string;
   weather: string;
+  /** Id de la categoría elegida en el <select>; "" si no se eligió ninguna. */
+  categoryId: string;
 }
 
 export type ListingFormErrors = Partial<Record<keyof ListingFormValues, string>>;

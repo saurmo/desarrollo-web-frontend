@@ -1,4 +1,4 @@
-# Subida de imágenes y rate limit (frontend)
+# Subida de imágenes, categorías, SEO y rate limit (frontend)
 
 Este documento explica la pantalla **Panel → Propiedades** (`/dashboard/listings`), que crea
 propiedades con fotos, y el rate limit del frontend. La parte del backend (bucket S3 de
@@ -100,7 +100,40 @@ El frontend solo puede leer `Retry-After` porque la API lo expone en CORS
 despliegue y, en Vercel, cada instancia lleva su propia cuenta. Para un límite exacto entre
 instancias se necesita un *store* compartido como Redis.
 
-## 4. Ejercicios
+## 4. Categoría desde la base de datos
+
+El `<select>` de categoría del modal no tiene opciones escritas en el código: `useCategoryOptions`
+las pide a `GET /api/categories` (pública) al abrir el modal, reutilizando `categoryService` de la
+feature de categorías. Si un admin crea o elimina una categoría, el selector lo refleja sin cambiar
+el frontend. La opción "Sin categoría" envía `categoryId` vacío y la API lo trata como no enviado.
+
+## 5. Página individual para SEO: `/listings/[id]`
+
+`app/(public)/listings/[id]/page.tsx` es un **Server Component**: Next pide la propiedad a la API
+en el servidor y entrega el HTML completo. La lista del inicio, en cambio, se llena en el navegador
+con `useEffect`; un buscador o la vista previa de WhatsApp que no ejecuta JavaScript la ve vacía.
+
+| Pieza | Para qué sirve |
+|---|---|
+| `generateMetadata` | `<title>`, `<meta name="description">`, URL canónica y Open Graph (imagen y título al compartir el enlace) |
+| `cache()` de React (`listing.server.ts`) | `generateMetadata` y la página piden la misma propiedad, pero la API se llama una sola vez |
+| `fetch(..., { next: { revalidate: 60 } })` | Next guarda la respuesta 60 s: las visitas no golpean la API cada vez |
+| `notFound()` | Si la propiedad no existe responde **404**, y Google no la indexa |
+| JSON-LD (`LodgingBusiness`) | Datos estructurados de schema.org: tipo de negocio, precio, ubicación y fotos |
+| Un solo `<h1>` y `alt` en cada foto | Lo que el buscador lee para entender la página |
+| `<Link href>` en `ListingCard` | Un enlace real; sin él, el buscador no llega a cada propiedad |
+| `app/sitemap.ts` → `/sitemap.xml` | Lista de todas las propiedades para los buscadores (se regenera cada hora) |
+| `app/robots.ts` → `/robots.txt` | Pide no indexar `/dashboard`, `/login` ni `/register` |
+
+En `PageProps<'/listings/[id]'>`, `params` es una **promesa** (Next 15+): se usa `await params`.
+Para que las URLs absolutas apunten al dominio real, define `NEXT_PUBLIC_SITE_URL` en Vercel
+(por ejemplo, `https://listings-ruby.vercel.app`); en local se usa `http://localhost:3000`.
+
+Para comprobarlo: abre la página, haz clic derecho → **Ver código fuente** (no el inspector) y
+busca el `<title>`, `og:image` y el `<script type="application/ld+json">`. Si están ahí, un
+buscador los ve sin ejecutar JavaScript.
+
+## 6. Ejercicios
 
 1. Muestra en `ListingCard` un contador "1/3" sobre la foto actual.
 2. Permite borrar una foto de una propiedad: endpoint `DELETE /api/listings/:id/photos` en el

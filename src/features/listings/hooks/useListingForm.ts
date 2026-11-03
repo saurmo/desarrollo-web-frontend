@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { ListingFormErrors, ListingFormValues } from "../domain/Listing";
 
-const EMPTY_VALUES: ListingFormValues = { name: "", location: "", price: "", capacity: "", weather: "" };
+const EMPTY_VALUES: ListingFormValues = { name: "", location: "", price: "", capacity: "", weather: "", categoryId: "" };
 
 /** Mismas reglas que ListingDto en el backend, para avisar antes de enviar. */
 const validateField = (field: keyof ListingFormValues, value: string): string | undefined => {
@@ -25,6 +25,8 @@ const validateField = (field: keyof ListingFormValues, value: string): string | 
             if (!text) return "La capacidad es obligatoria.";
             if (!Number.isInteger(Number(text)) || Number(text) < 1) return "Escribe un número entero desde 1.";
             return undefined;
+        case "categoryId":
+            return undefined; // opcional: las opciones vienen de la API, no hay nada que validar
     }
 };
 
@@ -38,7 +40,8 @@ export function useListingForm(onSubmit: (values: ListingFormValues) => Promise<
     const [values, setValues] = useState<ListingFormValues>(EMPTY_VALUES);
     const [errors, setErrors] = useState<ListingFormErrors>({});
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    /** Sirve para los <input> y para el <select> de categoría. */
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const field = event.target.name as keyof ListingFormValues;
         const value = event.target.value;
         setValues((prev) => ({ ...prev, [field]: value }));

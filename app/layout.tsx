@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { SITE_URL } from "@/src/features/common/config";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,7 +14,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Listings",
+  // metadataBase: base para las URLs relativas del SEO (canonical, Open Graph) de todas las páginas
+  metadataBase: new URL(SITE_URL),
+  // template: cada página define su título y se le agrega " | Listings" al final
+  title: { default: "Listings", template: "%s | Listings" },
   description: "Encuentra y reserva tu próxima cabaña",
 };
 

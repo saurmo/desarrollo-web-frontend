@@ -24,12 +24,13 @@ export function ListingTable({ listings, canManage, onAddPhotos, onDelete }: Lis
 
     return (
         <div className="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-900/60">
-            <table className="w-full min-w-[720px] text-left text-sm">
+            <table className="w-full min-w-[840px] text-left text-sm">
                 <thead className="border-b border-slate-800 text-xs uppercase tracking-wider text-slate-400">
                     <tr>
                         <th scope="col" className="px-4 py-3 font-semibold">Foto</th>
                         <th scope="col" className="px-4 py-3 font-semibold">Nombre</th>
                         <th scope="col" className="px-4 py-3 font-semibold">Ubicación</th>
+                        <th scope="col" className="px-4 py-3 font-semibold">Categoría</th>
                         <th scope="col" className="px-4 py-3 font-semibold">Precio</th>
                         <th scope="col" className="px-4 py-3 font-semibold">Fotos</th>
                         <th scope="col" className="px-4 py-3 text-right font-semibold">Acciones</th>
@@ -48,6 +49,9 @@ export function ListingTable({ listings, canManage, onAddPhotos, onDelete }: Lis
                             </td>
                             <td className="px-4 py-3 font-medium text-white">{listing.name}</td>
                             <td className="px-4 py-3 text-slate-300">{listing.location}</td>
+                            <td className="px-4 py-3 text-slate-300">
+                                {listing.categories?.join(", ") || <span className="text-slate-600">Sin categoría</span>}
+                            </td>
                             <td className="whitespace-nowrap px-4 py-3 text-slate-300">${listing.price.toLocaleString("es-CO")}</td>
                             <td className="px-4 py-3 text-slate-400">{listing.photos.length}</td>
                             <td className="px-4 py-3">

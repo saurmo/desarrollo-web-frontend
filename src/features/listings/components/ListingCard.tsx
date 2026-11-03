@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Star, MapPin, Users, Sun, Check, ChevronLeft, ChevronRight, Video } from 'lucide-react';
 import { getPhotoUrl, Listing } from '../domain/Listing';
 
@@ -98,7 +99,12 @@ export const ListingCard: React.FC<ListingCardProps> = ({ listing, onBook }) => 
         </div>
 
         {/* Título */}
-        <h3 className="mt-2 text-lg font-bold text-gray-900 line-clamp-1">{listing.name}</h3>
+        {/* Enlace real (<a href>) a la página de la propiedad: así los buscadores la encuentran */}
+        <h3 className="mt-2 text-lg font-bold text-gray-900 line-clamp-1">
+          <Link href={`/listings/${listing.id}`} className="hover:text-emerald-700 hover:underline">
+            {listing.name}
+          </Link>
+        </h3>
 
         {/* Info rápida: Capacidad y Clima */}
         <div className="mt-3 flex items-center gap-4 text-xs font-medium text-gray-600">
